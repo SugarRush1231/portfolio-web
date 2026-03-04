@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 김병석 Portfolio</title>
+    <meta name="description" content="2026 모션 그래픽 & 영상 디자인 포트폴리오">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="/ico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/ico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/ico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/ico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/ico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/ico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/ico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/ico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/ico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/ico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/ico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ico/favicon-16x16.png">
+    <link rel="manifest" href="/ico/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ico/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <!-- ═══════════════ NAVIGATION ═══════════════ -->
+    <nav id="nav" class="nav">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">PORTFOLIO</a>
+            <div class="nav-links">
+                <a href="#work" class="nav-link">Portfolio</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════ HERO SECTION ═══════════════ -->
+    <section id="hero" class="hero">
+        <div class="hero-bg-gradient"></div>
+        <div class="hero-content">
+            <div class="hero-label animate-fade-up">MOTION & VISUAL DESIGN & AI CREATOR</div>
+            <h1 class="hero-title animate-fade-up delay-1">
+                <span class="title-line">Creative</span>
+                <span class="title-line accent">Portfolio</span>
+                <span class="title-line">2026</span>
+            </h1>
+            <p class="hero-desc animate-fade-up delay-2">
+                영상 디자인 · 모션 그래픽 · AI 영상
+            </p>
+            <div class="hero-scroll-indicator">
+                <div class="scroll-line"></div>
+                <span>SCROLL</span>
+            </div>
+        </div>
+        <!-- 히어로 배경 영상 넣는 곳 -->
+        <div class="hero-video-bg">
+            <!-- 
+                여기에 배경 영상을 넣으세요:
+                <video autoplay muted loop playsinline>
+                    <source src="your-hero-video.mp4" type="video/mp4">
+                </video>
+            -->
+        </div>
+    </section>
+
+    <!-- ═══════════════ WORK SECTION ═══════════════ -->
+    <section id="work" class="section work-section">
+        <div class="section-header">
+            <span class="section-number">01</span>
+            <h2 class="section-title">Portfolio</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <!-- ── PROJECT 01 ── -->
+        <article class="project" data-project="01">
+            <div class="project-header">
+                <div class="project-meta">
+                    <span class="project-number">01</span>
+                    <div class="project-info">
+                        <h3 class="project-title">프로젝트 제목을 입력하세요</h3>
+                        <p class="project-subtitle">Project Title Here</p>
+                    </div>
+                </div>
+                <div class="project-tags">
+                    <!-- <span class="tag">AI Video</span> -->
+                    <span class="tag">Ae</span>
+                    <span class="tag">Ps</span>
+                </div>
+            </div>
+
+            <!-- 메인 영상/이미지 슬롯 -->
+            <div class="project-media main-media">
+                <div class="video-player" id="project1-main">
+                    <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
+                    <video src="video/인포그래픽 김병석.mp4" preload="metadata" poster="Thumbnail/Google info .png"></video>
+                    <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
+                </div>
+            </div>
+
+            <div class="project-description">
+                <div class="desc-block">
+                    <span class="desc-label">Program</span>
+                    <p class="desc-text">Ae/Ps</p>
+                </div>
+                <div class="desc-block">
+                    <span class="desc-label">Concept</span>
+                    <p class="desc-text">
+                        프로젝트에 대한 설명을 여기에 입력하세요. 어떤 컨셉으로 작업했는지,
+                        어떤 기법을 활용했는지 등을 적어주세요.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 서브 이미지 그리드 -->
+            <div class="project-media-grid grid-2">
+                <div class="media-placeholder" id="project1-sub1">
+                    <div class="placeholder-content">
+                        <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg> -->
+                        <span><img src="img/google info work Screen.png" alt="wokr screen"></span>
+                    </div>
+                </div>
+                <div class="media-placeholder" id="project1-sub2">
+                    <div class="placeholder-content">
+                        <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg> -->
+                        <span><img src="img/google info work Screen2.png" alt="wokr screen"></span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ── PROJECT 02 ── -->
+        <article class="project" data-project="02">
+            <div class="project-header">
+                <div class="project-meta">
+                    <span class="project-number">02</span>
+                    <div class="project-info">
+                        <h3 class="project-title">AI Virtual Idol</h3>
+                        <p class="project-subtitle">Virtual Idol Branding + MV</p>
+                    </div>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Ae</span>
+                    <span class="tag">AI video</span>
+                    <span class="tag">Pr</span>
+                    <span class="tag">Ps</span>
+                    <span class="tag">Suno</span>
+                </div>
+            </div>
+
+            <div class="project-media main-media">
+                <div class="video-player" id="project1-main">
+                    <div class="media-placeholder" id="project2-main">
+                        <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
+                        <video src="video/AI뮤비_김병석 .mp4" preload="metadata"
+                            poster="Thumbnail/Sugarrush thumb.png"></video>
+                        <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-description">
+                <div class="desc-block">
+                    <span class="desc-label">Program</span>
+                    <p class="desc-text">Ae / AI video / Pr /<br> Ps / Suno</p>
+                </div>
+                <div class="desc-block">
+                    <span class="desc-label">Concept</span>
+                    <p class="desc-text">
+                    <p style="color: dimgray;">Virtual Idol Branding + MV
+                    </p>
+                    <p style="color: #999999;">
+                        각 캐릭터 마다 컨셉과 의상을 다르게 하여 개성을 살렸으며, 캐릭터 마다 <a href="img/시트모음.png"
+                            style="color: rgb(255, 255, 255);" target="_blank">고유의 시트</a>를 제작하여 뮤직비디오 작업을 진행하였습니다.
+                    </p>
+                    <p style="color: #999999;">
+                        버추얼 걸밴드 Sugar Rush의 데뷔 프로젝트로, “각자의 작은 빛이 모여 하나의 무대를 만든다”라는 콘셉트를 뮤직비디오 “GLOW” 와 실제 아이돌처럼 <a
+                            href="https://sugarrush-web.pages.dev/" style="color: rgb(255, 255, 255);"
+                            target="_blank">공식 홈페이지</a>를 제작하였습니다.
+                    </p>
+                    <!-- </p>
+                    <p><a href="https://sugarrush-web.pages.dev/" target="_blank">공식 홈페이지</a></p>
+                    </p> -->
+                </div>
+            </div>
+
+            <div class="project-media-grid grid-2">
+                <div class="media-placeholder" id="project2-sub1">
+                    <div class="placeholder-content">
+                        <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg> -->
+                        <span><img src="img/sugarrush prompt.png" alt="sugarrush prompt"></span>
+                    </div>
+                </div>
+                <div class="media-placeholder" id="project2-sub2">
+                    <div class="placeholder-content">
+                        <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg> -->
+                        <span><img src="img/sugarrush prompt2.png" alt="sugarrush prompt"></span>
+                    </div>
+                </div>
+                <div class="media-placeholder" id="project2-sub3">
+                    <div class="placeholder-content">
+                        <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg> -->
+                        <span><img src="img/AI 가수 work.png" alt="sugarrush work Pr"></span>
+                    </div>
+                </div>
+                <div class="media-placeholder" id="project2-sub4">
+                    <div class="placeholder-content">
+                        <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg> -->
+                        <span><img src="img/AI 가수 work AE.png" alt="sugarrush work AE"></span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ── PROJECT 03 ── -->
+        <article class="project" data-project="03">
+            <div class="project-header">
+                <div class="project-meta">
+                    <span class="project-number">03</span>
+                    <div class="project-info">
+                        <h3 class="project-title">Movie MV Cut Editing</h3>
+                        <p class="project-subtitle">뮤직비디오</p>
+                    </div>
+                </div>
+                <div class="project-tags">
+                    <!-- <span class="tag">C4D</span> -->
+                    <span class="tag">Pr</span>
+                </div>
+            </div>
+
+            <div class="project-media main-media">
+                <div class="video-player" id="project1-main">
+                    <div class="media-placeholder" id="project3-main">
+                        <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
+                        <video src="video/뮤직비디오_김병석.mp4" preload="metadata"
+                            poster="Thumbnail/Fire_on_up thumb.png"></video>
+                        <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-description">
+                <div class="desc-block">
+                    <span class="desc-label">Program</span>
+                    <p class="desc-text">Pr</p>
+                </div>
+                <div class="desc-block">
+                    <span class="desc-label">Concept</span>
+                    <p class="desc-text">
+                        영화 Ford V Ferrari를
+                        배경 음악에 맞춰서 컷 편집을 진행하고, 빠른 장면전환으로 박진감 넘치는 느낌을 표현했습니다.<br>
+                        영상의 속도감을 표현하기 위해 다양한 컷 편집과 속도 등을 신경써서 작업을 진행하였습니다.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3개 이미지 그리드 -->
+            <div class="project-media-grid grid-3">
+                <div class="media-placeholder" id="project3-sub1">
+                    <div class="placeholder-content">
+                        <svg class="placeholder-icon small" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <span>이미지</span>
+                    </div>
+                </div>
+                <div class="media-placeholder" id="project3-sub2">
+                    <div class="placeholder-content">
+                        <svg class="placeholder-icon small" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <span>이미지</span>
+                    </div>
+                </div>
+                <div class="media-placeholder" id="project3-sub3">
+                    <div class="placeholder-content">
+                        <svg class="placeholder-icon small" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <span>이미지</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ── PROJECT 04 ── -->
+        <article class="project" data-project="04">
+            <div class="project-header">
+                <div class="project-meta">
+                    <span class="project-number">04</span>
+                    <div class="project-info">
+                        <h3 class="project-title">네 번째 프로젝트</h3>
+                        <p class="project-subtitle">Fourth Project Title</p>
+                    </div>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">Pr</span>
+                </div>
+            </div>
+
+            <div class="project-media main-media">
+                <div class="media-placeholder" id="project4-main">
+                    <div class="placeholder-content">
+                        <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <span>영상 또는 이미지를 넣어주세요</span>
+                        <span class="placeholder-hint">video 또는 img 태그로 교체</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-description">
+                <div class="desc-block">
+                    <span class="desc-label">Program</span>
+                    <p class="desc-text">Pr</p>
+                </div>
+                <div class="desc-block">
+                    <span class="desc-label">Concept</span>
+                    <p class="desc-text">
+                        네 번째 프로젝트에 대한 설명을 여기에 입력하세요.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 풀 와이드 서브 이미지 -->
+            <div class="project-media sub-media">
+                <div class="media-placeholder" id="project4-sub1">
+                    <div class="placeholder-content">
+                        <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <span>풀 와이드 이미지를 넣어주세요</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- ═══════════════ ABOUT SECTION ═══════════════ -->
+    <section id="about" class="section about-section">
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2 class="section-title">About Me</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3 class="about-heading">KIM BYEONG SEOK</h3>
+                <p class="about-role"> AI Creator / Motion Graphic Designer / Video Editor</p>
+                <p class="about-bio">
+                    자기소개를 여기에 입력하세요. 어떤 분야에 관심이 있는지,
+                    어떤 작업을 해왔는지 등을 자유롭게 적어주세요.
+                    영상 디자인과 모션 그래픽을 통해 시각적인 스토리텔링을
+                    만들어가는 것을 좋아합니다.
+                </p>
+                <div class="about-skills">
+                    <div class="skill-group">
+                        <span class="skill-label">Design</span>
+                        <div class="skill-items">
+                            <span class="skill-item">Photoshop</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <span class="skill-label">Motion</span>
+                        <div class="skill-items">
+                            <span class="skill-item">After Effects</span>
+                            <span class="skill-item">Premiere Pro</span>
+                            <span class="skill-item">Blender 3D</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <span class="skill-label">AI Tool</span>
+                        <div class="skill-items">
+                            <span class="skill-item">Nano Banana PRO</span>
+                            <span class="skill-item">Firefly</span>
+                            <span class="skill-item">Google Gemini</span>
+                            <span class="skill-item">Veo 3.1</span>
+                            <span class="skill-item">GPT image 1.5</span>
+                            <span class="skill-item">Claude</span>
+                            <span class="skill-item">Suno</span>
+                            <span class="skill-item">ComfyUI</span>
+                            <span class="skill-item">Stable Diffusion</span>
+                            <span class="skill-item">Kling</span>
+                            <span class="skill-item">Seedence</span>
+                            <span class="skill-item">grok imagine</span>
+                            <span class="skill-item">Vrew</span>
+                            <span class="skill-item">Elevenlabs</span>
+                            <span class="skill-item">Midjourney</span>
+                            <span class="skill-item">Topaz AI Upscale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <div class="media-placeholder" id="about-photo">
+                    <div class="placeholder-content">
+                        <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>프로필 사진</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ CONTACT SECTION ═══════════════ -->
+    <section id="contact" class="section contact-section">
+        <div class="contact-content">
+            <h2 class="contact-title">
+                <span class="contact-line">Let's Work</span>
+                <span class="contact-line accent">Together</span>
+            </h2>
+            <div class="contact-info">
+                <a class="contact-link" id="contact-email">
+                    <span class="contact-link-label">Email</span>
+                    <span class="contact-link-value">kbs318@naver.com</span>
+                    <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+                <a href="https://open.kakao.com/o/sLJoyqji" target="_blank" class="contact-link" id="contact-instagram">
+                    <span class="contact-link-label">Kakao</span>
+                    <span class="contact-link-value">카카오톡 오픈 채팅 포트폴리오 문의/연락</span>
+                    <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+                <!-- <a href="https://behance.net" target="_blank" class="contact-link" id="contact-behance">
+                    <span class="contact-link-label">Behance</span>
+                    <span class="contact-link-value">behance.net/yourname</span>
+                    <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span class="footer-copy">© 2026 BYUNGSEOK KIM Portfolio. All Rights Reserved.</span>
+            <a href="#hero" class="footer-top" id="back-to-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="19" x2="12" y2="5"></line>
+                    <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+                TOP
+            </a>
+        </div>
+    </footer>
+
+    <!-- ═══════════════ IMAGE LIGHTBOX ═══════════════ -->
+    <div class="lightbox-overlay" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close" aria-label="닫기">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="확대 이미지">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
