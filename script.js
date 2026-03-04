@@ -444,13 +444,18 @@
                 }
             });
 
-            // 초기 상태
+            // 초기 상태: 볼륨 최대, 음소거 해제
+            video.volume = 1;
+            video.muted = false;
+            previousVolume = 1;
+            updateVolumeIcon();
+            updateVolumeSlider();
             showControlsPermanent();
         });
     }
 
-    // ── 스크롤 시 자동재생 (화면에 보일 때 재생, 벗어나면 정지) ──
-    function initVideoAutoplay() {
+    // ── 화면 밖으로 나가면 자동 일시정지 (자동 재생은 없음) ──
+    function initVideoAutoPause() {
         const videoPlayers = document.querySelectorAll('.video-player');
 
         const videoObserver = new IntersectionObserver((entries) => {
@@ -458,53 +463,16 @@
                 const video = entry.target.querySelector('video');
                 if (!video) return;
 
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                    // 화면에 50% 이상 보이면 자동재생
-                    if (video.paused && !video.dataset.userPaused) {
-                        video.play().catch(() => {
-                            // 자동재생 차단된 경우 음소거 후 재생
-                            video.muted = true;
-                            video.play().catch(() => { });
-                            // 음소거 아이콘 업데이트
-                            const muteBtn = entry.target.querySelector('.video-mute');
-                            if (muteBtn) {
-                                const iconVolume = muteBtn.querySelector('.icon-volume');
-                                const iconMuted = muteBtn.querySelector('.icon-muted');
-                                if (iconVolume) iconVolume.style.display = 'none';
-                                if (iconMuted) iconMuted.style.display = 'block';
-                            }
-                        });
-                    }
-                } else {
-                    // 화면에서 벗어나면 일시정지
-                    if (!video.paused) {
-                        video.pause();
-                        delete video.dataset.userPaused;
-                    }
+                // 화면에서 벗어나면 일시정지
+                if (!entry.isIntersecting && !video.paused) {
+                    video.pause();
                 }
             });
         }, {
-            threshold: 0.5
+            threshold: 0.1
         });
 
         videoPlayers.forEach(player => videoObserver.observe(player));
-
-        // 사용자가 직접 일시정지한 경우 구분
-        document.querySelectorAll('.video-player video').forEach(video => {
-            video.addEventListener('pause', () => {
-                // IntersectionObserver에 의한 정지가 아닌 경우만 마킹
-                const player = video.closest('.video-player');
-                const rect = player.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
-                const isVisible = rect.top < viewportHeight && rect.bottom > 0;
-                if (isVisible) {
-                    video.dataset.userPaused = 'true';
-                }
-            });
-            video.addEventListener('play', () => {
-                delete video.dataset.userPaused;
-            });
-        });
     }
 
     // ──────────────────────────────────────────────
@@ -727,6 +695,7 @@
     handleNavScroll();
     initCursorGlow();
     initVideoPlayers();
+    initVideoAutoPause();
     initImageLightbox();
 
     // ── Page Load Animation ──

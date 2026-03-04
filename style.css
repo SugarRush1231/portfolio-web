@@ -877,6 +877,72 @@ video {
     line-height: 1.8;
 }
 
+/* CTA row */
+.cta-row {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* 기본 버튼 */
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 12px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    color: rgba(255, 255, 255, 0.86);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+
+    transition: transform .2s var(--ease-out),
+        background .2s var(--ease-out),
+        border-color .2s var(--ease-out),
+        color .2s var(--ease-out),
+        box-shadow .2s var(--ease-out);
+}
+
+/* primary도 기본은 동일(초록 고정 제거) */
+.cta-btn.primary {
+    color: rgba(255, 255, 255, 0.86);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ✅ primary만 hover 시 초록 */
+.cta-btn.primary:hover {
+    transform: translateY(-1px);
+    color: #0a0a0a;
+    background: rgba(200, 255, 0, 0.92);
+    border-color: rgba(200, 255, 0, 0);
+    box-shadow: 0 10px 30px rgba(200, 255, 0, 0.18);
+}
+
+/* 나머지는 hover 시 약하게 */
+.cta-btn:not(.primary):hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+/* hover 강제(우선순위 높임) */
+.project-description .cta-row .cta-btn:hover {
+    background: rgba(200, 255, 0, 0.92);
+    border-color: rgba(200, 255, 0, 0);
+    color: #0a0a0a;
+    box-shadow: 0 10px 30px rgba(200, 255, 0, 0.18);
+    transform: translateY(-1px);
+}
+
 /* ═══════════════ ABOUT SECTION ═══════════════ */
 .about-section {
     background: var(--bg-secondary);
