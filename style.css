@@ -370,6 +370,74 @@ video {
     background: var(--border);
 }
 
+/* ═══════════════ SIDE NAVIGATION ═══════════════ */
+.project-side-nav {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-normal) var(--ease-out), transform var(--duration-normal) var(--ease-out);
+}
+
+.project-side-nav.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.side-nav-link {
+    font-size: 0.8rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text-muted);
+    text-decoration: none;
+    position: relative;
+    padding: 0.2rem 0.5rem;
+    transition: color var(--duration-fast) ease, transform var(--duration-fast) ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+}
+
+.side-nav-link::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 0;
+    background-color: var(--accent);
+    transition: height var(--duration-fast) ease;
+}
+
+.side-nav-link:hover,
+.side-nav-link.active {
+    color: var(--text-primary);
+    transform: translateX(-5px);
+    opacity: 1;
+}
+
+.side-nav-link.active {
+    color: var(--accent);
+}
+
+.side-nav-link.active::after {
+    height: 100%;
+}
+
+@media (max-width: 1024px) {
+    .project-side-nav {
+        display: none;
+    }
+}
+
 /* ═══════════════ PROJECT CARDS ═══════════════ */
 .project {
     margin-bottom: var(--space-2xl);
@@ -640,6 +708,58 @@ video {
     pointer-events: none;
 }
 
+/* ── YouTube-style Action Indicator ── */
+.video-action-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 8;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.video-action-indicator.show {
+    animation: actionIndicatorPop 0.5s ease-out forwards;
+}
+
+.action-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.action-icon-wrap svg {
+    width: 24px;
+    height: 24px;
+}
+
+.action-icon-play {
+    margin-left: 3px;
+}
+
+@keyframes actionIndicatorPop {
+    0% {
+        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.3);
+    }
+}
+
 /* ── Video Controls Bar ── */
 .video-controls {
     position: absolute;
@@ -853,6 +973,104 @@ video {
 
 .video-volume-container:hover .video-volume-handle {
     transform: translate(-50%, -50%) scale(1);
+}
+
+/* ── Settings Button & Menu ── */
+.video-settings-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.video-settings-btn svg {
+    transition: transform 0.4s ease;
+}
+
+.video-settings-btn.active {
+    color: var(--accent) !important;
+}
+
+.video-settings-btn.active svg {
+    transform: rotate(60deg);
+}
+
+.video-settings-menu {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    right: 0;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 6px;
+    min-width: 180px;
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    z-index: 50;
+}
+
+.video-settings-menu.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.video-settings-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.video-settings-option:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.settings-option-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+
+/* ── Toggle Switch ── */
+.settings-toggle-track {
+    width: 34px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 9px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.25s ease;
+    flex-shrink: 0;
+}
+
+.settings-toggle-track.on {
+    background: var(--accent);
+}
+
+.settings-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.settings-toggle-track.on .settings-toggle-thumb {
+    transform: translateX(16px);
 }
 
 /* ═══════════════ PROJECT DESCRIPTION ═══════════════ */
@@ -1458,4 +1676,149 @@ body::after {
     .cursor-glow {
         display: none;
     }
+}
+
+/* ═══════════════ COPY TOAST ═══════════════ */
+.copy-toast {
+    position: fixed;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.5rem;
+    background: rgba(30, 30, 30, 0.95);
+    border: 1px solid rgba(200, 255, 0, 0.2);
+    border-radius: 50px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.copy-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.copy-toast svg {
+    width: 18px;
+    height: 18px;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.copy-toast span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+}
+
+/* ── Copy Icon on Contact Links ── */
+.contact-link.copyable {
+    cursor: pointer;
+}
+
+.copy-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    opacity: 0.4;
+    transition: opacity var(--duration-fast) ease, color var(--duration-fast) ease;
+    flex-shrink: 0;
+}
+
+.contact-link.copyable:hover .copy-icon {
+    opacity: 1;
+    color: var(--accent);
+}
+
+/* ═══════════════ CCL LICENSE BADGE ═══════════════ */
+.ccl-list {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-lg) 0 0;
+    width: fit-content;
+    margin-left: auto;
+    opacity: 0.6;
+    transition: opacity var(--duration-fast) ease;
+    position: relative;
+    cursor: pointer;
+    --tip-gap: -30px;
+    --tip-lift: 4px;
+    --tail: 10px;
+    --tip-y: calc(100% + var(--tip-gap));
+}
+
+.ccl-list:hover {
+    opacity: 1;
+}
+
+/* ── 툴팁 텍스트 ── */
+.ccl-list::before {
+    content: attr(ccl);
+    position: absolute;
+    bottom: var(--tip-y);
+    left: 50%;
+    transform: translateX(-50%) translateY(var(--tip-lift));
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-hover);
+    white-space: nowrap;
+    opacity: 0;
+    transition: translateX(-50%) translateY(var(--tip-lift));
+    pointer-events: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+}
+
+/* ── 툴팁 삼각형 꼬리 ── */
+.ccl-list::after {
+    /* content: '';
+    position: absolute;
+    bottom: calc(var(--tip-y) - (var(--tail) - 1px));
+    left: 50%;
+    transform: translateX(-50%) translateY(var(--tip-lift));
+    border: 8px solid transparent;
+    border-top-color: var(--bg-elevated);
+    opacity: 0;
+    transition: opacity var(--duration-fast) ease, transform var(--duration-fast) ease;
+    pointer-events: none;
+    z-index: 19; */
+    display: none;
+}
+
+.ccl-list:hover::before,
+.ccl-list:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.ccl-list img {
+    width: 28px;
+    height: 28px;
+    display: block;
+    filter: invert(1) brightness(0.85);
+    transition: filter var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+
+.ccl-list:hover img {
+    filter: invert(1) brightness(1.1) sepia(1) saturate(5) hue-rotate(25deg);
+}
+
+.ccl-list img:hover {
+    transform: scale(1.15);
 }
