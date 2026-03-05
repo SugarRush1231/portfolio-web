@@ -459,6 +459,14 @@ video {
     aspect-ratio: 16 / 9;
 }
 
+/* ── YouTube Shorts (9:16) 세로 비율 ── */
+.shorts-media {
+    aspect-ratio: 9 / 16;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .sub-media {
     aspect-ratio: 21 / 9;
 }
@@ -1051,7 +1059,7 @@ video {
 .contact-line {
     font-size: clamp(2.5rem, 7vw, 5rem);
     font-weight: 900;
-    line-height: 1.1;
+    line-height: 1.4;
     letter-spacing: -0.03em;
 }
 
