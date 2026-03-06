@@ -868,9 +868,11 @@
         if (!lightbox || !lightboxImg || !lightboxClose) return;
 
         let currentMode = 'image'; // 'image' or 'video'
+        let closeTimer = null;
 
         // 라이트박스 열기 (이미지)
         function openLightbox(imgSrc) {
+            if (closeTimer) clearTimeout(closeTimer);
             currentMode = 'image';
             lightboxImg.src = imgSrc;
             lightboxImg.style.display = 'block';
@@ -886,6 +888,7 @@
 
         // 라이트박스 열기 (비디오)
         function openVideoLightbox(videoSrc) {
+            if (closeTimer) clearTimeout(closeTimer);
             currentMode = 'video';
             if (!lightboxVideo) return;
             lightboxImg.style.display = 'none';
@@ -905,7 +908,8 @@
                 lightboxVideo.pause();
             }
             // 트랜지션 후 src 초기화
-            setTimeout(() => {
+            if (closeTimer) clearTimeout(closeTimer);
+            closeTimer = setTimeout(() => {
                 lightboxImg.src = '';
                 lightboxImg.style.display = 'block';
                 if (lightboxVideo) {
