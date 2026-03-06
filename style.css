@@ -675,6 +675,30 @@ video {
     align-items: start;
 }
 
+#project4-sub4 .inline-loop-video {
+    pointer-events: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+#project3-sub2 .inline-loop-video {
+    pointer-events: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+#project3-sub3 .inline-loop-video {
+    pointer-events: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
 /* ═══════════════ VIDEO PLAYER ═══════════════ */
 .video-player {
     position: relative;
@@ -1384,7 +1408,7 @@ video {
 }
 
 .about-image .media-placeholder {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 9 / 16;
     border-radius: 16px;
 }
 
