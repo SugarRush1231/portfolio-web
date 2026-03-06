@@ -863,23 +863,56 @@
     function initImageLightbox() {
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxVideo = document.getElementById('lightbox-video');
         const lightboxClose = document.getElementById('lightbox-close');
         if (!lightbox || !lightboxImg || !lightboxClose) return;
 
-        // 라이트박스 열기
+        let currentMode = 'image'; // 'image' or 'video'
+
+        // 라이트박스 열기 (이미지)
         function openLightbox(imgSrc) {
+            currentMode = 'image';
             lightboxImg.src = imgSrc;
+            lightboxImg.style.display = 'block';
+            if (lightboxVideo) {
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+                lightboxVideo.removeAttribute('src');
+                lightboxVideo.innerHTML = '';
+            }
             lightbox.classList.add('active');
             document.body.classList.add('lightbox-open');
+        }
+
+        // 라이트박스 열기 (비디오)
+        function openVideoLightbox(videoSrc) {
+            currentMode = 'video';
+            if (!lightboxVideo) return;
+            lightboxImg.style.display = 'none';
+            lightboxVideo.style.display = 'block';
+            lightboxVideo.src = videoSrc;
+            lightboxVideo.currentTime = 0;
+            lightbox.classList.add('active');
+            document.body.classList.add('lightbox-open');
+            lightboxVideo.play().catch(() => { });
         }
 
         // 라이트박스 닫기
         function closeLightbox() {
             lightbox.classList.remove('active');
             document.body.classList.remove('lightbox-open');
+            if (lightboxVideo) {
+                lightboxVideo.pause();
+            }
             // 트랜지션 후 src 초기화
             setTimeout(() => {
                 lightboxImg.src = '';
+                lightboxImg.style.display = 'block';
+                if (lightboxVideo) {
+                    lightboxVideo.removeAttribute('src');
+                    lightboxVideo.innerHTML = '';
+                    lightboxVideo.style.display = 'none';
+                }
             }, 400);
         }
 
@@ -894,6 +927,14 @@
             e.stopPropagation();
             closeLightbox();
         });
+
+        // 확대된 영상 클릭으로 닫기
+        if (lightboxVideo) {
+            lightboxVideo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeLightbox();
+            });
+        }
 
         // 배경(오버레이) 클릭으로 닫기
         lightbox.addEventListener('click', (e) => {
@@ -919,6 +960,21 @@
                 e.preventDefault();
                 e.stopPropagation();
                 openLightbox(img.src);
+            });
+        });
+
+        // clickable-video 클릭 시 비디오 라이트박스 열기
+        const clickableVideos = document.querySelectorAll('.clickable-video');
+        clickableVideos.forEach(video => {
+            video.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // source 태그에서 src 가져오기 또는 video의 src
+                const source = video.querySelector('source');
+                const videoSrc = video.src || (source ? source.src : '');
+                if (videoSrc) {
+                    openVideoLightbox(videoSrc);
+                }
             });
         });
     }
@@ -990,6 +1046,50 @@
         requestAnimationFrame(() => {
             document.body.style.opacity = '1';
         });
+    });
+
+    // ── Webm gif 처럼 실행 ──
+    const scrollVideos = document.querySelectorAll('.scroll-play-video');
+
+    const playVideo = async (video) => {
+        try {
+            if (video.readyState < 2) {
+                await new Promise((resolve) => {
+                    video.addEventListener('loadeddata', resolve, { once: true });
+                });
+            }
+
+            video.currentTime = 0;
+            await video.play();
+        } catch (err) {
+            console.warn('Video play failed:', err, video.currentSrc);
+        }
+    };
+
+    const pauseVideo = (video) => {
+        video.pause();
+        if (video.readyState >= 2) {
+            video.currentTime = 0;
+        }
+    };
+
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            const video = entry.target;
+
+            if (entry.isIntersecting) {
+                playVideo(video);
+            } else {
+                pauseVideo(video);
+            }
+        });
+    }, {
+        threshold: 0.25
+    });
+
+    scrollVideos.forEach((video) => {
+        video.pause();
+        videoObserver.observe(video);
     });
 
 })();
