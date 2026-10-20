@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 김병석 Portfolio</title>
-    <meta name="description" content="2026 모션 그래픽 & 영상 디자인 포트폴리오">
+    <title>김병석 | Portfolio</title>
+    <meta name="description" content="김병석의 모션 그래픽, 영상 디자인, AI 영상 작업 포트폴리오.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="assets/brand/google-g.svg" as="image">
+    <link rel="preload" href="assets/brand/google-sans-bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/brand/barlow-condensed-extrabold-italic.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/brand/Allura-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="style.css?v=20261021-109">
     <link rel="apple-touch-icon" sizes="57x57" href="ico/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="ico/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="ico/apple-icon-72x72.png">
@@ -28,7 +33,7 @@
     <link rel="manifest" href="ico/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="ico/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#111111">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G788GHLNMG"></script>
     <script>
@@ -51,41 +56,36 @@
     <!-- ═══════════════ NAVIGATION ═══════════════ -->
     <nav id="nav" class="nav">
         <div class="nav-inner">
-            <a href="#hero" class="nav-logo">PORTFOLIO</a>
+            <a href="#hero" class="nav-logo" aria-label="포트폴리오 첫 화면"><span>Motion &</span><span>Visual stories.</span></a>
             <div class="nav-links">
-                <a href="#work" class="nav-link">Portfolio</a>
+                <a href="#work" class="nav-link">Work</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
+            <div class="work-barcode" role="group" aria-label="Select a project"><button type="button" data-work-index="0" aria-label="View Google Chrome" aria-pressed="false" title="Google Chrome"></button><button type="button" data-work-index="1" aria-label="View Sugar Rush" aria-pressed="false" title="Sugar Rush"></button><button type="button" data-work-index="2" aria-label="View Fire on up" aria-pressed="false" title="Fire on up"></button><button type="button" data-work-index="3" aria-label="View CHANEL" aria-pressed="false" title="CHANEL"></button><button type="button" data-work-index="4" aria-label="View Initial D" aria-pressed="false" title="Initial D"></button><button type="button" data-work-index="5" aria-label="View MMT" aria-pressed="false" title="MMT"></button></div>
+            <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme">
+                <svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></svg>
+                <svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"></path></svg>
+                <span class="theme-name">Light</span>
+            </button>
         </div>
     </nav>
 
+    <div class="view-toolbar" id="view-toolbar" hidden><a href="#work" class="view-back">↖ All work</a><span id="view-label"></span></div>
+
     <!-- ═══════════════ HERO SECTION ═══════════════ -->
     <section id="hero" class="hero">
-        <div class="hero-bg-gradient"></div>
         <div class="hero-content">
-            <div class="hero-label animate-fade-up">MOTION & VISUAL DESIGN & AI CREATOR</div>
-            <h1 class="hero-title animate-fade-up delay-1">
-                <span class="title-line">Creative</span>
-                <span class="title-line accent">Portfolio</span>
-                <span class="title-line">2026</span>
+            <div class="hero-label">MOTION & VISUAL PORTFOLIO</div>
+            <h1 class="hero-title">
+                <span>Motion &</span>
+                <span>Visual stories.</span>
             </h1>
-            <p class="hero-desc animate-fade-up delay-2">
-                모션 그래픽 · 영상 디자인 · AI 영상
-            </p>
-            <div class="hero-scroll-indicator">
-                <div class="scroll-line"></div>
-                <span>SCROLL</span>
+            <div class="hero-bottom">
+                <p class="hero-desc">모션 그래픽 · 영상 디자인 · AI 영상</p>
+                <a href="#work" class="hero-work-link">View work <span aria-hidden="true">↘</span></a>
+                <span class="hero-edition">PORTFOLIO / <span data-current-year></span></span>
             </div>
-        </div>
-        <!-- 히어로 배경 영상 넣는 곳 -->
-        <div class="hero-video-bg">
-            <!-- 
-                여기에 배경 영상을 넣으세요:
-                <video autoplay muted loop playsinline>
-                    <source src="your-hero-video.mp4" type="video/mp4">
-                </video>
-            -->
         </div>
     </section>
 
@@ -93,27 +93,116 @@
     <section id="work" class="section work-section">
         <div class="section-header">
             <span class="section-number">01</span>
-            <h2 class="section-title">Portfolio</h2>
+            <h2 class="section-title">Selected work</h2>
             <div class="section-line"></div>
+            <span class="work-count">6 PROJECTS</span>
+        </div>
+
+        <p class="work-intro">각 작품의 영상과 제작 과정을 살펴보세요.</p>
+        <div class="gallery-caption"><span>SELECTED WORK — 01 / 06</span><span>SELECT A PROJECT</span></div>
+        <div class="work-index" aria-label="프로젝트 바로가기">
+        <div class="gallery-selection" id="gallery-selection">
+            <p>Motion Graphics / Study</p>
+            <h3>Google Chrome</h3>
+            <span class="gallery-selection-role">모션 그래픽 · 영상 구성</span>
+            <span class="gallery-selection-hint">SCROLL / DRAG TO EXPLORE · CLICK TO WATCH</span>
+        </div>
+            <a class="work-preview" href="#project-01">
+                <img alt="Google Chrome 인포그래픽" decoding="async" height="540" src="Thumbnail/work-01.jpg" width="960"/>
+                <div class="work-card-copy">
+                    <p class="work-card-type">Motion Graphics / Study</p>
+                    <h3 class="work-card-title">Google Chrome<span aria-hidden="true">↗</span></h3>
+                    <p class="work-card-role"><span>Role</span>모션 그래픽 · 영상 구성</p>
+                    <p class="work-card-description">Google 광고를 바탕으로 Chrome의 기능을 35초 인포그래픽으로 재구성했습니다.</p>
+                    <small class="work-card-meta">0:35 <span aria-hidden="true">/</span> 개인 기여도 100%</small>
+                </div>
+            </a>
+            <a class="work-preview" href="#project-02">
+                <img alt="Sugar Rush 가상 아이돌 뮤직비디오" decoding="async" height="536" src="Thumbnail/work-02.jpg" width="960"/>
+                <div class="work-card-copy">
+                    <p class="work-card-type">Branding / GLOW — Music Video</p>
+                    <h3 class="work-card-title">Sugar Rush<span aria-hidden="true">↗</span></h3>
+                    <p class="work-card-role"><span>Role</span>캐릭터 콘셉트 · 시트 제작 · M/V · 웹사이트</p>
+                    <p class="work-card-description">캐릭터별 개성을 하나의 무대로 연결한 버추얼 걸밴드 데뷔 프로젝트입니다.</p>
+                    <small class="work-card-meta">2:03 <span aria-hidden="true">/</span> 개인 기여도 100%</small>
+                </div>
+            </a>
+            <a class="work-preview" href="#project-03">
+                <img alt="Fire on up 뮤직비디오" decoding="async" height="540" src="Thumbnail/work-03.jpg" width="960"/>
+                <div class="work-card-copy">
+                    <p class="work-card-type">Editing / Music Video</p>
+                    <h3 class="work-card-title">Fire on up<span aria-hidden="true">↗</span></h3>
+                    <p class="work-card-role"><span>Role</span>컷 편집 · 전환 · 속도 조절</p>
+                    <p class="work-card-description">음악의 리듬에 맞춰 영화의 장면을 재편집하고 레이싱의 속도감을 표현했습니다.</p>
+                    <small class="work-card-meta">3:09 <span aria-hidden="true">/</span> 개인 기여도 100%</small>
+                </div>
+            </a>
+            <a class="work-preview" href="#project-04">
+                <img alt="CHANEL AI 광고" decoding="async" height="540" loading="lazy" src="Thumbnail/work-04.jpg" width="960"/>
+                <div class="work-card-copy">
+                    <p class="work-card-type">AI / Concept Ad</p>
+                    <h3 class="work-card-title">CHANEL<span aria-hidden="true">↗</span></h3>
+                    <p class="work-card-role"><span>Role</span>AI 이미지·영상 제작 · 편집</p>
+                    <p class="work-card-description">제품과 브랜드의 형태·분위기를 유지하는 데 집중한 AI 광고 콘셉트입니다.</p>
+                    <small class="work-card-meta">0:40 <span aria-hidden="true">/</span> 개인 기여도 100%</small>
+                </div>
+            </a>
+            <a class="work-preview" href="#project-05">
+                <img alt="애니메이션 실사화 작업" decoding="async" height="1720" loading="lazy" src="Thumbnail/work-05.jpg" width="960"/>
+                <div class="work-card-copy">
+                    <p class="work-card-type">AI / Live-action Concept</p>
+                    <h3 class="work-card-title">Initial D<span aria-hidden="true">↗</span></h3>
+                    <p class="work-card-role"><span>Role</span>AI 이미지·영상 제작 · 음악에 맞춘 편집</p>
+                    <p class="work-card-description">애니메이션을 실사 영화 촬영 현장으로 재해석한 세로형 영상입니다.</p>
+                    <small class="work-card-meta">0:34 <span aria-hidden="true">/</span> 개인 기여도 100%</small>
+                </div>
+            </a>
+            <a class="work-preview" href="#project-mmt" data-kind="software">
+                <img alt="MMT — Multi Media Toolkit" decoding="async" height="800" src="assets/mmt/thumbnail-v2.svg" width="1200"/>
+                <div class="work-card-copy">
+                    <p class="work-card-type">Software / Windows Application</p>
+                    <h3 class="work-card-title">MMT<span aria-hidden="true">↗</span></h3>
+                    <p class="work-card-role"><span>Role</span>기획 · AI 협업 개발 · 검증·운영</p>
+                    <p class="work-card-description">미디어 준비 작업의 불편을 정의하고, AI 협업 개발부터 사용자 검증·배포 대응까지 이어간 프로젝트입니다.</p>
+                    <small class="work-card-meta">Multi Media Toolkit <span aria-hidden="true">/</span> 개발 프로젝트</small>
+                </div>
+            </a>
+            <div class="gallery-world"><div class="gallery-camera" id="gallery-camera">
+            <div class="gallery-focus" id="gallery-focus" hidden>
+                <div class="gallery-type" id="gallery-type"></div>
+                <p class="gallery-project-kind" id="gallery-project-kind"></p>
+                <p class="gallery-project-credit" id="gallery-project-credit"></p>
+            </div>
+            <div class="gallery-cinema" id="gallery-cinema" inert></div>
+            </div></div>
+            <div class="gallery-controls" id="gallery-controls" hidden>
+                <button type="button" class="gallery-back" id="gallery-back">↖ All work</button>
+                <a class="gallery-details" id="gallery-details" href="#project-01">Process &amp; credits ↓</a>
+                <div class="gallery-step"><button type="button" id="gallery-prev" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M15.5 5 8.5 12 15.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M15.5 19 8.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M8.5 12 15.5 5"/></svg></button><button type="button" id="gallery-next" aria-label="Next project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M8.5 5 15.5 12 8.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M8.5 19 15.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M15.5 12 8.5 5"/></svg></button></div>
+            </div>
+            <p class="gallery-status" id="gallery-status" role="status" aria-live="polite"></p>
         </div>
 
         <!-- 사이드 프로젝트 내비게이션 -->
         <div class="project-side-nav" id="project-side-nav">
-            <a href="#project-01" class="side-nav-link" data-target="01">01</a>
-            <a href="#project-02" class="side-nav-link" data-target="02">02</a>
-            <a href="#project-03" class="side-nav-link" data-target="03">03</a>
-            <a href="#project-04" class="side-nav-link" data-target="04">04</a>
-            <a href="#project-05" class="side-nav-link" data-target="05">05</a>
+            <a href="#project-01" class="side-nav-link" data-target="01" aria-label="01 Google Chrome 인포그래픽">01</a>
+            <a href="#project-02" class="side-nav-link" data-target="02" aria-label="02 Sugar Rush 뮤직비디오">02</a>
+            <a href="#project-03" class="side-nav-link" data-target="03" aria-label="03 Fire on up 뮤직비디오">03</a>
+            <a href="#project-04" class="side-nav-link" data-target="04" aria-label="04 CHANEL AI 광고 콘셉트">04</a>
+            <a href="#project-05" class="side-nav-link" data-target="05" aria-label="05 Initial D AI 실사화">05</a>
         </div>
 
         <!-- ── PROJECT 01 ── -->
         <article class="project" id="project-01" data-project="01">
             <div class="project-header">
+                <h2 class="project-display-title" aria-label="GOOGLE CHROME"><span class="project-display-word google-brand" aria-hidden="true"><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:0;"><svg class="google-g" viewBox="10 10 20 20" data-portal data-camera-x="0.40" data-camera-y="0.50" aria-hidden="true"><title>G</title><image href="assets/brand/google-g.svg" x="10" y="10" width="20" height="20"/></svg></span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:1">o</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:2">o</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:3">g</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:4">l</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:5">e</span></span></span><span class="project-display-word" aria-hidden="true"><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:6;">C</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:7;">h</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:8;">r</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:9;">o</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:10;">m</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:11;">e</span></span></span></h2>
                 <div class="project-meta">
-                    <span class="project-number">01</span>
                     <div class="project-info">
-                        <h3 class="project-title">Google 광고 모작 Infographic</h3>
+                        <p class="project-type">Motion Graphics / Study</p>
+                        <h3 class="project-title">Google Chrome — 인포그래픽 모작</h3>
                         <p class="project-subtitle">Google Chrome Motion Infographic</p>
+                        <p class="project-contribution">개인 기여도 <span>100%</span></p>
+                        <p class="project-scope">Role · 모션 그래픽 · 영상 구성<span>러닝타임 0:35</span></p>
                     </div>
                 </div>
                 <div class="project-tags">
@@ -125,9 +214,9 @@
 
             <!-- 메인 영상/이미지 슬롯 -->
             <div class="project-media main-media">
-                <div class="video-player" id="project1-main">
+                <div class="video-player" id="project1-player">
                     <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                    <video src="video/인포그래픽 김병석.mp4" preload="metadata" poster="Thumbnail/Google info .png"></video>
+                    <video data-src="video/web/project-01.mp4" preload="none" playsinline poster="Thumbnail/work-01.jpg"></video>
                     <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                 </div>
             </div>
@@ -137,17 +226,15 @@
                     <span class="desc-label">Program</span>
                     <!-- <p class="desc-text">Ae / Ps</p> -->
                     <p class="desc-text desc-tools">
-                        <span>Ae</span>
-                        <span>/</span>
-                        <!-- <span>Pr</span>
-                        <span>/</span> -->
-                        <span>Ps</span>
+                        <span class="program-tool"><img src="assets/brand/tools/after-effects.svg" width="24" height="24" alt="" decoding="async">After Effects</span>
+                        <span class="program-tool"><img src="assets/brand/tools/photoshop.svg" width="24" height="24" alt="" decoding="async">Photoshop</span>
                     </p>
                 </div>
                 <div class="desc-block">
                     <span class="desc-label">Concept</span>
                     <p class="desc-text">
-                        Google 광고 "Ask Search Anything"을 모티브로 하고, Chrome을 추가하여 RT를 35초 분량으로 짧게 제작한<br> 인포그래픽 영상입니다.
+                        Google 광고 「Ask Search Anything」을 바탕으로 Chrome의 기능을 35초 인포그래픽으로 재구성한 스터디입니다.
+                        정보의 순서와 모션 그래픽을 구성했습니다. 아래 제작 화면에서 그래픽 레이어와 모션 작업 과정을 볼 수 있습니다.
                     </p>
                 </div>
             </div>
@@ -162,7 +249,7 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/google info work Screen.png" alt="wokr screen"></span>
+                        <span><img loading="lazy" width="1920" height="997" decoding="async" src="img/google info work Screen.png" alt="wokr screen"></span>
                     </div>
                 </div>
                 <div class="media-placeholder" id="project1-sub2">
@@ -173,20 +260,24 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/google info work Screen2.png" alt="wokr screen"></span>
+                        <span><img loading="lazy" width="1920" height="996" decoding="async" src="img/google info work Screen2.png" alt="wokr screen"></span>
                     </div>
                 </div>
             </div>
+        <nav class="project-pagination" aria-label="작품 탐색"><a class="project-step-next" href="#project-02" aria-label="Next project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M8.5 5 15.5 12 8.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M8.5 19 15.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M15.5 12 8.5 5"/></svg></a></nav>
         </article>
 
         <!-- ── PROJECT 02 ── -->
         <article class="project" id="project-02" data-project="02">
             <div class="project-header">
+                <h2 class="project-display-title" aria-label="SUGAR RUSH"><span class="project-display-word" aria-hidden="true"><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:0"><svg class="ink-word" data-ink="Sugar" viewBox="-47 -654 2391.5 1083" style="width:2.3915em;height:1.083em" aria-hidden="true"><title>Sugar</title><defs><mask id="sugar-ink-Sugar" maskUnits="userSpaceOnUse" x="-47" y="-654" width="2391.5" height="1083"><g transform="scale(1,-1)" fill="none" stroke="white" stroke-width="70" stroke-linecap="round" stroke-linejoin="round"><path class="ink-stroke" d="M163 -34Q93 -34 53.0 -10.5Q13 13 13 56Q13 100 39.0 137.5Q65 175 106.5 202.5Q148 230 193.5 245.5Q239 261 278 261Q298 261 298 255Q298 246 277 246Q240 246 196.5 228.0Q153 210 119 178Q92 154 78.5 129.5Q65 105 65 84Q65 53 94.0 32.5Q123 12 181 12Q215 12 250.0 17.5Q285 23 313.5 30.0Q342 37 357 41Q394 53 431.5 70.0Q469 87 499.0 108.5Q529 130 543 152Q551 164 554.5 175.0Q558 186 558 196Q558 224 533.0 243.5Q508 263 469.0 279.0Q430 295 386.0 309.5Q342 324 303.0 340.0Q264 356 239.0 376.5Q214 397 214 426Q214 459 238.5 485.5Q263 512 301.5 532.5Q340 553 384.0 566.5Q428 580 468.0 587.0Q508 594 534 594Q644 594 644 539Q644 517 626 488Q618 473 603.0 459.5Q588 446 580 446Q574 446 574 453Q574 456 585.0 465.5Q596 475 607.0 489.0Q618 503 618 517Q618 538 594.5 549.0Q571 560 533 560Q515 560 481.0 554.5Q447 549 407.0 537.0Q367 525 330 505Q261 467 261 440Q261 420 300 402Q329 389 367.0 375.0Q405 361 444.0 345.0Q483 329 516.5 309.0Q550 289 570.5 264.5Q591 240 591 209Q591 167 545 123Q509 89 461.5 60.0Q414 31 361.5 10.0Q309 -11 258.0 -22.5Q207 -34 163 -34Z" pathLength="1" style="--ink-delay:0ms;--ink-duration:330ms"/><path class="ink-stroke" d="M898 -10Q880 -10 866.0 -2.0Q852 6 845 28Q844 33 842.5 39.5Q841 46 841 53Q841 77 847.5 107.0Q854 137 862 157Q858 154 848.0 137.0Q838 120 823.0 97.5Q808 75 789.5 52.5Q771 30 749.5 15.5Q728 1 704 1Q688 1 665.5 10.0Q643 19 633 35Q623 51 623 75Q623 104 636.0 138.5Q649 173 669 203Q676 213 685.0 227.0Q694 241 703.0 251.5Q712 262 716 263Q728 267 744 267Q761 267 769 263Q776 260 776 256Q776 251 768 243Q757 233 738.0 213.0Q719 193 700.5 165.0Q682 137 670 103Q660 76 660 56Q660 21 688 21Q712 21 739.0 41.0Q766 61 791.5 90.0Q817 119 837.5 147.5Q858 176 869 193Q879 207 891.5 229.0Q904 251 916.0 272.0Q928 293 935 303Q942 303 956.5 300.5Q971 298 981.5 292.0Q992 286 987 277Q981 267 968.5 246.0Q956 225 943.5 203.5Q931 182 924 169Q900 123 893 70Q892 66 892.0 62.5Q892 59 892 55Q892 15 919 15Q934 15 959.0 33.0Q984 51 1010.5 76.0Q1037 101 1058.5 124.5Q1080 148 1088 160Q1090 163 1094 163Q1098 163 1100.5 160.0Q1103 157 1100 152Q1091 135 1069.5 109.5Q1048 84 1022.0 58.5Q996 33 971 15Q958 5 938.0 -2.5Q918 -10 898 -10Z" pathLength="1" style="--ink-delay:290ms;--ink-duration:180ms"/><path class="ink-stroke" d="M1033 -367Q1021 -364 1012 -361Q993 -351 985.0 -338.5Q977 -326 977 -312Q977 -289 992.5 -262.5Q1008 -236 1033 -208Q1058 -178 1096.5 -147.0Q1135 -116 1177.0 -87.5Q1219 -59 1251 -38Q1286 33 1313.0 96.5Q1340 160 1351 194Q1330 171 1306.0 142.5Q1282 114 1271 101Q1252 81 1228.0 57.5Q1204 34 1177.5 17.5Q1151 1 1126 1Q1110 1 1092.0 10.5Q1074 20 1063 35Q1048 55 1048 76Q1048 103 1066.5 132.0Q1085 161 1114.5 188.5Q1144 216 1177.5 238.5Q1211 261 1241.5 276.5Q1272 292 1291 297Q1309 303 1335 303Q1347 303 1364.0 299.0Q1381 295 1394.5 286.5Q1408 278 1408 262Q1408 254 1400 257Q1393 269 1379.5 272.5Q1366 276 1352 276Q1313 276 1264.5 250.0Q1216 224 1178 189Q1166 179 1145.0 154.5Q1124 130 1107.5 101.0Q1091 72 1091 48Q1091 35 1098 25Q1101 20 1110 20Q1129 20 1156.5 37.0Q1184 54 1215.0 80.0Q1246 106 1275.5 135.5Q1305 165 1328.0 190.0Q1351 215 1362 228Q1364 233 1369.0 235.0Q1374 237 1380 237Q1396 237 1413.5 228.5Q1431 220 1428 214Q1409 173 1383.5 119.0Q1358 65 1330 6Q1343 13 1373.0 37.0Q1403 61 1439.0 94.5Q1475 128 1506 164Q1518 177 1524 177Q1530 177 1527.0 166.5Q1524 156 1511 140Q1495 121 1467.0 94.5Q1439 68 1408.0 40.5Q1377 13 1350.5 -8.5Q1324 -30 1309 -38Q1278 -104 1249.0 -162.5Q1220 -221 1196 -257Q1180 -282 1157.0 -308.0Q1134 -334 1107.0 -351.5Q1080 -369 1050 -369Q1046 -369 1042.0 -368.5Q1038 -368 1033 -367ZM1023 -341Q1029 -345 1040.5 -341.0Q1052 -337 1070 -323Q1109 -292 1137.0 -250.5Q1165 -209 1188.0 -163.5Q1211 -118 1232 -76Q1193 -105 1144.0 -144.5Q1095 -184 1055 -223Q1035 -243 1021.5 -267.5Q1008 -292 1008 -312Q1008 -333 1023 -341Z" pathLength="1" style="--ink-delay:460ms;--ink-duration:230ms"/><path class="ink-stroke" d="M1769 -10Q1752 -10 1737.5 -2.0Q1723 6 1716 28Q1713 37 1713 53Q1713 75 1719.0 102.0Q1725 129 1732 148Q1727 146 1713.5 130.5Q1700 115 1680.5 93.5Q1661 72 1637.5 50.5Q1614 29 1589.0 15.0Q1564 1 1540 1Q1524 1 1506.0 10.5Q1488 20 1477 35Q1462 55 1462 76Q1462 103 1480.5 132.0Q1499 161 1528.5 188.5Q1558 216 1591.5 238.5Q1625 261 1655.5 276.5Q1686 292 1705 297Q1725 303 1750 303Q1764 303 1779.0 299.5Q1794 296 1804 288Q1812 284 1817.0 277.0Q1822 270 1822 262Q1822 254 1815 257Q1807 269 1793.5 272.5Q1780 276 1766 276Q1726 276 1678.0 250.0Q1630 224 1592 189Q1580 179 1559.5 154.5Q1539 130 1522.0 101.0Q1505 72 1505 48Q1505 35 1512 25Q1516 18 1525 18Q1539 18 1562.5 33.0Q1586 48 1611.0 69.5Q1636 91 1656.5 111.0Q1677 131 1686 140Q1691 145 1705.5 160.5Q1720 176 1737.0 194.0Q1754 212 1767.5 225.0Q1781 238 1785 238Q1790 238 1801.5 235.5Q1813 233 1821.0 228.0Q1829 223 1824 215Q1798 177 1782.5 135.5Q1767 94 1764 70Q1763 66 1763.0 62.5Q1763 59 1763 55Q1763 15 1791 15Q1806 15 1831.0 33.0Q1856 51 1882.0 76.0Q1908 101 1929.5 124.5Q1951 148 1959 160Q1962 163 1965 163Q1969 163 1972.0 159.5Q1975 156 1972 151Q1961 133 1940.0 108.0Q1919 83 1893.0 58.0Q1867 33 1842 15Q1829 5 1809.0 -2.5Q1789 -10 1769 -10Z" pathLength="1" style="--ink-delay:670ms;--ink-duration:170ms"/><path class="ink-stroke" d="M2075 -12Q2058 -12 2045.0 -4.5Q2032 3 2027 24Q2024 35 2024 46Q2024 76 2039.5 104.5Q2055 133 2076.0 157.5Q2097 182 2112 199Q2120 207 2130.5 220.0Q2141 233 2141 246Q2141 254 2133.0 261.5Q2125 269 2104 272Q2092 274 2081.5 275.5Q2071 277 2060 277Q2032 239 2005.5 200.5Q1979 162 1949 125Q1942 118 1937 118Q1931 118 1931 124Q1931 130 1937 136Q1991 202 2030 277Q2025 277 2015.0 277.5Q2005 278 1999 279Q1992 281 1988.0 285.0Q1984 289 1984 293Q1984 299 1989 300Q2002 304 2017.0 312.0Q2032 320 2045 333Q2059 347 2071.0 362.5Q2083 378 2090 386Q2097 391 2105 391Q2110 391 2114.5 388.0Q2119 385 2119 379Q2119 372 2113 361Q2104 347 2093.5 330.0Q2083 313 2074 299Q2092 298 2110.0 297.0Q2128 296 2147 296Q2157 296 2166.5 296.5Q2176 297 2186 297Q2216 297 2216 282Q2216 272 2205.5 257.5Q2195 243 2180 226Q2146 187 2122.0 144.0Q2098 101 2090 78Q2082 54 2082 42Q2082 18 2101 18Q2118 18 2142.5 35.0Q2167 52 2193.0 76.5Q2219 101 2240.0 124.5Q2261 148 2270 160Q2272 163 2276 163Q2280 163 2283.0 159.5Q2286 156 2283 151Q2272 134 2251.0 108.5Q2230 83 2204.0 58.0Q2178 33 2153 15Q2140 5 2117.5 -3.5Q2095 -12 2075 -12Z" pathLength="1" style="--ink-delay:820ms;--ink-duration:180ms"/></g></mask></defs><g mask="url(#sugar-ink-Sugar)"><g transform="scale(1,-1)" fill="currentColor"><path d="M163 -34Q93 -34 53.0 -10.5Q13 13 13 56Q13 100 39.0 137.5Q65 175 106.5 202.5Q148 230 193.5 245.5Q239 261 278 261Q298 261 298 255Q298 246 277 246Q240 246 196.5 228.0Q153 210 119 178Q92 154 78.5 129.5Q65 105 65 84Q65 53 94.0 32.5Q123 12 181 12Q215 12 250.0 17.5Q285 23 313.5 30.0Q342 37 357 41Q394 53 431.5 70.0Q469 87 499.0 108.5Q529 130 543 152Q551 164 554.5 175.0Q558 186 558 196Q558 224 533.0 243.5Q508 263 469.0 279.0Q430 295 386.0 309.5Q342 324 303.0 340.0Q264 356 239.0 376.5Q214 397 214 426Q214 459 238.5 485.5Q263 512 301.5 532.5Q340 553 384.0 566.5Q428 580 468.0 587.0Q508 594 534 594Q644 594 644 539Q644 517 626 488Q618 473 603.0 459.5Q588 446 580 446Q574 446 574 453Q574 456 585.0 465.5Q596 475 607.0 489.0Q618 503 618 517Q618 538 594.5 549.0Q571 560 533 560Q515 560 481.0 554.5Q447 549 407.0 537.0Q367 525 330 505Q261 467 261 440Q261 420 300 402Q329 389 367.0 375.0Q405 361 444.0 345.0Q483 329 516.5 309.0Q550 289 570.5 264.5Q591 240 591 209Q591 167 545 123Q509 89 461.5 60.0Q414 31 361.5 10.0Q309 -11 258.0 -22.5Q207 -34 163 -34Z"/><path d="M898 -10Q880 -10 866.0 -2.0Q852 6 845 28Q844 33 842.5 39.5Q841 46 841 53Q841 77 847.5 107.0Q854 137 862 157Q858 154 848.0 137.0Q838 120 823.0 97.5Q808 75 789.5 52.5Q771 30 749.5 15.5Q728 1 704 1Q688 1 665.5 10.0Q643 19 633 35Q623 51 623 75Q623 104 636.0 138.5Q649 173 669 203Q676 213 685.0 227.0Q694 241 703.0 251.5Q712 262 716 263Q728 267 744 267Q761 267 769 263Q776 260 776 256Q776 251 768 243Q757 233 738.0 213.0Q719 193 700.5 165.0Q682 137 670 103Q660 76 660 56Q660 21 688 21Q712 21 739.0 41.0Q766 61 791.5 90.0Q817 119 837.5 147.5Q858 176 869 193Q879 207 891.5 229.0Q904 251 916.0 272.0Q928 293 935 303Q942 303 956.5 300.5Q971 298 981.5 292.0Q992 286 987 277Q981 267 968.5 246.0Q956 225 943.5 203.5Q931 182 924 169Q900 123 893 70Q892 66 892.0 62.5Q892 59 892 55Q892 15 919 15Q934 15 959.0 33.0Q984 51 1010.5 76.0Q1037 101 1058.5 124.5Q1080 148 1088 160Q1090 163 1094 163Q1098 163 1100.5 160.0Q1103 157 1100 152Q1091 135 1069.5 109.5Q1048 84 1022.0 58.5Q996 33 971 15Q958 5 938.0 -2.5Q918 -10 898 -10Z"/><path d="M1033 -367Q1021 -364 1012 -361Q993 -351 985.0 -338.5Q977 -326 977 -312Q977 -289 992.5 -262.5Q1008 -236 1033 -208Q1058 -178 1096.5 -147.0Q1135 -116 1177.0 -87.5Q1219 -59 1251 -38Q1286 33 1313.0 96.5Q1340 160 1351 194Q1330 171 1306.0 142.5Q1282 114 1271 101Q1252 81 1228.0 57.5Q1204 34 1177.5 17.5Q1151 1 1126 1Q1110 1 1092.0 10.5Q1074 20 1063 35Q1048 55 1048 76Q1048 103 1066.5 132.0Q1085 161 1114.5 188.5Q1144 216 1177.5 238.5Q1211 261 1241.5 276.5Q1272 292 1291 297Q1309 303 1335 303Q1347 303 1364.0 299.0Q1381 295 1394.5 286.5Q1408 278 1408 262Q1408 254 1400 257Q1393 269 1379.5 272.5Q1366 276 1352 276Q1313 276 1264.5 250.0Q1216 224 1178 189Q1166 179 1145.0 154.5Q1124 130 1107.5 101.0Q1091 72 1091 48Q1091 35 1098 25Q1101 20 1110 20Q1129 20 1156.5 37.0Q1184 54 1215.0 80.0Q1246 106 1275.5 135.5Q1305 165 1328.0 190.0Q1351 215 1362 228Q1364 233 1369.0 235.0Q1374 237 1380 237Q1396 237 1413.5 228.5Q1431 220 1428 214Q1409 173 1383.5 119.0Q1358 65 1330 6Q1343 13 1373.0 37.0Q1403 61 1439.0 94.5Q1475 128 1506 164Q1518 177 1524 177Q1530 177 1527.0 166.5Q1524 156 1511 140Q1495 121 1467.0 94.5Q1439 68 1408.0 40.5Q1377 13 1350.5 -8.5Q1324 -30 1309 -38Q1278 -104 1249.0 -162.5Q1220 -221 1196 -257Q1180 -282 1157.0 -308.0Q1134 -334 1107.0 -351.5Q1080 -369 1050 -369Q1046 -369 1042.0 -368.5Q1038 -368 1033 -367ZM1023 -341Q1029 -345 1040.5 -341.0Q1052 -337 1070 -323Q1109 -292 1137.0 -250.5Q1165 -209 1188.0 -163.5Q1211 -118 1232 -76Q1193 -105 1144.0 -144.5Q1095 -184 1055 -223Q1035 -243 1021.5 -267.5Q1008 -292 1008 -312Q1008 -333 1023 -341Z"/><path d="M1769 -10Q1752 -10 1737.5 -2.0Q1723 6 1716 28Q1713 37 1713 53Q1713 75 1719.0 102.0Q1725 129 1732 148Q1727 146 1713.5 130.5Q1700 115 1680.5 93.5Q1661 72 1637.5 50.5Q1614 29 1589.0 15.0Q1564 1 1540 1Q1524 1 1506.0 10.5Q1488 20 1477 35Q1462 55 1462 76Q1462 103 1480.5 132.0Q1499 161 1528.5 188.5Q1558 216 1591.5 238.5Q1625 261 1655.5 276.5Q1686 292 1705 297Q1725 303 1750 303Q1764 303 1779.0 299.5Q1794 296 1804 288Q1812 284 1817.0 277.0Q1822 270 1822 262Q1822 254 1815 257Q1807 269 1793.5 272.5Q1780 276 1766 276Q1726 276 1678.0 250.0Q1630 224 1592 189Q1580 179 1559.5 154.5Q1539 130 1522.0 101.0Q1505 72 1505 48Q1505 35 1512 25Q1516 18 1525 18Q1539 18 1562.5 33.0Q1586 48 1611.0 69.5Q1636 91 1656.5 111.0Q1677 131 1686 140Q1691 145 1705.5 160.5Q1720 176 1737.0 194.0Q1754 212 1767.5 225.0Q1781 238 1785 238Q1790 238 1801.5 235.5Q1813 233 1821.0 228.0Q1829 223 1824 215Q1798 177 1782.5 135.5Q1767 94 1764 70Q1763 66 1763.0 62.5Q1763 59 1763 55Q1763 15 1791 15Q1806 15 1831.0 33.0Q1856 51 1882.0 76.0Q1908 101 1929.5 124.5Q1951 148 1959 160Q1962 163 1965 163Q1969 163 1972.0 159.5Q1975 156 1972 151Q1961 133 1940.0 108.0Q1919 83 1893.0 58.0Q1867 33 1842 15Q1829 5 1809.0 -2.5Q1789 -10 1769 -10Z"/><path d="M2075 -12Q2058 -12 2045.0 -4.5Q2032 3 2027 24Q2024 35 2024 46Q2024 76 2039.5 104.5Q2055 133 2076.0 157.5Q2097 182 2112 199Q2120 207 2130.5 220.0Q2141 233 2141 246Q2141 254 2133.0 261.5Q2125 269 2104 272Q2092 274 2081.5 275.5Q2071 277 2060 277Q2032 239 2005.5 200.5Q1979 162 1949 125Q1942 118 1937 118Q1931 118 1931 124Q1931 130 1937 136Q1991 202 2030 277Q2025 277 2015.0 277.5Q2005 278 1999 279Q1992 281 1988.0 285.0Q1984 289 1984 293Q1984 299 1989 300Q2002 304 2017.0 312.0Q2032 320 2045 333Q2059 347 2071.0 362.5Q2083 378 2090 386Q2097 391 2105 391Q2110 391 2114.5 388.0Q2119 385 2119 379Q2119 372 2113 361Q2104 347 2093.5 330.0Q2083 313 2074 299Q2092 298 2110.0 297.0Q2128 296 2147 296Q2157 296 2166.5 296.5Q2176 297 2186 297Q2216 297 2216 282Q2216 272 2205.5 257.5Q2195 243 2180 226Q2146 187 2122.0 144.0Q2098 101 2090 78Q2082 54 2082 42Q2082 18 2101 18Q2118 18 2142.5 35.0Q2167 52 2193.0 76.5Q2219 101 2240.0 124.5Q2261 148 2270 160Q2272 163 2276 163Q2280 163 2283.0 159.5Q2286 156 2283 151Q2272 134 2251.0 108.5Q2230 83 2204.0 58.0Q2178 33 2153 15Q2140 5 2117.5 -3.5Q2095 -12 2075 -12Z"/></g></g></svg></span></span></span><span class="project-display-word" aria-hidden="true"><svg class="band-strings" viewBox="0 0 400 88" aria-hidden="true" focusable="false"><path d="M8 20 Q200 10 392 20" style="transform-origin:200px 20px;--string-delay:220ms;stroke-width:0.65"/><path d="M8 28 Q200 18 392 28" style="transform-origin:200px 28px;--string-delay:258ms;stroke-width:0.77"/><path d="M8 36 Q200 26 392 36" style="transform-origin:200px 36px;--string-delay:296ms;stroke-width:0.89"/><path d="M8 44 Q200 34 392 44" style="transform-origin:200px 44px;--string-delay:334ms;stroke-width:1.01"/><path d="M8 52 Q200 42 392 52" style="transform-origin:200px 52px;--string-delay:372ms;stroke-width:1.13"/><path d="M8 60 Q200 50 392 60" style="transform-origin:200px 60px;--string-delay:410ms;stroke-width:1.25"/></svg><svg class="band-note" viewBox="0 0 24 36" aria-hidden="true" focusable="false" style="--note-x:40%;--note-delay:390ms;--note-drift:-18px;--note-turn:-12deg"><ellipse cx="7" cy="28" rx="5" ry="3.5" transform="rotate(-20 7 28)"/><path d="M11 27V5c0 5 9 5 9 11"/></svg><svg class="band-note" viewBox="0 0 24 36" aria-hidden="true" focusable="false" style="--note-x:57%;--note-delay:510ms;--note-drift:16px;--note-turn:10deg"><ellipse cx="7" cy="28" rx="5" ry="3.5" transform="rotate(-20 7 28)"/><path d="M11 27V5c0 5 9 5 9 11"/></svg><svg class="band-note" viewBox="0 0 24 36" aria-hidden="true" focusable="false" style="--note-x:69%;--note-delay:630ms;--note-drift:24px;--note-turn:16deg"><ellipse cx="7" cy="28" rx="5" ry="3.5" transform="rotate(-20 7 28)"/><path d="M11 27V5c0 5 9 5 9 11"/></svg><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:1"><svg class="ink-word" data-ink="Rush" viewBox="-28 -664 1888 906" style="width:1.888em;height:0.906em" aria-hidden="true"><title>Rush</title><defs><mask id="sugar-ink-Rush" maskUnits="userSpaceOnUse" x="-28" y="-664" width="1888" height="906"><g transform="scale(1,-1)" fill="none" stroke="white" stroke-width="70" stroke-linecap="round" stroke-linejoin="round"><path class="ink-stroke" d="M717 -182Q707 -182 697.0 -181.0Q687 -180 676 -178Q608 -165 553.0 -133.0Q498 -101 454.5 -58.5Q411 -16 375.5 31.0Q340 78 311.0 121.5Q282 165 257 198Q255 203 252.5 201.0Q250 199 250 199Q228 157 209.5 120.5Q191 84 182 62Q174 40 174 31Q174 17 185 17Q199 17 215 36Q226 49 235.5 60.5Q245 72 252 70Q253 69 253 67Q253 62 246.0 53.5Q239 45 238 44Q231 34 219.5 17.0Q208 0 195.5 -13.5Q183 -27 169 -27Q167 -27 157.5 -25.0Q148 -23 139.5 -20.0Q131 -17 130 -13Q128 6 139.5 40.5Q151 75 171.0 117.0Q191 159 212 199Q196 203 189 206Q179 213 179 225Q179 235 187.0 243.0Q195 251 211 251Q216 251 223.0 249.0Q230 247 234 242Q251 272 264.5 297.0Q278 322 284 336Q290 347 292.0 354.5Q294 362 294 366Q294 372 292 376Q294 388 306.5 408.0Q319 428 338.0 448.0Q357 468 379.0 481.5Q401 495 420 495Q426 495 438.5 491.5Q451 488 462.5 481.0Q474 474 477 461Q478 458 478 455Q478 452 476 452Q474 452 470.5 453.5Q467 455 465 455Q437 455 402.5 421.5Q368 388 332.5 336.0Q297 284 266 228Q271 227 277.5 225.5Q284 224 293 224Q297 224 300.5 224.0Q304 224 308 225Q372 232 438.5 250.0Q505 268 563.0 297.0Q621 326 659 365Q694 402 694 441Q694 470 672.0 495.0Q650 520 603 533Q575 541 539.5 545.0Q504 549 463 549Q399 549 331.5 538.0Q264 527 205.0 504.5Q146 482 106.0 448.0Q66 414 58 367Q55 343 67.0 329.0Q79 315 96.5 307.5Q114 300 124 294Q131 288 131 284Q131 277 118 279Q104 282 83.5 293.0Q63 304 47.5 323.5Q32 343 32 369Q32 373 32.5 377.0Q33 381 34 385Q34 386 33.5 391.5Q33 397 33 401Q39 432 63.5 459.5Q88 487 119.5 508.5Q151 530 178 543Q225 566 291.0 579.5Q357 593 429 593Q473 593 516.5 587.0Q560 581 601 568Q658 549 689.5 509.5Q721 470 718 427Q715 386 689.5 353.0Q664 320 624.5 295.5Q585 271 537.5 253.5Q490 236 442 225Q403 217 360.0 212.0Q317 207 279 205Q322 152 364.5 98.5Q407 45 455.5 -2.0Q504 -49 562.0 -82.5Q620 -116 693 -130Q708 -133 724 -133Q750 -133 775.5 -125.0Q801 -117 818.0 -100.0Q835 -83 835 -55Q835 -50 834.5 -45.0Q834 -40 833 -35Q833 -33 832.5 -32.0Q832 -31 832 -30Q832 -21 839 -21Q849 -21 852 -36Q855 -51 855 -64Q855 -79 852.5 -92.0Q850 -105 846 -116Q837 -144 800.5 -163.0Q764 -182 717 -182Z" pathLength="1" style="--ink-delay:140ms;--ink-duration:380ms"/><path class="ink-stroke" d="M845 -10Q827 -10 813.0 -2.0Q799 6 792 28Q791 33 789.5 39.5Q788 46 788 53Q788 77 794.5 107.0Q801 137 809 157Q805 154 795.0 137.0Q785 120 770.0 97.5Q755 75 736.5 52.5Q718 30 696.5 15.5Q675 1 651 1Q635 1 612.5 10.0Q590 19 580 35Q570 51 570 75Q570 104 583.0 138.5Q596 173 616 203Q623 213 632.0 227.0Q641 241 650.0 251.5Q659 262 663 263Q675 267 691 267Q708 267 716 263Q723 260 723 256Q723 251 715 243Q704 233 685.0 213.0Q666 193 647.5 165.0Q629 137 617 103Q607 76 607 56Q607 21 635 21Q659 21 686.0 41.0Q713 61 738.5 90.0Q764 119 784.5 147.5Q805 176 816 193Q826 207 838.5 229.0Q851 251 863.0 272.0Q875 293 882 303Q889 303 903.5 300.5Q918 298 928.5 292.0Q939 286 934 277Q928 267 915.5 246.0Q903 225 890.5 203.5Q878 182 871 169Q847 123 840 70Q839 66 839.0 62.5Q839 59 839 55Q839 15 866 15Q881 15 906.0 33.0Q931 51 957.5 76.0Q984 101 1005.5 124.5Q1027 148 1035 160Q1037 163 1041 163Q1045 163 1047.5 160.0Q1050 157 1047 152Q1038 135 1016.5 109.5Q995 84 969.0 58.5Q943 33 918 15Q905 5 885.0 -2.5Q865 -10 845 -10Z" pathLength="1" style="--ink-delay:480ms;--ink-duration:190ms"/><path class="ink-stroke" d="M1033 -50Q993 -50 993 -28Q993 -12 1010 5Q1023 18 1039.0 26.0Q1055 34 1059 34Q1064 34 1064.5 30.0Q1065 26 1060 24Q1050 18 1037.5 7.5Q1025 -3 1025 -15Q1025 -31 1044 -31Q1067 -31 1092.0 -17.5Q1117 -4 1138.5 17.0Q1160 38 1173.5 59.5Q1187 81 1187 97Q1187 110 1178.0 121.0Q1169 132 1141 147Q1122 158 1104.5 170.0Q1087 182 1078 199Q1070 185 1057.5 165.5Q1045 146 1028 125Q1022 119 1016 119Q1010 119 1010 124Q1010 127 1015 134Q1042 166 1055.0 193.0Q1068 220 1073 234Q1077 263 1100.0 289.0Q1123 315 1156.0 334.5Q1189 354 1223.5 365.0Q1258 376 1285 376Q1312 376 1333.0 366.0Q1354 356 1354 334Q1354 322 1347 308Q1338 289 1317 274Q1316 273 1314 273Q1306 273 1306 280Q1306 285 1311 290Q1319 297 1324.0 307.0Q1329 317 1329 326Q1329 344 1308 344Q1286 344 1250.5 332.0Q1215 320 1185 301Q1151 279 1128.0 253.0Q1105 227 1105 207Q1105 197 1111.5 188.5Q1118 180 1137 169Q1147 163 1165.0 153.5Q1183 144 1196 136Q1237 111 1237 83Q1237 60 1217.0 36.5Q1197 13 1165.5 -6.5Q1134 -26 1099.0 -38.0Q1064 -50 1033 -50Z" pathLength="1" style="--ink-delay:650ms;--ink-duration:190ms"/><path class="ink-stroke" d="M1326 -13Q1318 -13 1322 -6Q1324 0 1332.5 24.0Q1341 48 1353.0 82.0Q1365 116 1378.0 151.5Q1391 187 1402 215Q1395 206 1380.5 189.0Q1366 172 1350.0 153.0Q1334 134 1320 120Q1317 117 1316 117Q1313 117 1313 123Q1313 135 1319 145Q1341 173 1361.5 197.5Q1382 222 1399 244Q1389 250 1389 259Q1389 273 1403 273Q1409 273 1412 271Q1413 270 1414.0 270.0Q1415 270 1416 268Q1421 275 1424.5 281.0Q1428 287 1431 294Q1435 303 1447.5 328.5Q1460 354 1479.0 389.0Q1498 424 1522.5 461.5Q1547 499 1575.5 531.5Q1604 564 1634.5 584.0Q1665 604 1697 604Q1701 604 1705.0 603.5Q1709 603 1713 602Q1738 597 1748.0 584.5Q1758 572 1758 555Q1758 543 1753.5 529.5Q1749 516 1741 503Q1721 468 1688.0 432.5Q1655 397 1614.5 362.5Q1574 328 1533.5 295.5Q1493 263 1458 234Q1434 183 1421.0 143.5Q1408 104 1401 80Q1412 94 1434.0 120.0Q1456 146 1484.0 176.0Q1512 206 1542.0 233.5Q1572 261 1599.0 278.5Q1626 296 1645 296Q1669 296 1669 271Q1669 247 1652.0 218.0Q1635 189 1624 169Q1610 140 1601.5 113.5Q1593 87 1591 70Q1590 66 1590.0 62.5Q1590 59 1590 55Q1590 15 1618 15Q1633 15 1658.0 33.0Q1683 51 1709.0 76.0Q1735 101 1756.5 124.5Q1778 148 1786 160Q1789 163 1793 163Q1797 163 1799.0 160.0Q1801 157 1799 152Q1789 135 1768.0 109.5Q1747 84 1721.0 58.5Q1695 33 1670 15Q1657 5 1636.5 -2.5Q1616 -10 1596 -10Q1580 -10 1565.0 -2.0Q1550 6 1543 28Q1540 37 1540 53Q1540 58 1540.0 63.5Q1540 69 1541 75Q1545 107 1562.5 142.5Q1580 178 1595 206Q1599 214 1601.5 220.0Q1604 226 1604 230Q1604 238 1597 238Q1590 238 1575.0 229.0Q1560 220 1535 198Q1513 179 1488.5 148.5Q1464 118 1440.5 86.0Q1417 54 1399.5 31.0Q1382 8 1375 4Q1370 1 1352.0 -6.0Q1334 -13 1326 -13ZM1477 279Q1517 306 1564.0 346.5Q1611 387 1652.5 433.5Q1694 480 1716 522Q1728 545 1728 560Q1728 577 1713 577Q1706 577 1697.0 573.5Q1688 570 1676 561Q1609 509 1563.0 437.5Q1517 366 1477 279Z" pathLength="1" style="--ink-delay:800ms;--ink-duration:320ms"/></g></mask></defs><g mask="url(#sugar-ink-Rush)"><g transform="scale(1,-1)" fill="currentColor"><path d="M717 -182Q707 -182 697.0 -181.0Q687 -180 676 -178Q608 -165 553.0 -133.0Q498 -101 454.5 -58.5Q411 -16 375.5 31.0Q340 78 311.0 121.5Q282 165 257 198Q255 203 252.5 201.0Q250 199 250 199Q228 157 209.5 120.5Q191 84 182 62Q174 40 174 31Q174 17 185 17Q199 17 215 36Q226 49 235.5 60.5Q245 72 252 70Q253 69 253 67Q253 62 246.0 53.5Q239 45 238 44Q231 34 219.5 17.0Q208 0 195.5 -13.5Q183 -27 169 -27Q167 -27 157.5 -25.0Q148 -23 139.5 -20.0Q131 -17 130 -13Q128 6 139.5 40.5Q151 75 171.0 117.0Q191 159 212 199Q196 203 189 206Q179 213 179 225Q179 235 187.0 243.0Q195 251 211 251Q216 251 223.0 249.0Q230 247 234 242Q251 272 264.5 297.0Q278 322 284 336Q290 347 292.0 354.5Q294 362 294 366Q294 372 292 376Q294 388 306.5 408.0Q319 428 338.0 448.0Q357 468 379.0 481.5Q401 495 420 495Q426 495 438.5 491.5Q451 488 462.5 481.0Q474 474 477 461Q478 458 478 455Q478 452 476 452Q474 452 470.5 453.5Q467 455 465 455Q437 455 402.5 421.5Q368 388 332.5 336.0Q297 284 266 228Q271 227 277.5 225.5Q284 224 293 224Q297 224 300.5 224.0Q304 224 308 225Q372 232 438.5 250.0Q505 268 563.0 297.0Q621 326 659 365Q694 402 694 441Q694 470 672.0 495.0Q650 520 603 533Q575 541 539.5 545.0Q504 549 463 549Q399 549 331.5 538.0Q264 527 205.0 504.5Q146 482 106.0 448.0Q66 414 58 367Q55 343 67.0 329.0Q79 315 96.5 307.5Q114 300 124 294Q131 288 131 284Q131 277 118 279Q104 282 83.5 293.0Q63 304 47.5 323.5Q32 343 32 369Q32 373 32.5 377.0Q33 381 34 385Q34 386 33.5 391.5Q33 397 33 401Q39 432 63.5 459.5Q88 487 119.5 508.5Q151 530 178 543Q225 566 291.0 579.5Q357 593 429 593Q473 593 516.5 587.0Q560 581 601 568Q658 549 689.5 509.5Q721 470 718 427Q715 386 689.5 353.0Q664 320 624.5 295.5Q585 271 537.5 253.5Q490 236 442 225Q403 217 360.0 212.0Q317 207 279 205Q322 152 364.5 98.5Q407 45 455.5 -2.0Q504 -49 562.0 -82.5Q620 -116 693 -130Q708 -133 724 -133Q750 -133 775.5 -125.0Q801 -117 818.0 -100.0Q835 -83 835 -55Q835 -50 834.5 -45.0Q834 -40 833 -35Q833 -33 832.5 -32.0Q832 -31 832 -30Q832 -21 839 -21Q849 -21 852 -36Q855 -51 855 -64Q855 -79 852.5 -92.0Q850 -105 846 -116Q837 -144 800.5 -163.0Q764 -182 717 -182Z"/><path d="M845 -10Q827 -10 813.0 -2.0Q799 6 792 28Q791 33 789.5 39.5Q788 46 788 53Q788 77 794.5 107.0Q801 137 809 157Q805 154 795.0 137.0Q785 120 770.0 97.5Q755 75 736.5 52.5Q718 30 696.5 15.5Q675 1 651 1Q635 1 612.5 10.0Q590 19 580 35Q570 51 570 75Q570 104 583.0 138.5Q596 173 616 203Q623 213 632.0 227.0Q641 241 650.0 251.5Q659 262 663 263Q675 267 691 267Q708 267 716 263Q723 260 723 256Q723 251 715 243Q704 233 685.0 213.0Q666 193 647.5 165.0Q629 137 617 103Q607 76 607 56Q607 21 635 21Q659 21 686.0 41.0Q713 61 738.5 90.0Q764 119 784.5 147.5Q805 176 816 193Q826 207 838.5 229.0Q851 251 863.0 272.0Q875 293 882 303Q889 303 903.5 300.5Q918 298 928.5 292.0Q939 286 934 277Q928 267 915.5 246.0Q903 225 890.5 203.5Q878 182 871 169Q847 123 840 70Q839 66 839.0 62.5Q839 59 839 55Q839 15 866 15Q881 15 906.0 33.0Q931 51 957.5 76.0Q984 101 1005.5 124.5Q1027 148 1035 160Q1037 163 1041 163Q1045 163 1047.5 160.0Q1050 157 1047 152Q1038 135 1016.5 109.5Q995 84 969.0 58.5Q943 33 918 15Q905 5 885.0 -2.5Q865 -10 845 -10Z"/><path d="M1033 -50Q993 -50 993 -28Q993 -12 1010 5Q1023 18 1039.0 26.0Q1055 34 1059 34Q1064 34 1064.5 30.0Q1065 26 1060 24Q1050 18 1037.5 7.5Q1025 -3 1025 -15Q1025 -31 1044 -31Q1067 -31 1092.0 -17.5Q1117 -4 1138.5 17.0Q1160 38 1173.5 59.5Q1187 81 1187 97Q1187 110 1178.0 121.0Q1169 132 1141 147Q1122 158 1104.5 170.0Q1087 182 1078 199Q1070 185 1057.5 165.5Q1045 146 1028 125Q1022 119 1016 119Q1010 119 1010 124Q1010 127 1015 134Q1042 166 1055.0 193.0Q1068 220 1073 234Q1077 263 1100.0 289.0Q1123 315 1156.0 334.5Q1189 354 1223.5 365.0Q1258 376 1285 376Q1312 376 1333.0 366.0Q1354 356 1354 334Q1354 322 1347 308Q1338 289 1317 274Q1316 273 1314 273Q1306 273 1306 280Q1306 285 1311 290Q1319 297 1324.0 307.0Q1329 317 1329 326Q1329 344 1308 344Q1286 344 1250.5 332.0Q1215 320 1185 301Q1151 279 1128.0 253.0Q1105 227 1105 207Q1105 197 1111.5 188.5Q1118 180 1137 169Q1147 163 1165.0 153.5Q1183 144 1196 136Q1237 111 1237 83Q1237 60 1217.0 36.5Q1197 13 1165.5 -6.5Q1134 -26 1099.0 -38.0Q1064 -50 1033 -50Z"/><path d="M1326 -13Q1318 -13 1322 -6Q1324 0 1332.5 24.0Q1341 48 1353.0 82.0Q1365 116 1378.0 151.5Q1391 187 1402 215Q1395 206 1380.5 189.0Q1366 172 1350.0 153.0Q1334 134 1320 120Q1317 117 1316 117Q1313 117 1313 123Q1313 135 1319 145Q1341 173 1361.5 197.5Q1382 222 1399 244Q1389 250 1389 259Q1389 273 1403 273Q1409 273 1412 271Q1413 270 1414.0 270.0Q1415 270 1416 268Q1421 275 1424.5 281.0Q1428 287 1431 294Q1435 303 1447.5 328.5Q1460 354 1479.0 389.0Q1498 424 1522.5 461.5Q1547 499 1575.5 531.5Q1604 564 1634.5 584.0Q1665 604 1697 604Q1701 604 1705.0 603.5Q1709 603 1713 602Q1738 597 1748.0 584.5Q1758 572 1758 555Q1758 543 1753.5 529.5Q1749 516 1741 503Q1721 468 1688.0 432.5Q1655 397 1614.5 362.5Q1574 328 1533.5 295.5Q1493 263 1458 234Q1434 183 1421.0 143.5Q1408 104 1401 80Q1412 94 1434.0 120.0Q1456 146 1484.0 176.0Q1512 206 1542.0 233.5Q1572 261 1599.0 278.5Q1626 296 1645 296Q1669 296 1669 271Q1669 247 1652.0 218.0Q1635 189 1624 169Q1610 140 1601.5 113.5Q1593 87 1591 70Q1590 66 1590.0 62.5Q1590 59 1590 55Q1590 15 1618 15Q1633 15 1658.0 33.0Q1683 51 1709.0 76.0Q1735 101 1756.5 124.5Q1778 148 1786 160Q1789 163 1793 163Q1797 163 1799.0 160.0Q1801 157 1799 152Q1789 135 1768.0 109.5Q1747 84 1721.0 58.5Q1695 33 1670 15Q1657 5 1636.5 -2.5Q1616 -10 1596 -10Q1580 -10 1565.0 -2.0Q1550 6 1543 28Q1540 37 1540 53Q1540 58 1540.0 63.5Q1540 69 1541 75Q1545 107 1562.5 142.5Q1580 178 1595 206Q1599 214 1601.5 220.0Q1604 226 1604 230Q1604 238 1597 238Q1590 238 1575.0 229.0Q1560 220 1535 198Q1513 179 1488.5 148.5Q1464 118 1440.5 86.0Q1417 54 1399.5 31.0Q1382 8 1375 4Q1370 1 1352.0 -6.0Q1334 -13 1326 -13ZM1477 279Q1517 306 1564.0 346.5Q1611 387 1652.5 433.5Q1694 480 1716 522Q1728 545 1728 560Q1728 577 1713 577Q1706 577 1697.0 573.5Q1688 570 1676 561Q1609 509 1563.0 437.5Q1517 366 1477 279Z"/></g></g></svg></span></span></span></h2>
                 <div class="project-meta">
-                    <span class="project-number">02</span>
                     <div class="project-info">
-                        <h3 class="project-title">AI Virtual Idol</h3>
-                        <p class="project-subtitle">Virtual Idol Branding + MV</p>
+                        <p class="project-type">Branding / Music Video</p>
+                        <h3 class="project-title">Sugar Rush — 버추얼 아이돌 M/V</h3>
+                        <p class="project-subtitle">버추얼 걸밴드 Sugar Rush · 데뷔곡 GLOW</p>
+                        <p class="project-contribution">개인 기여도 <span>100%</span></p>
+                        <p class="project-scope">Role · 캐릭터 콘셉트 · 시트 제작 · M/V · 웹사이트<span>러닝타임 2:03</span></p>
                     </div>
                 </div>
                 <div class="project-tags">
@@ -199,11 +290,11 @@
             </div>
 
             <div class="project-media main-media">
-                <div class="video-player" id="project1-main">
+                <div class="video-player" id="project2-player">
                     <div class="media-placeholder" id="project2-main">
                         <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                        <video src="video/AI뮤비_김병석 .mp4" preload="metadata"
-                            poster="Thumbnail/Sugarrush thumb.png"></video>
+                        <video data-src="video/web/project-02.mp4" preload="none" playsinline
+                            poster="Thumbnail/work-02.jpg"></video>
                         <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                     </div>
                 </div>
@@ -214,11 +305,9 @@
                     <span class="desc-label">Program</span>
                     <!-- <p class="desc-text">Ae / Pr / Ps</p> -->
                     <p class="desc-text desc-tools">
-                        <span>Ae</span>
-                        <span>/</span>
-                        <span>Pr</span>
-                        <span>/</span>
-                        <span>Ps</span>
+                        <span class="program-tool"><img src="assets/brand/tools/after-effects.svg" width="24" height="24" alt="" decoding="async">After Effects</span>
+                        <span class="program-tool"><img src="assets/brand/tools/premiere-pro.svg" width="24" height="24" alt="" decoding="async">Premiere Pro</span>
+                        <span class="program-tool"><img src="assets/brand/tools/photoshop.svg" width="24" height="24" alt="" decoding="async">Photoshop</span>
                     </p>
                     <div class="desc-list">
                         <div class="desc-row">
@@ -272,7 +361,7 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/sugarrush prompt.png" alt="sugarrush prompt"></span>
+                        <span><img loading="lazy" width="1920" height="928" decoding="async" src="img/sugarrush prompt.png" alt="sugarrush prompt"></span>
                     </div>
                 </div>
                 <div class="media-placeholder" id="project2-sub2">
@@ -283,7 +372,7 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/sugarrush prompt2.png" alt="sugarrush prompt"></span>
+                        <span><img loading="lazy" width="1920" height="924" decoding="async" src="img/sugarrush prompt2.png" alt="sugarrush prompt"></span>
                     </div>
                 </div>
                 <div class="media-placeholder" id="project2-sub3">
@@ -294,7 +383,7 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/AI 가수 work.png" alt="sugarrush work Pr"></span>
+                        <span><img loading="lazy" width="1920" height="996" decoding="async" src="img/AI 가수 work.png" alt="sugarrush work Pr"></span>
                     </div>
                 </div>
                 <div class="media-placeholder" id="project2-sub4">
@@ -305,20 +394,24 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/AI 가수 work AE.png" alt="sugarrush work AE"></span>
+                        <span><img loading="lazy" width="1920" height="998" decoding="async" src="img/AI 가수 work AE.png" alt="sugarrush work AE"></span>
                     </div>
                 </div>
             </div>
+        <nav class="project-pagination" aria-label="작품 탐색"><a class="project-step-prev" href="#project-01" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M15.5 5 8.5 12 15.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M15.5 19 8.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M8.5 12 15.5 5"/></svg></a><a class="project-step-next" href="#project-03" aria-label="Next project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M8.5 5 15.5 12 8.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M8.5 19 15.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M15.5 12 8.5 5"/></svg></a></nav>
         </article>
 
         <!-- ── PROJECT 03 ── -->
         <article class="project" id="project-03" data-project="03">
             <div class="project-header">
+                <h2 class="project-display-title" aria-label="FIRE ON UP"><span class="project-display-word" aria-hidden="true"><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:0">F</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:1">I</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:2">R</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:3">E</span></span></span><span class="project-display-word" aria-hidden="true"><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:4">O</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:5">N</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:6">&nbsp;</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:7">U</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:8">P</span></span></span></h2>
                 <div class="project-meta">
-                    <span class="project-number">03</span>
                     <div class="project-info">
-                        <h3 class="project-title">Movie M/V</h3>
-                        <p class="project-subtitle">Ford V Ferrari 뮤직비디오</p>
+                        <p class="project-type">Editing / Music Video</p>
+                        <h3 class="project-title">Fire on up — M/V 편집</h3>
+                        <p class="project-subtitle">영화 Ford v Ferrari 소스 기반 M/V</p>
+                        <p class="project-contribution">개인 기여도 <span>100%</span></p>
+                        <p class="project-scope">Role · 음악에 맞춘 컷 편집 · 전환 · 속도 조절<span>러닝타임 3:09</span></p>
                     </div>
                 </div>
                 <div class="project-tags">
@@ -328,11 +421,11 @@
             </div>
 
             <div class="project-media main-media">
-                <div class="video-player" id="project1-main">
+                <div class="video-player" id="project3-player">
                     <div class="media-placeholder" id="project3-main">
                         <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                        <video src="video/뮤직비디오_김병석.mp4" preload="metadata"
-                            poster="Thumbnail/Fire_on_up thumb.png"></video>
+                        <video data-src="video/web/project-03.mp4" preload="none" playsinline
+                            poster="Thumbnail/work-03.jpg"></video>
                         <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                     </div>
                 </div>
@@ -343,19 +436,14 @@
                     <span class="desc-label">Program</span>
                     <!-- <p class="desc-text">Pr</p> -->
                     <p class="desc-text desc-tools">
-                        <!-- <span>Ae</span>
-                        <span>/</span> -->
-                        <span>Pr</span>
-                        <!-- <span>/</span>
-                        <span>Ps</span> -->
+                        <span class="program-tool"><img src="assets/brand/tools/premiere-pro.svg" width="24" height="24" alt="" decoding="async">Premiere Pro</span>
                     </p>
                     <!-- <p class="desc-text">Ae</p> -->
                 </div>
                 <div class="desc-block">
                     <span class="desc-label">Concept</span>
                     <p class="desc-text">
-                        영화 Ford V Ferrari를
-                        배경 음악에 맞춰서 컷 편집을 진행하고, 빠른 장면전환으로 박진감 넘치는 느낌을 표현했습니다.<br>
+                        영화 Ford v Ferrari의 장면을 「Fire on up」에 맞춰 컷 편집한 뮤직비디오입니다. 빠른 장면 전환으로 박진감 넘치는 느낌을 표현했습니다.<br>
                         영상의 속도감을 표현하기 위해 다양한 편집 기법과 속도감 등을 신경써서 작업을 진행하였습니다.
                     </p>
                 </div>
@@ -371,7 +459,7 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/Movie MV work Pr.png" alt="Movie MV work Pr"></span>
+                        <span><img loading="lazy" width="1920" height="995" decoding="async" src="img/Movie MV work Pr.png" alt="Movie MV work Pr"></span>
                     </div>
                 </div>
                 <div class="media-placeholder" id="project3-sub2">
@@ -382,15 +470,12 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <div class="media-placeholder" id="project3-sub2">
-                            <video class="inline-loop-video scroll-play-video clickable-video" muted loop playsinline
-                                preload="auto" poster="video/Movie MV.webm">
-                                <source src="video/Movie MV.webm" type="video/webm">
-                            </video>
+                        <div class="media-placeholder" id="project3-sub3">
+                            <button type="button" class="video-preview" data-video-src="video/Movie MV.webm" aria-label="작업 과정 영상 확대 보기"><video class="scroll-play-video" data-src="video/Movie MV.webm" poster="Thumbnail/webm-01.jpg" preload="none" muted loop playsinline></video><span>확대 보기 <span aria-hidden="true">↗</span></span></button>
                         </div>
                     </div>
                 </div>
-                <div class="media-placeholder" id="project3-sub3">
+                <div class="media-placeholder" id="project3-sub3-2">
                     <div class="placeholder-content">
                         <!-- <svg class="placeholder-icon small" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -399,25 +484,26 @@
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg>
                         <span>이미지</span> -->
-                        <div class="media-placeholder" id="project3-sub2">
-                            <video class="inline-loop-video scroll-play-video clickable-video" muted loop playsinline
-                                preload="auto" poster="video/Movie MV2.webm">
-                                <source src="video/Movie MV2.webm" type="video/webm">
-                            </video>
+                        <div class="media-placeholder" id="project3-sub4">
+                            <button type="button" class="video-preview" data-video-src="video/Movie MV2.webm" aria-label="작업 과정 영상 확대 보기"><video class="scroll-play-video" data-src="video/Movie MV2.webm" poster="Thumbnail/webm-02.jpg" preload="none" muted loop playsinline></video><span>확대 보기 <span aria-hidden="true">↗</span></span></button>
                         </div>
                     </div>
                 </div>
             </div>
+        <nav class="project-pagination" aria-label="작품 탐색"><a class="project-step-prev" href="#project-02" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M15.5 5 8.5 12 15.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M15.5 19 8.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M8.5 12 15.5 5"/></svg></a><a class="project-step-next" href="#project-04" aria-label="Next project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M8.5 5 15.5 12 8.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M8.5 19 15.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M15.5 12 8.5 5"/></svg></a></nav>
         </article>
 
         <!-- ── PROJECT 04 ── -->
         <article class="project" id="project-04" data-project="04">
             <div class="project-header">
+                <h2 class="project-display-title" aria-label="CHANEL"><span class="project-display-word" aria-hidden="true"><span class="project-display-letter"><span class="project-display-glyph brand-glyph" style="--letter-index:0"><svg class="chanel-wordmark" viewBox="0 0 175 28" data-portal data-camera-x="0.428" data-camera-y="0.40" aria-hidden="true"><title>CHANEL</title><path data-portal-outline fill="currentColor" fill-rule="evenodd" d="m20.655 17.726 4.565 2.615c-2.282 4.197-6.737 6.922-11.781 6.922C6.075 27.263 0 21.629 0 13.713S6.075.163 13.439.163c5.044 0 9.5 2.725 11.781 6.923L20.655 9.7c-1.326-2.725-4.013-4.381-7.216-4.381-4.603 0-8.1 3.423-8.1 8.394s3.497 8.395 8.1 8.395c3.203 0 5.89-1.657 7.216-4.382m29.05 8.874V15.554H36.818V26.6h-5.154V.826h5.154V10.4h12.887V.826h5.155V26.6zm29.898-10.678L74.926 5.061 70.25 15.922zM89.838 26.6h-5.634l-2.54-5.892H68.188l-2.54 5.892h-5.634L71.428.826h6.996zm23.748 0L99.778 6.313V26.6h-4.786V.826h6.812l11.598 17.084V.826h4.787V26.6zm14.543 0V.826h18.41v4.787h-13.624v5.523h11.782v4.786h-11.782v5.892h14.36V26.6zm27.431 0V.826h5.154v20.62h13.622V26.6z"/></svg></span></span></span></h2>
                 <div class="project-meta">
-                    <span class="project-number">04</span>
                     <div class="project-info">
-                        <h3 class="project-title">CHANEL AI 광고</h3>
+                        <p class="project-type">AI / Concept Ad</p>
+                        <h3 class="project-title">CHANEL — AI 광고 콘셉트</h3>
                         <p class="project-subtitle"> 화장품 AI 광고</p>
+                        <p class="project-contribution">개인 기여도 <span>100%</span></p>
+                        <p class="project-scope">Role · AI 이미지·영상 제작 · 편집<span>러닝타임 0:40</span></p>
                     </div>
                 </div>
                 <div class="project-tags">
@@ -429,11 +515,11 @@
             </div>
 
             <div class="project-media main-media">
-                <div class="video-player" id="project1-main">
+                <div class="video-player" id="project4-player">
                     <div class="media-placeholder" id="project4-main">
                         <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                        <video src="video/Chanel Perfumes_김병석.mp4" preload="metadata"
-                            poster="Thumbnail/CHANEL_Thumb.png"></video>
+                        <video data-src="video/web/project-04.mp4" data-start="0.1" preload="none" playsinline
+                            poster="video/web/project-04-start.jpg"></video>
                         <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                     </div>
                 </div>
@@ -444,11 +530,9 @@
                     <span class="desc-label">Program</span>
                     <!-- <p class="desc-text">Ae / Pr / Ps</p> -->
                     <p class="desc-text desc-tools">
-                        <span>Ae</span>
-                        <span>/</span>
-                        <span>Pr</span>
-                        <span>/</span>
-                        <span>Ps</span>
+                        <span class="program-tool"><img src="assets/brand/tools/after-effects.svg" width="24" height="24" alt="" decoding="async">After Effects</span>
+                        <span class="program-tool"><img src="assets/brand/tools/premiere-pro.svg" width="24" height="24" alt="" decoding="async">Premiere Pro</span>
+                        <span class="program-tool"><img src="assets/brand/tools/photoshop.svg" width="24" height="24" alt="" decoding="async">Photoshop</span>
                     </p>
                     <!-- <p class="desc-text">Image: Midjourney,
                         <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nano Banana
@@ -477,14 +561,15 @@
                 <div class="desc-block">
                     <span class="desc-label">Concept</span>
                     <p class="desc-text">
-                        제품의 인지성과 브랜드 무드를 해치지 않도록 형태와 디테일의 일관성을 유지하는 데 집중했으며, AI 영상에서 발생하기 쉬운 텍스트 왜곡과 뭉개짐을 최소화해 높은 완성도의
-                        광고 비주얼을 구현하고자 했습니다.
+                        CHANEL 화장품을 소재로 이미지 생성부터 영상화, 편집까지 진행한 개인 광고 콘셉트입니다.
+                        제품의 형태와 브랜드 분위기를 유지하는 것을 목표로, AI 영상의 텍스트 왜곡과 디테일 뭉개짐에 주의를 기울였습니다.
+                        아래에는 이미지 생성 프롬프트, Premiere Pro 편집, After Effects 작업 화면을 순서대로 담았습니다.
                     </p>
                 </div>
             </div>
 
             <div class="project-media-grid grid-2">
-                <div class="media-placeholder" id="project2-sub1">
+                <div class="media-placeholder" id="project4-sub1">
                     <div class="placeholder-content">
                         <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -492,10 +577,10 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/Chanel_Prompt.png" alt="Chanel_Prompt"></span>
+                        <span><img loading="lazy" width="1822" height="914" decoding="async" src="img/Chanel_Prompt.png" alt="Chanel_Prompt"></span>
                     </div>
                 </div>
-                <div class="media-placeholder" id="project2-sub2">
+                <div class="media-placeholder" id="project4-sub2">
                     <div class="placeholder-content">
                         <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -503,10 +588,10 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/Chanel work Pr.png" alt="Chanel work Pr"></span>
+                        <span><img loading="lazy" width="1920" height="995" decoding="async" src="img/Chanel work Pr.png" alt="Chanel work Pr"></span>
                     </div>
                 </div>
-                <div class="media-placeholder" id="project2-sub3">
+                <div class="media-placeholder" id="project4-sub3">
                     <div class="placeholder-content">
                         <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -514,10 +599,10 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <span><img src="img/Chanel work Ae.png" alt="Chanel work Ae"></span>
+                        <span><img loading="lazy" width="1920" height="996" decoding="async" src="img/Chanel work Ae.png" alt="Chanel work Ae"></span>
                     </div>
                 </div>
-                <div class="media-placeholder" id="project2-sub4">
+                <div class="media-placeholder" id="project4-sub4">
                     <div class="placeholder-content">
                         <!-- <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -525,25 +610,26 @@
                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                             <polyline points="21 15 16 10 5 21"></polyline>
                         </svg> -->
-                        <div class="media-placeholder" id="project4-sub4">
-                            <video class="inline-loop-video scroll-play-video clickable-video" muted loop playsinline
-                                preload="auto" poster="img/Chanel AD.png">
-                                <source src="video/Chanel AD.webm" type="video/webm">
-                            </video>
+                        <div class="media-placeholder" id="project4-sub4-2">
+                            <button type="button" class="video-preview" data-video-src="video/Chanel AD.webm" aria-label="작업 과정 영상 확대 보기"><video class="scroll-play-video" data-src="video/Chanel AD.webm" poster="Thumbnail/webm-03.jpg" preload="none" muted loop playsinline></video><span>확대 보기 <span aria-hidden="true">↗</span></span></button>
                         </div>
                     </div>
                 </div>
             </div>
+        <nav class="project-pagination" aria-label="작품 탐색"><a class="project-step-prev" href="#project-03" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M15.5 5 8.5 12 15.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M15.5 19 8.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M8.5 12 15.5 5"/></svg></a><a class="project-step-next" href="#project-05" aria-label="Next project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M8.5 5 15.5 12 8.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M8.5 19 15.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M15.5 12 8.5 5"/></svg></a></nav>
         </article>
 
         <!-- ── PROJECT 05 ── -->
         <article class="project" id="project-05" data-project="05">
             <div class="project-header">
+                <h2 class="project-display-title" aria-label="INITIAL D"><span class="project-display-word" aria-hidden="true"><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:0">I</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:1">N</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:2">I</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:3">T</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:4">I</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:5">A</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:6">L</span></span><span class="project-display-letter"><span class="project-display-glyph" style="--letter-index:7">D</span></span></span></h2>
                 <div class="project-meta">
-                    <span class="project-number">05</span>
                     <div class="project-info">
-                        <h3 class="project-title">애니메이션 실사화</h3>
+                        <p class="project-type">AI / Live-action Concept</p>
+                        <h3 class="project-title">Initial D — AI 실사화</h3>
                         <p class="project-subtitle">Movie Behind Scenes Shorts</p>
+                        <p class="project-contribution">개인 기여도 <span>100%</span></p>
+                        <p class="project-scope">Role · AI 이미지·영상 제작 · 음악에 맞춘 편집<span>러닝타임 0:34</span></p>
                     </div>
                 </div>
                 <div class="project-tags">
@@ -552,12 +638,12 @@
                 </div>
             </div>
 
-            <div class="project-media shorts-media">
-                <div class="video-player" id="project1-main">
+            <div class="project-media main-media shorts-media">
+                <div class="video-player" id="project5-player">
                     <div class="media-placeholder" id="project5-main">
                         <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                        <video src="video/Movie_Behind_Scenes_AI_김병석_1022.mp4" preload="metadata"
-                            poster="Thumbnail/anime_Thumb.png"></video>
+                        <video data-src="video/web/project-05.mp4" preload="none" playsinline
+                            poster="Thumbnail/work-05.jpg"></video>
                         <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                     </div>
                 </div>
@@ -570,9 +656,8 @@
                     <!-- <span>Ae</span>
                         <span>/</span> -->
                     <p class="desc-text desc-tools">
-                        <!-- <span>AI Video</span> -->
-                        <!-- <span>/</span> -->
-                        <span>Pr</span>
+                        <span class="program-tool"><img src="assets/brand/tools/premiere-pro.svg" width="24" height="24" alt="" decoding="async">Premiere Pro</span>
+                    </p>
                     <div class="desc-list">
                         <div class="desc-row">
                             <span class="desc-key">Image</span>
@@ -596,31 +681,25 @@
             </div>
             <div class="project-media-grid grid-2">
                 <div class="media-placeholder" id="project5-sub1">
-                    <video class="inline-loop-video scroll-play-video clickable-video" muted loop playsinline
-                        preload="auto" poster="img/initial-d-takumi-poster.webp">
-                        <source src="video/Initial D 타쿠미.webm" type="video/webm">
-                    </video>
+                    <button type="button" class="video-preview" data-video-src="video/Initial D 타쿠미.webm" aria-label="작업 과정 영상 확대 보기"><video class="scroll-play-video" data-src="video/Initial D 타쿠미.webm" poster="Thumbnail/webm-04.jpg" preload="none" muted loop playsinline></video><span>확대 보기 <span aria-hidden="true">↗</span></span></button>
                 </div>
 
                 <div class="media-placeholder" id="project5-sub2">
-                    <video class="inline-loop-video scroll-play-video clickable-video" muted loop playsinline
-                        preload="auto" poster="img/initial-d-bunta-poster.webp">
-                        <source src="video/Initial D 분타.webm" type="video/webm">
-                    </video>
+                    <button type="button" class="video-preview" data-video-src="video/Initial D 분타.webm" aria-label="작업 과정 영상 확대 보기"><video class="scroll-play-video" data-src="video/Initial D 분타.webm" poster="Thumbnail/webm-05.jpg" preload="none" muted loop playsinline></video><span>확대 보기 <span aria-hidden="true">↗</span></span></button>
                 </div>
 
                 <div class="media-placeholder" id="project5-sub3">
-                    <img src="img/Movie_Behind_Screen.png" alt="Movie_Behind_Screen">
+                    <img loading="lazy" width="1920" height="994" decoding="async" src="img/Movie_Behind_Screen.png" alt="Movie_Behind_Screen">
                 </div>
 
                 <div class="media-placeholder" id="project5-sub4">
-                    <img src="img/Movie_Behind_Prompt.png" alt="Movie_Behind_Prompt">
+                    <img loading="lazy" width="1804" height="920" decoding="async" src="img/Movie_Behind_Prompt.png" alt="Movie_Behind_Prompt">
                 </div>
             </div>
 
             <!-- 풀 와이드 서브 이미지
                         <div class="project-media sub-media">
-                            <div class="media-placeholder" id="project4-sub1">
+                            <div class="media-placeholder" id="project4-sub1-2">
                                 <div class="placeholder-content">
                                     <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="1.5">
@@ -632,6 +711,7 @@
                                 </div>
                             </div>
                         </div> -->
+        <nav class="project-pagination" aria-label="작품 탐색"><a class="project-step-prev" href="#project-04" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="arrow-base" d="M15.5 5 8.5 12 15.5 19"/><path class="arrow-trace arrow-trace-bottom" pathLength="1" d="M15.5 19 8.5 12"/><path class="arrow-trace arrow-trace-top" pathLength="1" d="M8.5 12 15.5 5"/></svg></a></nav>
         </article>
 
         <!-- CCL 저작자표시-비영리-변경금지 -->
@@ -648,27 +728,59 @@
 
     </section>
 
+    <article class="project software-project" id="project-mmt" aria-labelledby="mmt-title" hidden>
+        <header class="software-header">
+            <p class="software-eyebrow">SOFTWARE / WINDOWS APPLICATION</p>
+            <h2 class="project-title" id="mmt-title">Multi Media Toolkit</h2>
+            <p class="software-lead">AI 협업으로 만든 도구를<br>실제 사용과 배포까지.</p>
+            <p class="software-summary">파일 변환과 AI 자막·번역을 하나의 흐름으로 연결하는 Windows 미디어 도구입니다. 필요한 기능과 동작 기준을 정의하고, AI와 구현·분석·검사를 진행한 뒤 실제 실행과 사용자 피드백으로 결과를 확인했습니다.</p>
+            <div class="software-tags"><span>C# / .NET</span><span>Windows desktop</span><span>FFmpeg</span><span>Whisper / Gemma</span></div>
+        </header>
+        <figure class="software-cover"><img src="assets/mmt/screen-content-v2.png" alt="실제 설치본 MMT v1.4.0의 AI 자막·번역 화면" width="1086" height="733"><figcaption>실제 설치본 v1.4.0 · AI 자막·번역 화면</figcaption></figure>
+        <div class="software-story">
+            <section><h3>Problem</h3><p>미디어 준비 작업에서는 파일 변환과 자막 생성, 번역을 반복하게 됩니다. 이 과정을 서로 다른 도구 사이에서 옮겨 다니지 않고 한 프로그램의 흐름으로 이어갈 수 있도록 MMT를 기획했습니다.</p></section>
+            <section><h3>My role & AI collaboration</h3><div class="software-features">
+                <div><h4>직접 맡은 역할</h4><p>필요 기능과 동작 기준을 정하고, 사용자 관점에서 화면과 사용 절차를 점검했습니다. 오류 재확인과 수정 기준 설정, 배포 판단까지 맡았습니다.</p></div>
+                <div><h4>AI와 협업한 범위</h4><p>기능 구현, 오류 원인 분석, 검사 작성은 AI의 도움을 받아 진행했습니다. 생성된 결과를 그대로 채택하기보다 실제 프로그램에서 동작을 확인하고 다시 수정하는 과정을 반복했습니다.</p></div>
+            </div></section>
+            <section><h3>Media workflow</h3><div class="software-features">
+                <div><h4>변환 · 자막 · 번역</h4><p>영상·오디오 변환과 Whisper 자막 생성, Gemma 번역을 연결했습니다. 영상 제작의 준비 작업을 한 흐름 안에서 다루도록 구성했습니다.</p></div>
+                <div><h4>공통 모델 관리</h4><p>기능마다 모델을 중복 설치하지 않고, 설치 상태와 실행 환경을 확인하게 했습니다. 모델이 없을 때 필요한 설치를 안내하고, 기존 모델은 자막·번역과 노래 자막 작업에서 재사용하도록 구성했습니다.</p></div>
+            </div></section>
+            <section><h3>Issue → resolution</h3><div class="software-features">
+                <div><h4>로그인 상태에서도 실패한 다운로드</h4><p>로그인 여부만 원인으로 단정하지 않고, 오류가 발생한 주소 유형과 처리 경로를 구분했습니다. 주소를 단순 치환해 다른 영상을 받지 않도록 원본 주소와 콘텐츠 유형을 유지하는 기준을 세웠습니다.</p></div>
+                <div><h4>수정 이후에도 사용자 재확인</h4><p>주소 유형별 처리를 보강하고 콘텐츠 식별값과 유형 검증을 추가했습니다. 수정 뒤에는 신고한 사용자에게 실제 정상 작동 여부를 다시 확인해 대응을 마무리했습니다.</p></div>
+            </div></section>
+            <section><h3>Usability & release</h3><div class="software-features">
+                <div><h4>필요한 시점에 연결 안내</h4><p>시작부터 브라우저 연결을 요구하는 대신, 로그인이 필요한 시점에 안내하도록 절차를 줄였습니다. UI 변경 뒤에는 기존 사용자의 실제 업데이트 동작도 확인했습니다.</p></div>
+                <div><h4>확장 프로그램 공개 배포 대응</h4><p>심사 자료와 개인정보 안내를 정리하고, 거절 사유 확인과 재제출에 대응했습니다. 브라우저 확장 0.2.15의 공개 게시까지 진행했습니다. 확장 프로그램과 데스크톱 앱 v1.4.0은 별도로 버전을 관리합니다.</p></div>
+            </div></section>
+            <section><h3>What this demonstrates</h3><p>요구사항을 구체적인 동작 기준으로 바꾸고, AI 협업 결과를 실제 실행과 사용자 확인으로 검증하는 경험입니다. 구현에 그치지 않고 예외 상황, 사용성, 배포 이후의 피드백까지 이어서 다뤘습니다.</p></section>
+        </div>
+        <a class="software-return" href="#work">↖ All work</a>
+    </article>
+
     <!-- ═══════════════ ABOUT SECTION ═══════════════ -->
     <section id="about" class="section about-section">
         <div class="section-header">
-            <span class="section-number">02</span>
-            <h2 class="section-title">About Me</h2>
+
+            <h2 class="section-title">About</h2>
             <div class="section-line"></div>
         </div>
         <div class="about-content">
             <div class="about-text">
-                <h3 class="about-heading">KIM BYEONG SEOK</h3>
-                <p class="about-role"> AI Creator / Motion Graphic Designer / Video Editor</p>
+                <h3 class="about-heading">김병석</h3>
+                <p class="about-role">Motion Graphic Designer / Video Editor / AI Creator</p>
                 <p class="about-bio">
-                    다양한 툴과 새로운 기술을 유연하게 활용하여, AI를 통해 아이디어를 확장하고 완성도 높은 작업물을 만들어갑니다.
-                    변화하는 제작 환경에 빠르게 적응하며, 반복적인 보완을 통해 결과물의 퀄리티와 완성도를 높여가고 있습니다.
+                    음악의 리듬에 맞춰 장면을 편집하고, 그래픽에 움직임을 더하는 김병석입니다.
+                    After Effects와 Premiere Pro를 중심으로 모션 그래픽과 뮤직비디오를 제작합니다.
                 </p>
+                <p class="about-bio about-bio--secondary">AI 이미지·영상 제작과 소프트웨어 프로젝트도 함께 다룹니다. MMT에서는 기능·동작 기준을 정의하고 AI와 구현·검사를 진행하며, 사용자 피드백과 배포 대응까지 이어갔습니다. Sugar Rush에서는 캐릭터 콘셉트와 시트 제작부터 뮤직비디오와 웹사이트까지, CHANEL 광고 콘셉트에서는 이미지 생성부터 영상화와 편집까지 연결했습니다.</p>
                 <div class="about-skills">
                     <div class="skill-group">
                         <span class="skill-label">Design</span>
                         <div class="skill-items">
                             <span class="skill-item">Photoshop</span>
-                            <span class="skill-item">Blender 3D</span>
                         </div>
                     </div>
                     <div class="skill-group">
@@ -678,6 +790,8 @@
                             <span class="skill-item">Premiere Pro</span>
                         </div>
                     </div>
+                </div>
+                <div class="additional-tools"><h3 class="tools-heading">AI & Development tools</h3><div class="about-skills">
                     <div class="skill-group">
                         <span class="skill-label">AI Image</span>
                         <div class="skill-items">
@@ -686,6 +800,7 @@
                             <span class="skill-item">GPT image</span>
                             <span class="skill-item">Midjourney</span>
                             <span class="skill-item">Stable Diffusion</span>
+                            <span class="skill-item">FLUX</span>
                             <span class="skill-item">ComfyUI</span>
                             <span class="skill-item">Grok imagine</span>
                             <span class="skill-item">Seedream</span>
@@ -700,6 +815,9 @@
                             <span class="skill-item">Seedance</span>
                             <span class="skill-item">Hailuo</span>
                             <span class="skill-item">Wan</span>
+                            <span class="skill-item">Runway · 영상 제작 경험</span>
+                            <span class="skill-item">LTX 2.3 · ComfyUI</span>
+                            <span class="skill-item">Sora · 이전 사용 경험</span>
                         </div>
                     </div>
                     <div class="skill-group">
@@ -727,7 +845,7 @@
                     </div>
                     <div class="skill-group">
                         <span class="skill-label">Program Skills</span>
-                        <div class="skill-items">                            
+                        <div class="skill-items">
                             <span class="skill-item">C#</span>
                             <span class="skill-item">HTML</span>
                             <span class="skill-item">CSS</span>
@@ -746,18 +864,23 @@
                     <div class="skill-group">
                         <span class="skill-label">AI Native</span>
                         <div class="skill-items">
-                            <span class="skill-item">Gemini-Cli</span>
-                            <span class="skill-item">Codex</span>                            
-                            <span class="skill-item">Antigravity</span>                                            
+                            <span class="skill-item">Gemini CLI</span>
+                            <span class="skill-item">Codex CLI (GPT)</span>
+                            <span class="skill-item">Claude Code</span>
+                            <span class="skill-item">Cursor</span>
+                            <span class="skill-item">Antigravity</span>
+                            <span class="skill-item">Local LLM (Gemma / Qwen / DeepSeek-R1 / Llama)</span>
+                            <span class="skill-item">Ollama</span>
+                            <span class="skill-item">LM Studio</span>
                         </div>
                     </div>
                     <div class="skill-group">
                         <span class="skill-label">형상 관리 툴</span>
                         <div class="skill-items">
-                            <span class="skill-item">Git</span> 
+                            <span class="skill-item">Git</span>
                         </div>
                     </div>
-                </div>
+                </div></div>
             </div>
             <!-- <div class="about-image">
                 <div class="media-placeholder" id="about-photo">
@@ -777,43 +900,32 @@
     <!-- ═══════════════ CONTACT SECTION ═══════════════ -->
     <section id="contact" class="section contact-section">
         <div class="contact-content">
-            <h2 class="contact-title">
-                <span class="contact-line">Let's Work</span>
-                <span class="contact-line accent">Together</span>
-            </h2>
+            <div class="section-header"><h2 class="section-title">Contact</h2></div>
+            <div class="contact-profile" tabindex="0" role="group" aria-label="김병석 프로필">
+                <div class="contact-profile-portrait"><img class="contact-profile-photo" src="assets/profile/byeongseok-kim.jpg" alt="김병석 프로필 사진" width="1264" height="1568" decoding="async"></div>
+                <div class="contact-profile-panel">
+                <div class="contact-profile-copy">
+                <div class="contact-profile-name"><h3>김병석</h3><span>BYEONGSEOK KIM</span></div>
+                <p class="contact-profile-label">Motion &amp; Visual Designer</p>
+                <p class="contact-profile-description">모션 그래픽과 영상 편집으로 이야기를 구성합니다. 리듬과 전환, 타이포그래피를 다루며 AI 도구를 활용한 비주얼·뮤직비디오 제작과 미디어 도구 MMT 개발도 함께합니다.</p>
+                </div>
+                <a class="contact-profile-work" href="#work">Selected work <span aria-hidden="true">↗</span></a>
+                </div>
+            </div>
+            <div class="contact-intro"><p class="contact-title">채용 및 프로젝트 문의</p><p>작업에 관한 이야기와 제안을 기다립니다.</p></div>
             <div class="contact-info">
-                <a class="contact-link copyable" id="contact-HP" data-copy="010-5858-4927">
-                    <span class="contact-link-label">H.P</span>
-                    <span class="contact-link-value">010-5858-4927</span>
-                    <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
+                <button type="button" class="contact-link copyable" id="contact-email" data-copy="kbs318@naver.com" aria-label="이메일 kbs318@naver.com 복사">
+                    <span class="contact-link-label">Email</span><span class="contact-link-value">kbs318@naver.com</span>
+                    <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="1"/><path d="M15 5V3H3v12h2"/></svg>
+                </button>
+                <button type="button" class="contact-link copyable" id="contact-HP" data-copy="010-5858-4927" aria-label="전화번호 010-5858-4927 복사">
+                    <span class="contact-link-label">Phone</span><span class="contact-link-value">010-5858-4927</span>
+                    <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="1"/><path d="M15 5V3H3v12h2"/></svg>
+                </button>
+                <a href="https://open.kakao.com/o/sLJoyqji" target="_blank" rel="noopener noreferrer" class="contact-link" id="contact-kakao" aria-label="카카오톡 오픈 채팅 새 창에서 열기">
+                    <span class="contact-link-label">KakaoTalk</span><span class="contact-link-value">Open chat</span>
+                    <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg>
                 </a>
-                <a class="contact-link copyable" id="contact-email" data-copy="kbs318@naver.com">
-                    <span class="contact-link-label">Email</span>
-                    <span class="contact-link-value">kbs318@naver.com</span>
-                    <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                </a>
-                <a href="https://open.kakao.com/o/sLJoyqji" target="_blank" class="contact-link" id="contact-instagram">
-                    <span class="contact-link-label">Kakao</span>
-                    <span class="contact-link-value">카카오톡 오픈 채팅 협업 문의/연락</span>
-                    <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </a>
-                <!-- <a href="https://behance.net" target="_blank" class="contact-link" id="contact-behance">
-                    <span class="contact-link-label">Behance</span>
-                    <span class="contact-link-value">behance.net/yourname</span>
-                    <svg class="contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </a> -->
             </div>
         </div>
     </section>
@@ -821,19 +933,19 @@
     <!-- ═══════════════ FOOTER ═══════════════ -->
     <footer class="footer">
         <div class="footer-inner">
-            <span class="footer-copy">© 2026 BYEONGSEOK KIM Portfolio. All Rights Reserved.</span>
-            <a href="#hero" class="footer-top" id="back-to-top">
+            <span class="footer-copy">© <span data-current-year></span> BYEONGSEOK KIM · All rights reserved.</span>
+            <button type="button" class="footer-top" id="back-to-top">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="12" y1="19" x2="12" y2="5"></line>
                     <polyline points="5 12 12 5 19 12"></polyline>
                 </svg>
                 TOP
-            </a>
+            </button>
         </div>
     </footer>
 
     <!-- ═══════════════ IMAGE / VIDEO LIGHTBOX ═══════════════ -->
-    <div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="작업 이미지 및 영상 확대" tabindex="-1">
         <button class="lightbox-close" id="lightbox-close" aria-label="닫기">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -841,18 +953,18 @@
             </svg>
         </button>
         <img class="lightbox-img" id="lightbox-img" src="" alt="확대 이미지">
-        <video class="lightbox-video" id="lightbox-video" playsinline autoplay loop muted></video>
+        <video class="lightbox-video" id="lightbox-video" playsinline controls preload="none" loop muted></video>
     </div>
 
     <!-- ═══════════════ COPY TOAST ═══════════════ -->
-    <div class="copy-toast" id="copy-toast">
+    <div class="copy-toast" id="copy-toast" role="status">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
         <span>클립보드에 복사되었습니다!</span>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=20261021-107"></script>
 </body>
 
 </html>

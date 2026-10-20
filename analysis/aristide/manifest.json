@@ -1,0 +1,26 @@
+[
+  {
+    "url": "https://aristidebenoist.com/static/js/d.js?2",
+    "file": "d.js",
+    "bytes": 69520,
+    "sha256": "845baea3e0b52ad4f469bcee2815c4504f6ee64a795f89a3a7721aaadbd60196"
+  },
+  {
+    "url": "https://aristidebenoist.com/static/js/m.js?2",
+    "file": "m.js",
+    "bytes": 14662,
+    "sha256": "61d3879cddcc0281f92671c7470f0abed1a0e5fde3d3c58593496a64181d6ed2"
+  },
+  {
+    "url": "https://aristidebenoist.com/static/css/d.css?2",
+    "file": "d.css",
+    "bytes": 9485,
+    "sha256": "48cce0526046fb2ae54a482a91a870b24a85f4793f446c3fb46a591bba06e583"
+  },
+  {
+    "url": "https://aristidebenoist.com/static/css/m.css?2",
+    "file": "m.css",
+    "bytes": 2712,
+    "sha256": "3f1e023f3e99cdc6e38f63f48bac00c4c11ea5bf0f16fc68023c3605b6711034"
+  }
+]
