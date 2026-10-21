@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VI / AI — Logo study</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+body { padding: 48px clamp(20px, 5vw, 80px); }
+header { max-width: 1360px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+h1 { font-size: clamp(28px, 3vw, 44px); letter-spacing: -.05em; font-weight: 500; line-height: 1.2; }
+header p { color: var(--text-secondary); font-size: 14px; margin-top: 12px; }
+header a { font-size: 13px; white-space: nowrap; padding-block: 12px; }
+.studies { max-width: 1360px; margin: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.study { min-width: 0; }
+.label { display: flex; gap: 16px; align-items: center; font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; }
+.label span { font-variant-numeric: tabular-nums; }
+.label h2 { font-size: inherit; font-weight: 500; color: var(--text-primary); }
+.stage { min-height: 260px; display: grid; align-content: center; justify-content: center; border: 1px solid var(--border); padding: 32px 20px; }
+.wordmark { display: inline-block; position: relative; font-size: clamp(32px, 3.45vw, 58px); font-weight: 700; letter-spacing: -.075em; line-height: .94; text-transform: uppercase; color: inherit; white-space: nowrap; }
+.wordmark .row { display: block; }
+.pair { display: inline-block; position: relative; width: .82em; margin-right: -.015em; }
+.pair svg { width: .82em; height: .727em; display: inline-block; vertical-align: baseline; overflow: visible; fill: currentColor; }
+.reflected .row + .row { margin-top: .095em; }
+.reflected::before { content: ''; position: absolute; width: .86em; height: 1px; top: .94em; left: 0; background: currentColor; opacity: .38; }
+.water .row + .row .pair { filter: url(#water); opacity: .82; }
+.water::before { width: 1.02em; opacity: .24; transform: rotate(-1deg); }
+.small-stage { display: grid; grid-template-columns: 1fr 1fr; }
+.small-stage > div { min-height: 126px; display: flex; flex-direction: column; align-items: start; justify-content: center; padding: 20px; gap: 16px; border: 1px solid var(--border); border-top: 0; }
+.small-stage > div + div { border-left: 0; }
+.small-stage .wordmark { font-size: 26px; }
+.light { color: #171717; background: #f7f7f5; }
+.size-label { font-size: 10px; letter-spacing: .07em; color: inherit; opacity: .65; }
+.note { color: var(--text-secondary); font-size: 14px; line-height: 1.8; margin-top: 20px; word-break: keep-all; }
+footer { max-width: 1360px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 13px; line-height: 1.8; }
+.definitions { position: absolute; width: 0; height: 0; overflow: hidden; }
+@media(max-width: 1050px) { .studies { grid-template-columns: 1fr; max-width: 640px; } .wordmark { font-size: 58px; } header { max-width: 640px; } }
+@media(max-width: 420px) { .wordmark { font-size: 46px; } .small-stage > div { padding: 16px 12px; } .small-stage .wordmark { font-size: 22px; } header { align-items: start; flex-direction: column; } }
+</style>
+</head>
+<body>
+<svg class="definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="vi" viewBox="0 0 82 72"><path d="M0 0H13L29 54L45 0H58L35 72H23Z"/><path d="M66 0H79V72H66Z"/></symbol>
+<symbol id="ai" viewBox="0 0 82 72"><path d="M0 0H13L29 54L45 0H58L35 72H23Z" transform="translate(0 72) scale(1 -1)"/><path d="M16 46H42V57H16Z M66 0H79V72H66Z"/></symbol>
+<filter id="water" x="-15%" y="-15%" width="130%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".015 .09" numOctaves="1" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G"/></filter>
+</defs></svg>
+<header><div><h1>VI / AI — Reflection study</h1><p>큰 형태와 실제 헤더 크기에서 비교하는 로고 미리보기.</p></div><a href="../index.html#contact">← Portfolio</a></header>
+<main class="studies">
+<article class="study">
+<div class="label"><span>01</span><h2>Original</h2></div>
+<div class="stage"><div class="wordmark"><span class="row">VISUAL &amp;</span><span class="row">AI CREATOR.</span></div></div>
+<div class="small-stage"><div><span class="size-label">HEADER / DARK</span><div class="wordmark"><span class="row">VISUAL &amp;</span><span class="row">AI CREATOR.</span></div></div><div class="light"><span class="size-label">HEADER / LIGHT</span><div class="wordmark"><span class="row">VISUAL &amp;</span><span class="row">AI CREATOR.</span></div></div></div>
+<p class="note">현재 형태. 글자가 가장 익숙하게 읽히고, VI / AI의 대응이 은근하게 드러납니다.</p>
+</article>
+<article class="study">
+<div class="label"><span>02</span><h2>Mirror axis</h2></div>
+<div class="stage"><div class="wordmark reflected" aria-label="Visual and AI Creator"><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#vi"/></svg></span>SUAL &amp;</span><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#ai"/></svg></span> CREATOR.</span></div></div>
+<div class="small-stage"><div><span class="size-label">HEADER / DARK</span><div class="wordmark reflected" aria-label="Visual and AI Creator"><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#vi"/></svg></span>SUAL &amp;</span><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#ai"/></svg></span> CREATOR.</span></div></div><div class="light"><span class="size-label">HEADER / LIGHT</span><div class="wordmark reflected" aria-label="Visual and AI Creator"><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#vi"/></svg></span>SUAL &amp;</span><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#ai"/></svg></span> CREATOR.</span></div></div></div>
+<p class="note">V를 뒤집은 골격에 A의 가로획을 더했습니다. 두 I의 축을 맞추고, 짧은 경계선으로 거울을 암시합니다.</p>
+</article>
+<article class="study">
+<div class="label"><span>03</span><h2>Water reflection</h2></div>
+<div class="stage"><div class="wordmark reflected water" aria-label="Visual and AI Creator"><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#vi"/></svg></span>SUAL &amp;</span><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#ai"/></svg></span> CREATOR.</span></div></div>
+<div class="small-stage"><div><span class="size-label">HEADER / DARK</span><div class="wordmark reflected water" aria-label="Visual and AI Creator"><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#vi"/></svg></span>SUAL &amp;</span><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#ai"/></svg></span> CREATOR.</span></div></div><div class="light"><span class="size-label">HEADER / LIGHT</span><div class="wordmark reflected water" aria-label="Visual and AI Creator"><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#vi"/></svg></span>SUAL &amp;</span><span class="row"><span class="pair"><svg aria-hidden="true"><use href="#ai"/></svg></span> CREATOR.</span></div></div></div>
+<p class="note">아래 AI에만 잔잔한 수면 왜곡과 옅은 농도를 적용했습니다. 작은 크기에서 읽히는지도 함께 비교해 보세요.</p>
+</article>
+</main>
+<footer>02·03은 VI / AI의 형태를 비교하기 위한 시안입니다. 실제 사이트 로고에는 아직 적용하지 않았습니다.</footer>
+</body>
+</html>

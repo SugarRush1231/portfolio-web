@@ -6,7 +6,7 @@ const { test } = require('node:test');
 test('year follows the device date, including after returning to an open tab', () => {
     const source = readFileSync(`${__dirname}/../script.js`, 'utf8');
     const years = [{ textContent: '' }, { textContent: '' }];
-    const metadata = { content: '' };
+    const metadata = { content: '김병석의 영상·모션 그래픽·AI 비주얼 및 프로그램 개발 포트폴리오.' };
     const events = {};
     let currentYear = 2026;
     const document = {
@@ -31,7 +31,7 @@ test('year follows the device date, including after returning to an open tab', (
         events[event].forEach(callback => callback());
         years.forEach(element => assert.equal(element.textContent, year));
         assert.equal(document.title, '김병석 | Portfolio');
-        assert.ok(metadata.content.startsWith(`${year} 김병석`));
+        assert.equal(metadata.content, '김병석의 영상·모션 그래픽·AI 비주얼 및 프로그램 개발 포트폴리오.');
     }
     const html = readFileSync(`${__dirname}/../index.html`, 'utf8');
     assert.match(html, /<title>김병석 \| Portfolio<\/title>/);

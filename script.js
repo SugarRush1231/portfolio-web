@@ -11,7 +11,6 @@
         document.querySelectorAll('[data-current-year]').forEach(element => {
             element.textContent = year;
         });
-        document.querySelector('meta[name="description"]').content = `${year} 김병석의 모션 그래픽, 영상 디자인, AI 영상 작업 포트폴리오.`;
     }
     updateCurrentYear();
     window.addEventListener('pageshow', updateCurrentYear);
@@ -609,7 +608,7 @@
             // 키보드 단축키
             playerContainer.setAttribute('tabindex', '0');
             playerContainer.addEventListener('keydown', (e) => {
-                if (e.target !== playerContainer) return;
+                if (e.target !== playerContainer || e.ctrlKey || e.metaKey || e.altKey) return;
                 if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !Number.isFinite(video.duration)) return;
                 const FRAME_DURATION = 1 / 30; // 30fps 기준 1프레임
 
@@ -948,11 +947,24 @@
         });
     }
 
+    function initMediaProtection() {
+        // Deter casual saving; browser-delivered media cannot be made download-proof here.
+        document.querySelectorAll('video').forEach(video => video.controlsList?.add('nodownload'));
+        document.addEventListener('contextmenu', event => event.preventDefault(), true);
+        document.addEventListener('keydown', event => {
+            if ((event.ctrlKey || event.metaKey) && !event.altKey && event.key.toLowerCase() === 's') event.preventDefault();
+        }, true);
+        document.addEventListener('dragstart', event => {
+            if (event.target.closest('video, img')) event.preventDefault();
+        }, true);
+    }
+
     // ── Init ──
     handleNavScroll();
     initVideoPlayers();
     initVideoAutoPause();
     initImageLightbox();
+    initMediaProtection();
     initCopyToClipboard();
     initScrollVideos();
     initProjectGallery();
@@ -1183,9 +1195,35 @@
         const back = document.getElementById('gallery-back');
         const previous = document.getElementById('gallery-prev');
         const next = document.getElementById('gallery-next');
-        const barcode = Array.from(document.querySelectorAll('[data-work-index]'));
+        // Card order is the single source for detail navigation, including software projects.
+        cards.forEach((card, i) => {
+            const project = document.getElementById(card.hash.slice(1));
+            const pagination = document.createElement('nav');
+            pagination.className = 'project-pagination';
+            pagination.setAttribute('aria-label', '작품 탐색');
+            [[-1, 'prev', previous], [1, 'next', next]].forEach(([step, direction, button]) => {
+                if (!cards[i + step]) return;
+                const link = document.createElement('a');
+                link.className = `project-step-${direction}`;
+                link.href = cards[i + step].hash;
+                link.setAttribute('aria-label', button.getAttribute('aria-label'));
+                link.appendChild(button.querySelector('svg').cloneNode(true));
+                pagination.appendChild(link);
+            });
+            project.appendChild(pagination);
+        });
+        const barcode = cards.map((card, i) => {
+            const button = document.createElement('button');
+            const name = card.querySelector('.work-card-title').textContent.replace('↗', '').trim();
+            button.type = 'button';
+            button.dataset.workIndex = String(i);
+            button.setAttribute('aria-label', `View ${name}`);
+            button.setAttribute('title', name);
+            return button;
+        });
+        document.querySelector('.work-barcode')?.replaceChildren(...barcode);
         const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let index = 0;
+        let index = Math.max(0, cards.findIndex(card => card.hash === window.location.hash));
         let gap = 120;
         let offset = index * gap;
         let phase = 'out';
@@ -1193,6 +1231,7 @@
         let returnPoint = null;
         let media = null;
         let story = null;
+        let opening = 0;
         let drag = null;
         let dragged = false;
         let liftFrame = 0, tilt = 0, impulse = 0, lastLiftTime = 0;
@@ -1259,6 +1298,8 @@
             updateCounter();
         }
         function returnMedia() {
+            opening++;
+            drag = null;
             resetLift();
             fireType.stop();
             clearTimeout(timer);
@@ -1315,6 +1356,7 @@
             const video = media.querySelector('video');
             video.volume = 0.5;
             video.muted = false;
+            if (document.hidden) { video.pause(); return; }
             video.play().catch(() => {
                 if (media && media.querySelector('video') === video) {
                     media.querySelector('.video-big-play').classList.remove('hidden');
@@ -1366,6 +1408,7 @@
             timer = setTimeout(enterCamera, index === 1 ? 1450 : 1300);
         }
         function expand(selected, instant = false) {
+            if (gallery.hidden) document.querySelector('.nav-link[href="#work"]').click();
             returnMedia();
             index = Math.max(0, Math.min(cards.length - 1, selected));
             const card = cards[index];
@@ -1413,9 +1456,11 @@
             if (video.readyState >= 1) video.currentTime = start;
             // Start within the user gesture so later playback is not blocked by autoplay policy.
             video.muted = true;
+            const currentOpening = opening;
             video.play().then(() => {
-                if (media && media.querySelector('video') === video) {
-                    if (phase !== 'video') video.pause();
+                if (currentOpening === opening && media && media.querySelector('video') === video &&
+                    phase !== 'video' && phase !== 'closing') {
+                    video.pause();
                     video.currentTime = start;
                 }
             }).catch(() => {});
@@ -1441,8 +1486,9 @@
         });
         barcode.forEach((button, i) => button.addEventListener('click', event => {
             if (document.body.classList.contains('lightbox-open')) return;
+            const viewingProject = gallery.hidden && window.location.hash.startsWith('#project-');
             if (gallery.hidden) document.querySelector('.nav-link[href="#work"]').click();
-            if (phase !== 'out') { expand(i, event.detail === 0); return; }
+            if (viewingProject || phase !== 'out') { expand(i, event.detail === 0); return; }
             gallery.classList.toggle('instant-motion', event.detail === 0 || motion.matches);
             index = i;
             offset = index * gap;
@@ -1451,7 +1497,7 @@
             window.scrollTo({ top: 0, behavior: 'instant' });
         }));
         gallery.addEventListener('wheel', event => {
-            if (phase === 'video' || document.body.classList.contains('lightbox-open')) return;
+            if (event.ctrlKey || phase === 'video' || document.body.classList.contains('lightbox-open')) return;
             event.preventDefault();
             if (phase !== 'out') return;
             const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
@@ -1464,15 +1510,14 @@
             layout();
         }, { passive: false });
         gallery.addEventListener('pointerdown', event => {
-            if (event.button !== 0 || event.target.closest('button, .gallery-details, .gallery-cinema')) return;
+            if (phase !== 'out' || gallery.hidden || event.button !== 0 || event.target.closest('button, .gallery-details, .gallery-cinema')) return;
             resetLift();
             drag = { x: event.clientX, offset, id: event.pointerId };
             dragged = false;
         });
         gallery.addEventListener('dragstart', event => event.preventDefault());
         gallery.addEventListener('pointermove', event => {
-            if (!drag || Math.abs(event.clientX - drag.x) < 8) return;
-            if (phase !== 'out') collapse();
+            if (phase !== 'out' || gallery.hidden || !drag || Math.abs(event.clientX - drag.x) < 8) return;
             dragged = true;
             gallery.setPointerCapture(event.pointerId);
             offset = Math.max(0, Math.min((cards.length - 1) * gap, drag.offset - (event.clientX - drag.x)));
@@ -1496,9 +1541,19 @@
             if (phase !== 'video') revealVideo();
             story.scrollIntoView({ behavior: motion.matches ? 'instant' : 'smooth', block: 'start' });
         });
-        document.querySelectorAll('a[href="#work"], a[href="#hero"], .nav-link, .project-pagination a').forEach(link => link.addEventListener('click', () => collapse()));
+        document.querySelectorAll('.project-pagination a').forEach(link => link.addEventListener('click', event => {
+            if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+            const selected = cards.findIndex(card => card.hash === link.hash);
+            if (selected < 0) return;
+            event.preventDefault();
+            expand(selected, event.detail === 0);
+        }));
+        document.querySelectorAll('a[href="#work"], a[href="#hero"], .nav-link').forEach(link => link.addEventListener('click', (event = {}) => {
+            if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button > 0) return;
+            collapse();
+        }));
         document.addEventListener('keydown', event => {
-            if (gallery.hidden || event.defaultPrevented || document.body.classList.contains('lightbox-open')) return;
+            if (gallery.hidden || event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || document.body.classList.contains('lightbox-open')) return;
             if (event.key === 'Escape' && phase !== 'out' && !document.fullscreenElement) {
                 event.preventDefault();
                 collapse(true, true);
@@ -1520,12 +1575,19 @@
         surface = initGallerySurface(gallery, cards, layout);
         new ResizeObserver(() => { if (!gallery.hidden && gallery.clientWidth) resize(); }).observe(gallery);
         window.addEventListener('resize', resize);
-        window.addEventListener('popstate', () => collapse());
-        window.addEventListener('hashchange', () => collapse());
+        const restoreView = () => {
+            const selected = cards.findIndex(card => card.hash === window.location.hash);
+            if (selected >= 0) index = selected;
+            collapse();
+        };
+        window.addEventListener('popstate', restoreView);
+        window.addEventListener('hashchange', restoreView);
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) return;
             resetLift();
-            if (phase !== 'out') collapse();
+            // Tab changes pause playback without closing the project or resetting its position.
+            if (phase === 'video') media.querySelector('video').pause();
+            else if (phase !== 'out' && phase !== 'closing') revealVideo();
         });
         motion.addEventListener('change', () => {
             if (motion.matches) resetLift();
@@ -1642,8 +1704,10 @@
         const toast = document.getElementById('copy-toast');
         let toastTimer = null;
 
-        function showToast() {
+        function showToast(copied) {
             if (!toast) return;
+            toast.querySelector('span').textContent = copied ? '클립보드에 복사되었습니다!' : '복사하지 못했습니다. 표시된 연락처를 직접 복사해 주세요.';
+            toast.querySelector('svg').style.display = copied ? '' : 'none';
             // 이전 타이머 취소
             clearTimeout(toastTimer);
             toast.classList.add('show');
@@ -1653,35 +1717,38 @@
         }
 
         copyLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+            link.addEventListener('click', async (e) => {
                 e.preventDefault();
                 const textToCopy = link.getAttribute('data-copy');
-
-                // Clipboard API 사용
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(textToCopy).then(() => {
-                        showToast();
-                    }).catch(() => {
-                        // 폴백
-                        fallbackCopy(textToCopy);
-                        showToast();
-                    });
-                } else {
-                    fallbackCopy(textToCopy);
-                    showToast();
+                let copied;
+                try {
+                    if (navigator.clipboard?.writeText) {
+                        await navigator.clipboard.writeText(textToCopy);
+                        copied = true;
+                    } else copied = fallbackCopy(textToCopy);
+                } catch (_) {
+                    copied = fallbackCopy(textToCopy);
                 }
+                showToast(copied);
             });
         });
 
         function fallbackCopy(text) {
+            const previousFocus = document.activeElement;
             const textarea = document.createElement('textarea');
             textarea.value = text;
             textarea.style.position = 'fixed';
             textarea.style.opacity = '0';
             document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
+            try {
+                textarea.select();
+                return document.execCommand('copy');
+            } catch (_) {
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+                previousFocus?.focus({ preventScroll: true });
+            }
         }
     }
 

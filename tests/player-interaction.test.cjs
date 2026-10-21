@@ -49,4 +49,8 @@ test('player shortcuts leave focused controls alone and use five-second seeking'
     context.video.duration = 20;
     handler(event);
     assert.equal(context.video.currentTime, 13);
+    for (const modifier of ['altKey', 'ctrlKey', 'metaKey']) {
+        handler({ ...event, [modifier]: true, preventDefault() { assert.fail('Browser shortcut was captured'); } });
+        assert.equal(context.video.currentTime, 13);
+    }
 });

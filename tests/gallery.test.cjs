@@ -6,7 +6,7 @@ const source = readFileSync(`${__dirname}/../script.js`, 'utf8');
 const frameHelper = source.match(/function galleryCardFrame\(position, gap, frameWidth\) \{[\s\S]*?(?=\n    function initGallerySurface)/)[0];
 const init = source.match(/function initProjectGallery\(\) \{[\s\S]*?(?=\n    function initPortfolioViews)/)[0];
 
-function setup(reduced = false) {
+function setup(reduced = false, withSoftware = false, hash = '') {
     let now = 0, timerId = 0;
     const fireCalls = { prepare: 0, show: 0, stop: 0 };
     const timers = new Map(), events = {}, windowEvents = {};
@@ -21,11 +21,13 @@ function setup(reduced = false) {
             focus() { this.focused = true; },
             replaceChildren(...children) { this.children = children; },
             setAttribute(name, value) { this.attributes[name] = value; },
+            getAttribute(name) { return this.attributes[name]; },
             appendChild(child) { this.children.push(child); },
+            cloneNode() { return element(); },
         };
     }
     const ids = Object.fromEntries(['back-to-top', 'gallery-focus', 'gallery-type', 'gallery-cinema', 'gallery-camera', 'gallery-portal', 'gallery-controls', 'gallery-details', 'gallery-status', 'gallery-back', 'gallery-prev', 'gallery-next', 'gallery-project-kind', 'gallery-project-credit'].map(id => [id, element()]));
-    const projects = Array.from({ length: 5 }, (_, i) => {
+    const projects = Array.from({ length: withSoftware ? 6 : 5 }, (_, i) => {
         const video = { dataset: { src: `video/web/project-0${i + 1}.mp4` }, loads: 0, pauses: 0, plays: 0, primes: 0, play() { if (this.muted) this.primes++; else this.plays++; return Promise.resolve(); }, load() { this.loads++; }, pause() { this.pauses++; } };
         const media = element();
         const project = element();
@@ -36,7 +38,7 @@ function setup(reduced = false) {
         project.querySelector = selector => selector === '.main-media' ? media : heading;
         project.video = video; project.media = media; project.hidden = true;
         project.scrollIntoView = options => { project.scrolled = options; };
-        ids[`project-0${i + 1}`] = project;
+        ids[i === 5 ? 'project-mmt' : `project-0${i + 1}`] = project;
         return project;
     });
     ids['gallery-cinema'].appendChild = media => { media.parent = ids['gallery-cinema']; };
@@ -47,21 +49,43 @@ function setup(reduced = false) {
     ids['gallery-type'].querySelectorAll = selector => selector === 'svg[data-ink]' ? inkSvgs : glyphs;
     const cards = projects.map((project, i) => {
         const card = element();
-        card.hash = `#project-0${i + 1}`;
+        card.hash = i === 5 ? '#project-mmt' : `#project-0${i + 1}`;
+        if (i === 5) card.dataset.kind = 'software';
         card.querySelector = selector => ({ textContent: selector === '.work-card-type' ? 'Motion' : '0:35 / 100%' });
         return card;
     });
     const gallery = element(); gallery.clientWidth = 1400; gallery.setPointerCapture = () => {};
     gallery.querySelectorAll = () => cards;
     const counter = element(), body = element(), nav = element();
-    const barcode = cards.map(() => element());
+    for (const [id, label] of [['gallery-prev', 'Previous project'], ['gallery-next', 'Next project']]) {
+        ids[id].setAttribute('aria-label', label);
+        ids[id].querySelector = () => element();
+    }
+    const detailLinks = () => projects.flatMap(project => project.children.filter(child => child.className === 'project-pagination').flatMap(nav => nav.children));
+    const barcode = element();
     const motion = { matches: reduced, addEventListener(name, callback) { this.change = callback; } };
-    const window = { scrollTo() {}, innerWidth: 1400, location: { hash: '' }, matchMedia: () => motion, addEventListener(name, fn) { windowEvents[name] = fn; } };
+    const window = { scrollTo() {}, innerWidth: 1400, location: { hash }, matchMedia: () => motion, addEventListener(name, fn) { windowEvents[name] = fn; } };
+    nav.click = () => {
+        nav.handlers.click();
+        gallery.hidden = false;
+        projects.forEach(project => { project.hidden = true; });
+        window.location.hash = '#work';
+    };
+    ids['gallery-details'].click = () => {
+        gallery.hidden = true;
+        window.location.hash = ids['gallery-details'].href;
+        ids[window.location.hash.slice(1)].hidden = false;
+    };
     const document = {
         body, hidden: false, getElementById: id => ids[id],
-        querySelector: selector => selector === '.work-index' ? gallery : counter,
-        querySelectorAll: selector => selector === '[data-work-index]' ? barcode : [nav],
+        querySelector: selector => selector === '.work-index' ? gallery : selector === '.work-barcode' ? barcode : selector === '.nav-link[href="#work"]' ? nav : counter,
+        querySelectorAll: selector => selector === '.project-pagination a' ? detailLinks() : [nav],
         addEventListener(name, fn) { events[name] = fn; },
+        createElement(tag) {
+            const result = element();
+            if (tag === 'a') Object.defineProperty(result, 'href', { set(value) { this.hash = value; } });
+            return result;
+        },
         createElementNS: () => element(),
         createComment() { return { replaceWith(media) { media.parent = this.originalParent; } }; },
     };
@@ -89,7 +113,7 @@ function setup(reduced = false) {
         }
         now = end;
     }
-    return { windowEvents, ids, projects, cards, barcode, gallery, glyphs, inkSvgs, counter, body, motion, nav, events, window, document, fire, tick, timers, fireCalls };
+    return { windowEvents, ids, projects, cards, get pagination() { return cards.map(card => detailLinks().find(link => link.hash === card.hash)); }, get barcode() { return barcode.children; }, gallery, glyphs, inkSvgs, counter, body, motion, nav, events, window, document, fire, tick, timers, fireCalls };
 }
 
 test('the gallery initially selects Google Chrome as project 01', () => {
@@ -230,7 +254,7 @@ test('gallery safely skips missing or empty galleries', () => {
     }
 });
 
-test('dragging browses without opening a work, and hiding the tab cancels a pending reveal', () => {
+test('dragging browses without opening a work, and hiding the tab settles a pending reveal without playback', () => {
     const app = setup();
     app.fire(app.gallery, 'pointerdown', { clientX: 100, pointerId: 1 });
     app.fire(app.gallery, 'pointermove', { clientX: -100, pointerId: 1 });
@@ -244,8 +268,38 @@ test('dragging browses without opening a work, and hiding the tab cancels a pend
     app.document.hidden = true;
     app.events.visibilitychange();
     app.tick(5000);
-    assert.equal(app.gallery.dataset.phase, 'out');
+    assert.equal(app.gallery.dataset.phase, 'video');
     assert.equal(app.projects[1].video.plays, 0);
+    assert.equal(app.projects[1].hidden, false);
+    assert.equal(app.projects[1].media.parent, app.ids['gallery-cinema']);
+    assert.equal(app.timers.size, 0);
+    app.document.hidden = false;
+    app.events.visibilitychange();
+    assert.equal(app.gallery.dataset.phase, 'video');
+    assert.equal(app.projects[1].video.plays, 0);
+});
+
+test('switching tabs keeps the active project, player, and playback position without automatically resuming', () => {
+    const app = setup();
+    app.fire(app.cards[2], 'click');
+    app.tick(4500);
+    const project = app.projects[2];
+    project.video.currentTime = 42;
+    const plays = project.video.plays, pauses = project.video.pauses;
+    app.document.hidden = true;
+    app.events.visibilitychange();
+    app.tick(5000);
+    assert.equal(project.video.pauses, pauses + 1);
+    assert.equal(app.gallery.dataset.phase, 'video');
+    assert.equal(project.media.parent, app.ids['gallery-cinema']);
+    assert.equal(project.hidden, false);
+    assert.equal(app.body.classList.contains('gallery-playing'), true);
+    assert.equal(project.video.currentTime, 42);
+    app.document.hidden = false;
+    app.events.visibilitychange();
+    assert.equal(project.video.plays, plays);
+    assert.equal(project.video.currentTime, 42);
+    assert.equal(app.gallery.dataset.phase, 'video');
 });
 
 test('changing the motion preference does not skip the title or duplicate playback', () => {
@@ -311,6 +365,53 @@ test('back holds the closing phase before returning the player and cancelling pl
     assert.equal(app.gallery.dataset.phase, 'out');
     assert.equal(app.projects[0].media.parent, app.projects[0]);
     assert.equal(app.projects[0].hidden, true);
+});
+
+test('opening a navigation link in another tab leaves the active film alone', () => {
+    const app = setup();
+    app.fire(app.cards[0], 'click'); app.tick(4500);
+    for (const options of [{ ctrlKey: true }, { metaKey: true }, { shiftKey: true }, { altKey: true }, { button: 1 }, { defaultPrevented: true }]) {
+        app.fire(app.nav, 'click', options);
+        assert.equal(app.gallery.dataset.phase, 'video');
+        assert.equal(app.projects[0].hidden, false);
+    }
+    app.fire(app.nav, 'click');
+    assert.equal(app.gallery.dataset.phase, 'out');
+});
+
+test('browser zoom and modified arrow shortcuts are not captured by the gallery', () => {
+    const app = setup();
+    const wheel = app.fire(app.gallery, 'wheel', { ctrlKey: true, deltaY: 300, deltaX: 0, deltaMode: 0 });
+    assert.equal(wheel.defaultPrevented, undefined);
+    for (const options of [{ altKey: true }, { ctrlKey: true }, { metaKey: true }]) {
+        let prevented = false;
+        app.events.keydown({ key: 'ArrowRight', target: { closest: () => null }, preventDefault() { prevented = true; }, ...options });
+        assert.equal(prevented, false);
+        assert.match(app.counter.textContent, /01 \/ 05/);
+    }
+});
+
+test('late click-priming completion cannot rewind a film already playing', async () => {
+    const app = setup(), video = app.projects[0].video;
+    let finishPrime;
+    video.play = function () { return this.muted ? new Promise(resolve => { finishPrime = resolve; }) : Promise.resolve(); };
+    app.fire(app.cards[0], 'click'); app.tick(4500);
+    video.currentTime = 9;
+    finishPrime(); await Promise.resolve();
+    assert.equal(video.currentTime, 9);
+});
+
+test('an old priming request cannot reset the same film after closing and reopening it', async () => {
+    const app = setup(), video = app.projects[0].video, completions = [];
+    video.play = () => new Promise(resolve => completions.push(resolve));
+    app.fire(app.cards[0], 'click');
+    app.nav.handlers.click();
+    app.fire(app.cards[0], 'click');
+    video.currentTime = 2;
+    const pauses = video.pauses;
+    completions[0](); await Promise.resolve();
+    assert.equal(video.currentTime, 2);
+    assert.equal(video.pauses, pauses);
 });
 
 test('Google keeps the original G and enters its real counter without constructing a mask', () => {
@@ -592,4 +693,117 @@ test('software detail link reaches the shared view router instead of scrolling a
     const event = app.fire(app.ids['gallery-details'], 'click');
     assert.equal(event.defaultPrevented, undefined);
     assert.equal(app.gallery.dataset.phase, 'out');
+});
+
+test('Initial D can enter MMT and return through its detail arrow with typography and playback', () => {
+    const app = setup(false, true);
+    app.fire(app.cards[4], 'click'); app.tick(4500);
+    app.fire(app.ids['gallery-next'], 'click');
+    assert.equal(app.gallery.hidden, true);
+    assert.equal(app.window.location.hash, '#project-mmt');
+    assert.equal(app.projects[5].hidden, false);
+    assert.equal(app.projects[4].media.parent, app.projects[4]);
+    assert.equal(app.fire(app.pagination[4], 'click').defaultPrevented, true);
+    assert.equal(app.gallery.hidden, false);
+    assert.equal(app.projects[5].hidden, true);
+    assert.equal(app.gallery.dataset.phase, 'type');
+    assert.equal(app.gallery.dataset.cinematic, 'true');
+    app.tick(4500);
+    assert.equal(app.projects[4].hidden, false);
+    assert.equal(app.projects[4].video.plays, 2);
+    assert.equal(app.ids['gallery-next'].disabled, false);
+});
+
+test('barcode opens a film from MMT, while About and Contact still select a main card', () => {
+    const app = setup(false, true);
+    app.fire(app.cards[5], 'click');
+    app.fire(app.barcode[1], 'click');
+    assert.equal(app.gallery.hidden, false);
+    assert.equal(app.projects[5].hidden, true);
+    assert.equal(app.gallery.dataset.phase, 'type');
+    app.tick(4500);
+    assert.equal(app.projects[1].video.plays, 1);
+    for (const hash of ['#about', '#contact']) {
+        app.nav.click(); app.gallery.hidden = true; app.window.location.hash = hash;
+        app.fire(app.barcode[0], 'click');
+        assert.equal(app.gallery.hidden, false);
+        assert.equal(app.gallery.dataset.phase, 'out');
+    }
+});
+
+test('detail project arrows preserve modified clicks', () => {
+    const app = setup(false, true);
+    app.fire(app.cards[5], 'click');
+    assert.equal(app.fire(app.pagination[4], 'click', { ctrlKey: true }).defaultPrevented, undefined);
+    assert.equal(app.gallery.hidden, true);
+    assert.equal(app.window.location.hash, '#project-mmt');
+});
+
+test('detail navigation follows card order automatically when a software project is added', () => {
+    for (const withSoftware of [false, true]) {
+        const app = setup(false, withSoftware);
+        assert.equal(app.barcode.length, app.cards.length);
+        assert.equal(app.ids['gallery-next'].disabled, false);
+        app.fire(app.barcode[app.cards.length - 1], 'click', { detail: 0 });
+        assert.equal(app.ids['gallery-next'].disabled, true);
+        assert.equal(app.barcode.at(-1).attributes['aria-pressed'], 'true');
+        app.projects.forEach((project, i) => {
+            const links = project.children.find(child => child.className === 'project-pagination').children;
+            const prev = links.find(link => link.className === 'project-step-prev');
+            const next = links.find(link => link.className === 'project-step-next');
+            assert.equal(prev?.hash, app.cards[i - 1]?.hash);
+            assert.equal(next?.hash, app.cards[i + 1]?.hash);
+            if (prev) assert.equal(prev.attributes['aria-label'], 'Previous project');
+            if (next) assert.equal(next.attributes['aria-label'], 'Next project');
+        });
+    }
+});
+
+test('dragging during typography, camera, playback, and closing does not browse or close the project', () => {
+    const app = setup();
+    app.fire(app.cards[1], 'click');
+    for (const delay of [0, 1450, 1100]) {
+        app.tick(delay);
+        const phase = app.gallery.dataset.phase;
+        const counter = app.counter.textContent;
+        app.fire(app.gallery, 'pointerdown', { clientX: 100, pointerId: 1 });
+        app.fire(app.gallery, 'pointermove', { clientX: -500, pointerId: 1 });
+        app.fire(app.gallery, 'pointerup');
+        assert.equal(app.gallery.dataset.phase, phase);
+        assert.equal(app.counter.textContent, counter);
+        assert.equal(app.projects[1].media.parent, app.ids['gallery-cinema']);
+    }
+    app.fire(app.ids['gallery-back'], 'click');
+    app.fire(app.gallery, 'pointerdown', { clientX: 100, pointerId: 1 });
+    app.fire(app.gallery, 'pointermove', { clientX: -500, pointerId: 1 });
+    assert.equal(app.gallery.dataset.phase, 'closing');
+    app.tick(650);
+    assert.equal(app.cards[1].classList.contains('is-current'), true);
+});
+
+test('opening a project cancels any pending main drag, and hidden detail views cannot start one', () => {
+    const app = setup(false, true);
+    app.fire(app.gallery, 'pointerdown', { clientX: 100, pointerId: 1 });
+    app.fire(app.cards[1], 'click'); app.tick(4500);
+    app.fire(app.gallery, 'pointermove', { clientX: -500, pointerId: 1 });
+    assert.equal(app.gallery.dataset.phase, 'video');
+    app.fire(app.cards[5], 'click');
+    const counter = app.counter.textContent;
+    app.fire(app.gallery, 'pointerdown', { clientX: 100, pointerId: 2 });
+    app.fire(app.gallery, 'pointermove', { clientX: -500, pointerId: 2 });
+    assert.equal(app.counter.textContent, counter);
+    assert.equal(app.window.location.hash, '#project-mmt');
+});
+
+test('direct project links and browser history keep the barcode selection in sync', () => {
+    const app = setup(false, true, '#project-mmt');
+    assert.equal(app.barcode[5].attributes['aria-pressed'], 'true');
+    assert.equal(app.ids['gallery-next'].disabled, true);
+    app.window.location.hash = '#project-05';
+    app.windowEvents.popstate();
+    assert.equal(app.barcode[4].attributes['aria-pressed'], 'true');
+    app.window.location.hash = '#project-01';
+    app.windowEvents.hashchange();
+    assert.equal(app.barcode[0].attributes['aria-pressed'], 'true');
+    assert.equal(app.ids['gallery-prev'].disabled, true);
 });
