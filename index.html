@@ -16,7 +16,7 @@
     <link rel="preload" href="assets/brand/barlow-condensed-extrabold-italic.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="assets/brand/Allura-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <script src="theme.js"></script>
-    <link rel="stylesheet" href="style.css?v=20261021-128">
+    <link rel="stylesheet" href="style.css?v=20261024-heading-focus">
     <link rel="apple-touch-icon" sizes="57x57" href="ico/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="ico/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="ico/apple-icon-72x72.png">
@@ -158,7 +158,7 @@
                 </div>
             </a>
             <a class="work-preview" href="#project-mmt" data-kind="software">
-                <img alt="MMT — Multi Media Toolkit" decoding="async" height="800" src="assets/mmt/thumbnail-v2.svg" width="1200"/>
+                <img alt="MMT — Multi Media Toolkit 개발 프로젝트" decoding="async" height="800" src="assets/mmt/thumbnail-project.svg" width="1200"/>
                 <div class="work-card-copy">
                     <p class="work-card-type">Software / Windows Application</p>
                     <h3 class="work-card-title">MMT<span aria-hidden="true">↗</span></h3>
@@ -216,7 +216,7 @@
             <div class="project-media main-media">
                 <div class="video-player" id="project1-player">
                     <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                    <video data-src="video/web/project-01.mp4" preload="none" playsinline poster="Thumbnail/work-01.jpg"></video>
+                    <video data-src="video/web/project-01.mp4" data-frame-duration="0.03336666666666667" preload="none" playsinline poster="Thumbnail/work-01.jpg"></video>
                     <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                 </div>
             </div>
@@ -292,7 +292,7 @@
                 <div class="video-player" id="project2-player">
                     <div class="media-placeholder" id="project2-main">
                         <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                        <video data-src="video/web/project-02.mp4" preload="none" playsinline
+                        <video data-src="video/web/project-02.mp4" data-frame-duration="0.03336666666666667" preload="none" playsinline
                             poster="Thumbnail/work-02.jpg"></video>
                         <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                     </div>
@@ -416,7 +416,7 @@
                 <div class="video-player" id="project3-player">
                     <div class="media-placeholder" id="project3-main">
                         <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                        <video data-src="video/web/project-03.mp4" preload="none" playsinline
+                        <video data-src="video/web/project-03.mp4" data-frame-duration="0.03336666666666667" preload="none" playsinline
                             poster="Thumbnail/work-03.jpg"></video>
                         <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                     </div>
@@ -632,7 +632,7 @@
                 <div class="video-player" id="project5-player">
                     <div class="media-placeholder" id="project5-main">
                         <!-- ★ poster: 썸네일 이미지 경로를 넣으세요 (예: img/thumbnail1.jpg) -->
-                        <video data-src="video/web/project-05.mp4" preload="none" playsinline
+                        <video data-src="video/web/project-05.mp4" data-frame-duration="0.04166666666666667" preload="none" playsinline
                             poster="Thumbnail/work-05.jpg"></video>
                         <!-- 비디오 컨트롤 오버레이 (JS가 자동 생성) -->
                     </div>
@@ -718,14 +718,32 @@
     </section>
 
     <article class="project software-project" id="project-mmt" aria-labelledby="mmt-title" hidden>
+        <div class="software-intro">
         <header class="software-header">
             <p class="software-eyebrow">SOFTWARE / WINDOWS APPLICATION</p>
             <h2 class="project-title" id="mmt-title">Multi Media Toolkit</h2>
             <p class="software-lead">파일 변환부터 AI 자막·번역까지,<br>하나의 작업 흐름으로.</p>
             <p class="software-summary">파일 변환과 AI 자막·번역을 하나의 흐름으로 연결하는 Windows 미디어 도구입니다. 필요한 기능과 동작 기준을 정의하고, AI와 구현·분석·검사를 진행한 뒤 실제 실행과 사용자 피드백으로 결과를 확인했습니다.</p>
             <div class="software-tags"><span>C# / .NET</span><span>Windows desktop</span><span>FFmpeg</span><span>Whisper / Gemma</span></div>
+            <div class="software-downloads">
+                <a class="software-download" data-mmt-download href="https://github.com/SugarRush1231/Multi_Media_Toolkit/releases/download/v1.4.0/MMT_Setup_v1.4.0.exe">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v4h14v-4"/></svg>
+                    <span>Download for Windows</span>
+                </a>
+                <span class="software-release-version"><span data-mmt-version>v1.4.0</span> · .exe</span>
+            </div>
         </header>
-        <figure class="software-cover"><img src="assets/mmt/screen-content-v2.png" alt="실제 설치본 MMT v1.4.0의 AI 자막·번역 화면" width="1086" height="733"><figcaption>실제 설치본 v1.4.0 · AI 자막·번역 화면</figcaption></figure>
+        <figure class="software-film">
+            <div class="video-player" id="mmt-film-player" data-controls="on-demand">
+                <video data-play-on-entry data-src="assets/mmt/portfolio-film.mp4?v=2" preload="none" playsinline poster="assets/mmt/portfolio-film-poster.jpg?v=2" width="1080" height="1920" aria-label="MMT 프로젝트 소개 영상, 24초"></video>
+            </div>
+            <figcaption><span>Project film</span><span>24 sec / 9:16</span><small>Music: <a href="https://ende.app/en" target="_blank" rel="noopener noreferrer">Sascha Ende</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> · edited excerpt</small></figcaption>
+        </figure>
+        </div>
+        <figure class="software-cover software-cover--interactive">
+            <iframe src="assets/mmt/preview/index.html?v=20261024-2" title="MMT UI 미리보기 — 메뉴와 옵션을 직접 눌러보세요" loading="lazy" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" aria-describedby="mmt-preview-caption"></iframe>
+            <figcaption id="mmt-preview-caption">MMT <span data-mmt-version>v1.4.0</span> · 메뉴와 옵션을 직접 눌러볼 수 있습니다. 파일 처리·다운로드는 실행되지 않습니다. 미리보기 화면으로, 실제 앱과 일부 다를 수 있습니다.</figcaption>
+        </figure>
         <div class="software-story">
             <section><h3>Problem</h3><p>미디어 준비 작업에서는 파일 변환과 자막 생성, 번역을 반복하게 됩니다. 이 과정을 서로 다른 도구 사이에서 옮겨 다니지 않고 한 프로그램의 흐름으로 이어갈 수 있도록 MMT를 기획했습니다.</p></section>
             <section><h3>My role & AI collaboration</h3><div class="software-features">
@@ -735,6 +753,7 @@
             <section><h3>Media workflow</h3><div class="software-features">
                 <div><h4>변환 · 자막 · 번역</h4><p>영상·오디오 변환과 Whisper 자막 생성, Gemma 번역을 연결했습니다. 영상 제작의 준비 작업을 한 흐름 안에서 다루도록 구성했습니다.</p></div>
                 <div><h4>공통 모델 관리</h4><p>기능마다 모델을 중복 설치하지 않고, 설치 상태와 실행 환경을 확인하게 했습니다. 모델이 없을 때 필요한 설치를 안내하고, 기존 모델은 자막·번역과 노래 자막 작업에서 재사용하도록 구성했습니다.</p></div>
+                <div><h4>한 번의 클릭으로 영상 다운로드</h4><p>위젯 모드는 흰 원형 다운로드 버튼으로 화면에 머무릅니다. 영상을 보고 있는 브라우저에서 버튼을 누르면 현재 영상 페이지를 감지해 다운로드를 시작합니다.</p></div>
             </div></section>
             <section><h3>Issue → resolution</h3><div class="software-features">
                 <div><h4>로그인 상태에서도 실패한 다운로드</h4><p>로그인 여부만 원인으로 단정하지 않고, 오류가 발생한 주소 유형과 처리 경로를 구분했습니다. 주소를 단순 치환해 다른 영상을 받지 않도록 원본 주소와 콘텐츠 유형을 유지하는 기준을 세웠습니다.</p></div>
@@ -742,7 +761,7 @@
             </div></section>
             <section><h3>Usability & release</h3><div class="software-features">
                 <div><h4>필요한 시점에 연결 안내</h4><p>시작부터 브라우저 연결을 요구하는 대신, 로그인이 필요한 시점에 안내하도록 절차를 줄였습니다. UI 변경 뒤에는 기존 사용자의 실제 업데이트 동작도 확인했습니다.</p></div>
-                <div><h4>확장 프로그램 공개 배포 대응</h4><p>심사 자료와 개인정보 안내를 정리하고, 거절 사유 확인과 재제출에 대응했습니다. 브라우저 확장 0.2.15의 공개 게시까지 진행했습니다. 확장 프로그램과 데스크톱 앱 v1.4.0은 별도로 버전을 관리합니다.</p></div>
+                <div><h4>확장 프로그램 공개 배포 대응</h4><p>심사 자료와 개인정보 안내를 정리하고, 거절 사유 확인과 재제출에 대응했습니다. 브라우저 확장 0.2.15의 공개 게시까지 진행했습니다. 확장 프로그램과 데스크톱 앱은 별도로 버전을 관리합니다.</p></div>
             </div></section>
             <section><h3>What this demonstrates</h3><p>요구사항을 구체적인 동작 기준으로 바꾸고, AI 협업 결과를 실제 실행과 사용자 확인으로 검증하는 경험입니다. 구현에 그치지 않고 예외 상황, 사용성, 배포 이후의 피드백까지 이어서 다뤘습니다.</p></section>
         </div>
@@ -1018,7 +1037,8 @@
         <span>클립보드에 복사되었습니다!</span>
     </div>
 
-    <script src="script.js?v=20261021-113"></script>
+    <script src="script.js?v=20261024-menu-click"></script>
+    <script src="mmt-release.js?v=20261024-1"></script>
 </body>
 
 </html>

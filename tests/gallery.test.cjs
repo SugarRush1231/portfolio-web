@@ -391,6 +391,24 @@ test('browser zoom and modified arrow shortcuts are not captured by the gallery'
     }
 });
 
+test('arrow keys browse only the main list and never switch projects during an open film', () => {
+    const app = setup();
+    const press = key => {
+        const event = { key, target: { closest: () => null }, preventDefault() { this.defaultPrevented = true; } };
+        app.events.keydown(event);
+        return event;
+    };
+    assert.equal(press('ArrowRight').defaultPrevented, true);
+    assert.match(app.counter.textContent, /02 \/ 05/);
+    app.fire(app.cards[1], 'click');
+    for (const phase of ['type', 'camera', 'video', 'closing']) {
+        app.gallery.dataset.phase = phase;
+        assert.equal(press('ArrowRight').defaultPrevented, undefined);
+        assert.equal(press('ArrowLeft').defaultPrevented, undefined);
+        assert.match(app.counter.textContent, /02 \/ 05/);
+    }
+});
+
 test('late click-priming completion cannot rewind a film already playing', async () => {
     const app = setup(), video = app.projects[0].video;
     let finishPrime;
@@ -571,15 +589,39 @@ test('a configured opening time survives priming and repeated gallery entry', as
 
 test('barcode browses the list, follows selection, and switches the active project', () => {
     const app = setup();
+    app.barcode[0].focus();
     app.fire(app.barcode[0], 'click');
+    assert.equal(app.barcode[0].focused, true, 'Browsing the main list keeps the menu focus');
     assert.match(app.counter.textContent, /01 \/ 05/);
     assert.equal(app.barcode[0].attributes['aria-pressed'], 'true');
     assert.equal(app.gallery.dataset.phase, 'out');
     app.fire(app.cards[0], 'click'); app.tick(3100);
+    app.barcode[4].focus();
     app.fire(app.barcode[4], 'click'); app.tick(3100);
+    assert.equal(app.barcode[4].focused, true, 'An existing focus does not affect project switching');
     assert.equal(app.projects[0].hidden, true);
     assert.equal(app.projects[4].hidden, false);
     assert.equal(app.barcode[4].attributes['aria-pressed'], 'true');
+});
+
+test('the project menu is pointer-only on the main list and project details', () => {
+    const app = setup();
+    for (const button of app.barcode) {
+        assert.equal(button.tabIndex, -1);
+        assert.equal(app.fire(button, 'pointerdown').defaultPrevented, true, 'Clicking a barcode must not take keyboard focus');
+    }
+    const target = { closest: selector => selector === '.work-barcode' ? app.barcode[0] : null };
+    for (const hidden of [false, true]) {
+        app.gallery.hidden = hidden;
+        const event = { key: ' ', target, preventDefault() { this.defaultPrevented = true; } };
+        app.events.keydown(event);
+        assert.equal(event.defaultPrevented, true);
+        assert.equal(app.gallery.dataset.phase, 'out');
+    }
+    app.gallery.hidden = false;
+    const enter = { key: 'Enter', target, preventDefault() { this.defaultPrevented = true; } };
+    app.events.keydown(enter);
+    assert.equal(enter.defaultPrevented, true, 'Enter cannot activate the pointer-only menu');
 });
 
 test('wheel lift reacts, settles, and cancels on entry or reduced motion', () => {
@@ -717,7 +759,9 @@ test('Initial D can enter MMT and return through its detail arrow with typograph
 test('barcode opens a film from MMT, while About and Contact still select a main card', () => {
     const app = setup(false, true);
     app.fire(app.cards[5], 'click');
+    app.barcode[1].focus();
     app.fire(app.barcode[1], 'click');
+    assert.equal(app.barcode[1].focused, true);
     assert.equal(app.gallery.hidden, false);
     assert.equal(app.projects[5].hidden, true);
     assert.equal(app.gallery.dataset.phase, 'type');

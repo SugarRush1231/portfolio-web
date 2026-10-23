@@ -57,6 +57,7 @@ button, a, summary { -webkit-tap-highlight-color: transparent; touch-action: man
 img, video { display: block; max-width: 100%; width: 100%; height: auto; }
 ::selection { background: var(--text-primary); color: var(--bg-primary); }
 :where(a, button, summary, [tabindex]):focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+:where(.project-title, .section-title)[tabindex="-1"]:focus-visible { outline: none; }
 section, article { scroll-margin-top: calc(var(--nav-height) + 24px); }
 .nav-inner, .hero, .work-section > .section-header, .work-intro, .work-index, .about-section, .contact-section, .footer-inner {
     width: min(100%, var(--max-width)); padding-inline: var(--gutter); margin-inline: auto;
@@ -1382,15 +1383,33 @@ button.footer-top { border: 0; background: none; color: inherit; font-family: in
 .gallery-playing[data-gallery-project="5"] .work-index { height: calc(var(--film-top) + var(--portrait-height) + 94px); }
 .gallery-playing .gallery-cinema[data-portrait="true"] { top: var(--film-top); }
 
-/* Software projects share the portfolio view without borrowing the video player. */
+/* Software projects share the portfolio detail view. */
 .gallery-mode .software-project { width: min(100%, 1280px); margin-inline: auto; padding: 64px calc(var(--gutter) + 64px) 80px; }
+.software-intro { display: grid; grid-template-columns: minmax(0, 1fr) clamp(260px, 24vw, 320px); align-items: center; gap: clamp(32px, 4vw, 56px); }
+.software-header { min-width: 0; }
+.software-film { position: relative; top: 24px; width: 100%; max-width: 340px; margin: 0; justify-self: center; }
+.software-film .video-player { height: auto; aspect-ratio: 9 / 16; }
+.software-film figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 12px; color: var(--text-muted); font-size: .6875rem; }
+.software-film figcaption small { flex-basis: 100%; font-size: .625rem; }
+.software-film figcaption a { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 1099px) {
+    .software-intro { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .software-film { top: 0; }
+}
 .software-eyebrow { margin-bottom: 24px; font-size: .6875rem; letter-spacing: .12em; color: var(--text-muted); }
 .gallery-mode .software-project .project-title { max-width: none; font-size: clamp(2.5rem, 6vw, 5rem); }
 .software-lead { margin-top: 32px; font-size: clamp(1.375rem, 3vw, 2.25rem); line-height: 1.4; letter-spacing: -.04em; }
 .software-summary { max-width: 62ch; margin-top: 24px; color: var(--text-secondary); line-height: 1.9; word-break: keep-all; }
 .software-tags { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 28px; color: var(--text-muted); font-size: .75rem; }
+.software-downloads { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 32px; font-size: .75rem; }
+.software-download { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 50px; padding: 12px 20px; border: 1px solid var(--text-primary); border-radius: 4px; background: var(--text-primary); color: var(--bg-primary); font-size: .8125rem; font-weight: 500; transition: background-color 160ms, color 160ms; }
+.software-download svg { width: 20px; height: 20px; flex: none; }
+.software-download:hover { background: var(--bg-primary); color: var(--text-primary); }
+.software-release-version { color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .software-cover { margin: 56px 0 72px; }
 .software-cover img { display: block; width: 100%; height: auto; border-radius: 18px; }
+.software-cover--interactive iframe { display: block; width: 100%; height: clamp(620px, 66vw, 780px); border: 1px solid var(--border); border-radius: 18px; background: #fff; }
+@media (min-width: 1100px) { .software-cover--interactive { margin-inline: -24px; } }
 .software-cover figcaption { margin-top: 12px; color: var(--text-muted); font-size: .6875rem; }
 .software-story > section { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; padding: 36px 0; border-top: 1px solid var(--border); }
 .software-story h3 { font-size: 1rem; font-weight: 500; }

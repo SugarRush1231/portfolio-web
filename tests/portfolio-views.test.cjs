@@ -5,7 +5,7 @@ const { test } = require('node:test');
 const source = readFileSync(`${__dirname}/../script.js`, 'utf8');
 const init = source.match(/function initPortfolioViews\(\) \{[\s\S]*?(?=\n    function initScrollVideos)/)[0];
 
-function setup(hash = '') {
+function setup(hash = '', { entryPlay = () => Promise.resolve(), hidden = false } = {}) {
     function element(id, classes = []) {
         const names = new Set(classes);
         return {
@@ -14,10 +14,10 @@ function setup(hash = '') {
             setAttribute(name, value) { this.attributes[name] = value; },
             removeAttribute(name) { delete this.attributes[name]; },
             focus() { this.focused = true; },
-            querySelector(selector) { return this.matches?.[selector] || this.heading; },
+            querySelector(selector) { return this.matches?.[selector] || (selector.startsWith('video[') ? null : this.heading); },
         };
     }
-    const panels = ['project-01', 'project-02', 'about', 'contact'].map(id => {
+    const panels = ['project-01', 'project-02', 'about', 'contact', 'project-mmt'].map(id => {
         const panel = element(id, id.startsWith('project') ? ['project'] : []);
         panel.heading = element(`${id}-title`);
         panel.heading.textContent = id;
@@ -28,14 +28,21 @@ function setup(hash = '') {
     const body = element('body');
     const events = {}, windowEvents = {};
     const video = { paused: 0, pause() { this.paused++; } };
+    const entryVideo = {
+        dataset: { src: 'assets/mmt/portfolio-film.mp4' }, plays: 0, paused: true,
+        play() { this.plays++; this.paused = false; return entryPlay(); },
+        pause() { this.paused = true; },
+        closest() { return null; },
+    };
+    panels[4].matches = { 'video[data-play-on-entry]': entryVideo };
     const window = {
         location: { hash }, history: { pushState(state, title, value) { window.location.hash = value; } },
         addEventListener(name, callback) { windowEvents[name] = callback; }, scrollTo() {},
     };
     const document = {
-        body, getElementById: id => elements[id],
+        body, hidden, getElementById: id => elements[id],
         querySelector: selector => selector === '.work-index' ? elements.gallery : elements.caption,
-        querySelectorAll: selector => selector === '.project, #about, #contact' ? panels : selector === '.nav-link' ? links : [video],
+        querySelectorAll: selector => selector === '.project, #about, #contact' ? panels : selector === '.nav-link' ? links : [video, entryVideo],
         addEventListener(name, callback) { events[name] = callback; },
     };
     runInNewContext(`${init}; initPortfolioViews();`, { document, window });
@@ -44,8 +51,34 @@ function setup(hash = '') {
         events.click({ target: { closest: () => link }, button: 0, preventDefault() { prevented = true; }, ...options });
         return prevented;
     }
-    return { panels, elements, body, links, video, window, windowEvents, events, element, click };
+    return { panels, elements, body, links, video, entryVideo, window, windowEvents, events, element, click };
 }
+
+test('entry playback loads only the active project, pauses on exit and starts again on re-entry', () => {
+    const app = setup();
+    assert.equal(app.entryVideo.src, undefined);
+    assert.equal(app.entryVideo.plays, 0);
+    app.click(app.element('project-mmt'));
+    assert.equal(app.entryVideo.src, 'assets/mmt/portfolio-film.mp4');
+    assert.equal(app.entryVideo.dataset.src, undefined);
+    assert.equal(app.entryVideo.plays, 1);
+    app.click(app.links[1]);
+    assert.equal(app.entryVideo.paused, true);
+    assert.equal(app.entryVideo.plays, 1);
+    app.click(app.element('project-mmt'));
+    assert.equal(app.entryVideo.plays, 2);
+});
+
+test('entry playback handles direct links, background tabs and blocked autoplay', async () => {
+    assert.equal(setup('#project-mmt').entryVideo.plays, 1);
+    const background = setup('#project-mmt', { hidden: true });
+    assert.equal(background.entryVideo.plays, 0);
+    assert.equal(background.entryVideo.src, undefined);
+    const blocked = setup('#project-mmt', { entryPlay: () => Promise.reject(new Error('NotAllowedError')) });
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(blocked.panels[4].hidden, false);
+    assert.equal(blocked.entryVideo.plays, 1);
+});
 
 test('Project details opens one view, pauses media, and returns keyboard focus to the work', () => {
     const app = setup();

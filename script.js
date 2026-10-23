@@ -225,7 +225,8 @@
             let hideControlsTimer = null;
             let isDragging = false;
             let wasPlayingBeforeDrag = false;
-            let frameStepMode = false; // 기본 탐색은 5초 단위, 프레임 이동은 설정에서 선택
+            let frameStepMode = true;
+            const FRAME_DURATION = Number(video.dataset.frameDuration) || 1 / 30;
             let isSeeking = false; // 시크(이동) 중 상태
             let seekingTimeout = null; // 시크 완료 감지용 타이머
             let hasStarted = false; // 영상이 한 번이라도 재생된 적 있는지
@@ -241,7 +242,7 @@
 
             // 프레임 토글 클릭
             const toggleTrack = frameOption.querySelector('.settings-toggle-track');
-            toggleTrack.classList.add('on'); // 초기 상태 ON
+            toggleTrack.classList.toggle('on', frameStepMode);
             frameOption.addEventListener('click', (e) => {
                 e.stopPropagation();
                 frameStepMode = !frameStepMode;
@@ -270,7 +271,7 @@
                 if (isNaN(seconds)) return '0:00:00';
                 const min = Math.floor(seconds / 60);
                 const sec = Math.floor(seconds % 60);
-                const frame = Math.floor((seconds % 1) * 30); // 30fps 기준
+                const frame = Math.round((seconds % 1) / FRAME_DURATION) % Math.round(1 / FRAME_DURATION);
                 return `${min}:${sec.toString().padStart(2, '0')}:${frame.toString().padStart(2, '0')}`;
             }
 
@@ -533,7 +534,9 @@
             }
 
             // ── 컨트롤 표시/숨기기 ──
-            function showControls() {
+            function showControls(fromInteraction = false) {
+                if (fromInteraction) overlay.classList.add('controls-interacted');
+                if (playerContainer.dataset.controls === 'on-demand' && !overlay.classList.contains('controls-interacted')) return;
                 overlay.classList.add('show-controls');
                 clearTimeout(hideControlsTimer);
                 if (isPlaying) {
@@ -544,6 +547,7 @@
             }
 
             function showControlsPermanent() {
+                if (playerContainer.dataset.controls === 'on-demand' && !overlay.classList.contains('controls-interacted')) return;
                 overlay.classList.add('show-controls');
                 clearTimeout(hideControlsTimer);
             }
@@ -553,6 +557,7 @@
             overlay.addEventListener('click', (e) => {
                 // 컨트롤 바 안의 버튼 클릭은 무시
                 if (e.target.closest('.video-controls')) return;
+                showControls(true);
                 togglePlay();
             });
 
@@ -592,7 +597,7 @@
 
             // 마우스 움직임으로 컨트롤 표시
             playerContainer.addEventListener('mousemove', () => {
-                showControls();
+                showControls(true);
                 if (isSeeking) {
                     isSeeking = false;
                 }
@@ -607,13 +612,25 @@
 
             // 키보드 단축키
             playerContainer.setAttribute('tabindex', '0');
-            playerContainer.addEventListener('keydown', (e) => {
-                if (e.target !== playerContainer || e.ctrlKey || e.metaKey || e.altKey) return;
-                if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !Number.isFinite(video.duration)) return;
-                const FRAME_DURATION = 1 / 30; // 30fps 기준 1프레임
+            playerContainer.addEventListener('focusin', () => showControls(true));
+            function handlePlayerKeydown(e) {
+                if (e.defaultPrevented) return;
+                const arrowKey = e.key === 'ArrowLeft' || e.key === 'ArrowRight';
+                if ((e.target !== playerContainer && !arrowKey && e.key !== ' ') || e.ctrlKey || e.metaKey || e.altKey ||
+                    e.target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])')) return;
+                if (e.key === ' ' && e.target !== playerContainer && !e.target.closest('.work-barcode') &&
+                    e.target.closest('button, [role="button"], [role="switch"], [role="slider"]')) return;
+                const rect = playerContainer.getBoundingClientRect();
+                if (!rect.width || !rect.height || rect.bottom <= (document.getElementById('nav')?.offsetHeight || 0) ||
+                    rect.top >= window.innerHeight || rect.right <= 0 || rect.left >= window.innerWidth) return;
+                if (arrowKey && !Number.isFinite(video.duration)) return;
+                if (arrowKey || [' ', 'k', 'm', 'f'].includes(e.key)) showControls(true);
 
                 switch (e.key) {
                     case ' ':
+                        e.preventDefault();
+                        if (!e.repeat) togglePlay();
+                        break;
                     case 'k':
                         e.preventDefault();
                         togglePlay();
@@ -635,7 +652,7 @@
                             video.currentTime = Math.max(0, video.currentTime - step);
                             timeDisplay.textContent = `${formatTimeWithFrame(video.currentTime)} / ${formatTime(video.duration)}`;
                         } else {
-                            video.currentTime = Math.max(0, video.currentTime - 5);
+                            video.currentTime = Math.max(0, video.currentTime - (e.shiftKey ? 5 : 1));
                         }
                         updateProgress();
                         showControls();
@@ -651,12 +668,22 @@
                             video.currentTime = Math.min(video.duration, video.currentTime + step);
                             timeDisplay.textContent = `${formatTimeWithFrame(video.currentTime)} / ${formatTime(video.duration)}`;
                         } else {
-                            video.currentTime = Math.min(video.duration, video.currentTime + 5);
+                            video.currentTime = Math.min(video.duration, video.currentTime + (e.shiftKey ? 5 : 1));
                         }
                         updateProgress();
                         showControls();
                         break;
                 }
+            }
+            playerContainer.addEventListener('keydown', handlePlayerKeydown);
+            document.addEventListener('keydown', e => {
+                if (e.defaultPrevented || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== ' ') ||
+                    playerContainer.contains(e.target) || playerContainer.closest('[hidden]') || !playerContainer.getClientRects().length ||
+                    document.body.classList.contains('lightbox-open') ||
+                    (e.target.closest('button, [role="button"], [role="slider"]') && !(e.key === ' ' && e.target.closest('.work-barcode')))) return;
+                const gallery = playerContainer.closest('.work-index');
+                if (gallery && (gallery.hidden || gallery.dataset.phase !== 'video')) return;
+                handlePlayerKeydown(e);
             });
 
             // 초기 상태: 볼륨 50%, 음소거 해제
@@ -678,15 +705,21 @@
             videoPlayers.forEach(player => {
                 const video = player.querySelector('video');
                 const gallery = player.closest('.work-index');
-                if (!video || video.paused || (gallery && gallery.dataset.phase !== 'video')) return;
+                if (!video || (gallery && gallery.dataset.phase !== 'video')) return;
+                if (document.hidden) { if (!video.paused) video.pause(); return; }
                 const rect = player.getBoundingClientRect();
                 const width = Math.max(0, Math.min(window.innerWidth, rect.right) - Math.max(0, rect.left));
                 const height = Math.max(0, Math.min(window.innerHeight, rect.bottom) - Math.max(header?.offsetHeight || 0, rect.top));
-                if (!rect.width || !rect.height || width * height / (rect.width * rect.height) < 0.2) video.pause();
+                if ((!width || !height) && player.contains(document.activeElement)) document.activeElement.blur();
+                if (!video.paused && (!rect.width || !rect.height || width * height / (rect.width * rect.height) < 0.2)) video.pause();
             });
         }
         window.addEventListener('scroll', pauseOutsideView, { passive: true });
         window.addEventListener('resize', pauseOutsideView);
+        document.addEventListener('play', event => {
+            if (!event.target.closest('.work-index')) pauseOutsideView();
+        }, true);
+        document.addEventListener('visibilitychange', pauseOutsideView);
     }
 
     // ──────────────────────────────────────────────
@@ -1216,6 +1249,8 @@
             const button = document.createElement('button');
             const name = card.querySelector('.work-card-title').textContent.replace('↗', '').trim();
             button.type = 'button';
+            button.tabIndex = -1;
+            button.addEventListener('pointerdown', event => event.preventDefault());
             button.dataset.workIndex = String(i);
             button.setAttribute('aria-label', `View ${name}`);
             button.setAttribute('title', name);
@@ -1553,16 +1588,17 @@
             collapse();
         }));
         document.addEventListener('keydown', event => {
+            // Player shortcuts run first; the barcode menu is pointer-only.
+            if ((event.key === ' ' || event.key === 'Enter') && !event.ctrlKey && !event.metaKey && !event.altKey && event.target.closest('.work-barcode')) event.preventDefault();
             if (gallery.hidden || event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || document.body.classList.contains('lightbox-open')) return;
             if (event.key === 'Escape' && phase !== 'out' && !document.fullscreenElement) {
                 event.preventDefault();
                 collapse(true, true);
-            } else if (!event.target.closest('button, video, .video-player') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+            } else if (phase === 'out' && !event.target.closest('button, video, .video-player') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
                 event.preventDefault();
                 resetLift();
                 index = Math.max(0, Math.min(cards.length - 1, index + (event.key === 'ArrowRight' ? 1 : -1)));
-                if (phase === 'out') { gallery.classList.add('instant-motion'); offset = index * gap; layout(); cards[index].focus({ preventScroll: true }); }
-                else expand(index, true);
+                gallery.classList.add('instant-motion'); offset = index * gap; layout(); cards[index].focus({ preventScroll: true });
             }
         });
         const resize = () => {
@@ -1634,6 +1670,17 @@
                 const target = active ? active.querySelector('.project-title, .section-title') : selectedCard || gallery;
                 if (target !== selectedCard) target.setAttribute('tabindex', '-1');
                 target.focus({ preventScroll: true });
+            }
+            const entryVideo = active?.querySelector('video[data-play-on-entry]');
+            if (entryVideo && !document.hidden) {
+                entryVideo.closest('.video-player[data-controls="on-demand"]')?.querySelector('.video-overlay')
+                    .classList.remove('controls-interacted', 'show-controls');
+                if (entryVideo.dataset.src) {
+                    entryVideo.src = entryVideo.dataset.src;
+                    delete entryVideo.dataset.src;
+                }
+                // Keep the existing play button available if the browser blocks autoplay.
+                entryVideo.play().catch(() => {});
             }
         }
         document.addEventListener('click', event => {

@@ -1,0 +1,20 @@
+{
+  "pass": true,
+  "protocols": [
+    "http",
+    "file"
+  ],
+  "menus": 7,
+  "sizes": [
+    1440,
+    1024,
+    768,
+    390
+  ],
+  "statePreserved": true,
+  "processingDisabled": true,
+  "repeatedNotices": false,
+  "roundWidget": true,
+  "automaticRelease": true,
+  "previewNetworkRequests": 0
+}

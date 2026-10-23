@@ -6,7 +6,7 @@ const { runInNewContext } = require('node:vm');
 test('video requests are deferred until main play or preview visibility', () => {
     const html = readFileSync(`${__dirname}/../index.html`, 'utf8');
     const videos = [...html.matchAll(/<video\b[^>]*>/g)];
-    assert.equal(videos.length, 11);
+    assert.equal(videos.length, 12);
     for (const [tag] of videos) {
         assert.doesNotMatch(tag, /\ssrc=|\sautoplay\b/);
         assert.match(tag, /preload="none"/);
@@ -16,7 +16,7 @@ test('video requests are deferred until main play or preview visibility', () => 
     assert.equal([...html.matchAll(/class="scroll-play-video"/g)].length, 5);
     assert.equal([...html.matchAll(/poster="Thumbnail\/webm-0[1-5]\.jpg"/g)].length, 5);
     for (const [, path] of html.matchAll(/(?:data-src|data-video-src|poster)="([^"]+)"/g)) {
-        assert.ok(existsSync(`${__dirname}/../${path}`), `Missing media: ${path}`);
+        assert.ok(existsSync(`${__dirname}/../${path.split('?')[0]}`), `Missing media: ${path}`);
     }
 });
 
@@ -175,11 +175,13 @@ test('scroll pauses the main film below 20 percent but does not interrupt entry 
     const init = source.match(/function initVideoAutoPause\(\) \{[\s\S]*?(?=\n    \/\/ ─)/)[0];
     const events = {}, header = { offsetHeight: 88 }, gallery = { dataset: { phase: 'type' } };
     let ratio = 0;
-    const video = { paused: false, pauses: 0, plays: 0, pause() { this.paused = true; this.pauses++; }, play() { this.plays++; } };
-    const player = { querySelector: () => video, closest: () => gallery,
+    const video = { paused: false, pauses: 0, plays: 0, closest: () => gallery, pause() { this.paused = true; this.pauses++; }, play() { this.plays++; } };
+    const player = { querySelector: () => video, closest: () => gallery, contains: () => false,
         getBoundingClientRect: () => ({ left: 0, right: 100, width: 100, top: header.offsetHeight - 100 * (1 - ratio), bottom: header.offsetHeight + 100 * ratio, height: 100 }) };
+    const document = { hidden: false, querySelectorAll: () => [player], getElementById: () => header,
+        addEventListener(name, callback) { events[name] = callback; } };
     runInNewContext(`${init}; initVideoAutoPause();`, {
-        document: { querySelectorAll: () => [player], getElementById: () => header },
+        document,
         window: { innerWidth: 1000, innerHeight: 800, addEventListener(name, callback) { events[name] = callback; } },
     });
     assert.equal(video.pauses, 0);
@@ -187,6 +189,8 @@ test('scroll pauses the main film below 20 percent but does not interrupt entry 
     assert.equal(video.pauses, 0, 'the hidden intro must not cancel click-primed playback');
     gallery.dataset.phase = 'video'; ratio = 1;
     assert.equal(video.pauses, 0, 'revealing the film itself must not trigger a pause');
+    ratio = 0; events.play({ target: video });
+    assert.equal(video.pauses, 0, 'a cinematic handoff must not be paused by its initial play event');
     ratio = .21; events.scroll();
     assert.equal(video.pauses, 0);
     ratio = .19; events.scroll();
@@ -196,4 +200,16 @@ test('scroll pauses the main film below 20 percent but does not interrupt entry 
     assert.equal(video.plays, 0);
     video.paused = false; header.offsetHeight = 112; ratio = .1; events.resize();
     assert.equal(video.pauses, 2);
+    player.closest = video.closest = () => null;
+    video.paused = false; events.play({ target: video });
+    assert.equal(video.pauses, 3, 'entry playback stays paused when the software film is below the viewport');
+    video.paused = false; ratio = 1; document.hidden = true; events.visibilitychange();
+    assert.equal(video.pauses, 4, 'switching tabs pauses the software film');
+    document.hidden = false; events.visibilitychange();
+    assert.equal(video.plays, 0, 'tab return must not resume playback');
+    let focused = true;
+    document.activeElement = { blur() { focused = false; } };
+    player.contains = () => focused;
+    ratio = 0; events.scroll();
+    assert.equal(focused, false, 'Offscreen controls lose focus so native Space cannot activate a hidden play button');
 });
