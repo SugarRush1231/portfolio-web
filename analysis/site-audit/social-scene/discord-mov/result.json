@@ -1,0 +1,41 @@
+{
+  "pass": true,
+  "dialogChecks": [
+    {
+      "theme": "light",
+      "normalContrast": 15.563334890654836,
+      "hoverContrast": 9.074820525727807
+    },
+    {
+      "theme": "dark",
+      "normalContrast": 12.643630091224104,
+      "hoverContrast": 10.163491159200058
+    }
+  ],
+  "mov": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "prores",
+        "profile": "4444",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuva444p12le",
+        "nb_frames": "60"
+      }
+    ],
+    "format": {
+      "duration": "2.000000"
+    }
+  },
+  "alpha": {
+    "opaque": 17153,
+    "transparent": 2033024,
+    "changed": 32984,
+    "greenFirst": 2372,
+    "greenSecond": 2372
+  },
+  "fileGuidance": true,
+  "errors": []
+}

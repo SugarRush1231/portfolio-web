@@ -1,0 +1,9 @@
+FFmpeg browser encoder for transparent MOV export
+
+@ffmpeg/ffmpeg 0.12.15: MIT (ffmpeg-wasm-LICENSE.txt)
+@ffmpeg/core 0.12.10: GPL-2.0-or-later (ffmpeg-core-GPLv2.txt)
+
+Pinned distribution URLs and SHA-512 integrity values: sources.json
+Upstream source and build instructions: https://github.com/ffmpegwasm/ffmpeg.wasm
+FFmpeg source: https://github.com/FFmpeg/FFmpeg
+No upstream binaries were modified. All codec files are served locally.

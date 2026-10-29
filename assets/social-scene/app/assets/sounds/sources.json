@@ -1,0 +1,28 @@
+{
+  "iphone": {
+    "file": "iphone-opening.mp3",
+    "source": "https://raw.githubusercontent.com/extratone/macOSsystemsounds/main/mp3/Opening.mp3",
+    "sha256": "822edb87b055921035389bf2e0a239cae237f664a33c29358e6eca11ae2cb550"
+  },
+  "galaxy": {
+    "file": "galaxy-over-the-horizon-2026.mp3",
+    "source": "https://3.onj.me/phonetones/unzipped/Samsung/Galaxy-A57/media/audio/ringtones/SoundTheme/Galaxy/Over_the_Horizon_2026.ogg",
+    "sha256": "a3eafd37c392c01d9c86860c3f40fa910330dd371b601b036c7da3be3283370b",
+    "conversion": "FFmpeg stereo MP3, libmp3lame q4 from the original Ogg file."
+  },
+  "discord": {
+    "file": "discord-incoming.mp3",
+    "source": "https://raw.githubusercontent.com/0b0t-org/discord-application-sounds/main/call_ringing.mp3",
+    "sha256": "a2365a04f839099538271d06889147475ceef0845f8cc010425618f5dc412880"
+  },
+  "discord-outgoing": {
+    "file": "discord-outgoing.mp3",
+    "source": "https://raw.githubusercontent.com/0b0t-org/discord-application-sounds/main/call_calling.mp3",
+    "sha256": "c3999dbbbea7fca113d6f396b81d6054dd2dd6df79f442b62dfb74afddd36934"
+  },
+  "iphone-reflection": {
+    "file": "iphone-reflection.mp3",
+    "source": "https://raw.githubusercontent.com/extratone/macOSsystemsounds/main/mp3/Reflection.mp3",
+    "sha256": "0bbd677b0e24307debfb21a1bb32a3c7239b14d42278bd1ab33decb9681b11bc"
+  }
+}

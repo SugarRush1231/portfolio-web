@@ -1,0 +1,2 @@
+PASS 115 template/device/navigation states and per-device controls
+PASS visible/hidden PNG differences in chat, call and search on both devices; actual JSON roundtrips and MP4 pixels contain no hidden bar

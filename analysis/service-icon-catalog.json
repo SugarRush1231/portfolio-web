@@ -1,0 +1,20 @@
+[
+  {
+    "Requested": "KakaoTalk",
+    "Name": "KakaoTalk : Messenger",
+    "Bundle": "com.iwilab.KakaoTalk",
+    "Artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/57/29/03/572903d9-dde2-3750-92e0-5c43f5822f3f/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-85-220.png/512x512bb.jpg"
+  },
+  {
+    "Requested": "Instagram",
+    "Name": "Instagram",
+    "Bundle": "com.burbn.instagram",
+    "Artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/44/b0/cc/44b0cc3a-e91f-2824-d98f-3e5e095a73f3/Prod-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-85-220.png/512x512bb.jpg"
+  },
+  {
+    "Requested": "NAVER",
+    "Name": "네이버 - NAVER",
+    "Bundle": "com.nhncorp.NaverSearch",
+    "Artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/68/48/00/68480028-fc16-1661-a947-cd4b727bfe39/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-0-85-220.png/512x512bb.jpg"
+  }
+]

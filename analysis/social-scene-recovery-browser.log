@@ -1,0 +1,2 @@
+PASS file: editor appears, popup restores all scenes and media, actual JSON/PNG export, return button and window close retain edits
+PASS http: editor appears, popup restores all scenes and media, actual JSON/PNG export, return button and window close retain edits

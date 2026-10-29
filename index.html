@@ -17,6 +17,7 @@
     <link rel="preload" href="assets/brand/Allura-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <script src="theme.js"></script>
     <link rel="stylesheet" href="style.css?v=20261024-heading-focus">
+    <link rel="stylesheet" href="social-scene-project.css?v=20261029-7">
     <link rel="apple-touch-icon" sizes="57x57" href="ico/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="ico/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="ico/apple-icon-72x72.png">
@@ -165,6 +166,16 @@
                     <p class="work-card-role"><span>Role</span>기능·흐름 설계 · AI 협업 개발 · 검증·배포</p>
                     <p class="work-card-description">파일 변환과 AI 자막·번역을 연결한 Windows 도구입니다. 기능 설계부터 AI 협업 구현, 실제 사용 검증과 배포까지 진행했습니다.</p>
                     <small class="work-card-meta">Multi Media Toolkit <span aria-hidden="true">/</span> 개발 프로젝트</small>
+                </div>
+            </a>
+            <a class="work-preview" href="#project-social-scene" data-kind="software">
+                <img alt="Social Scene — 영상 제작용 UI 장면 편집 도구" decoding="async" height="800" loading="lazy" src="assets/social-scene/thumbnail.svg?v=20261029-frame-ink" width="1200"/>
+                <div class="work-card-copy">
+                    <p class="work-card-type">Software / Browser Tool</p>
+                    <h3 class="work-card-title">Social Scene<span aria-hidden="true">↗</span></h3>
+                    <p class="work-card-role"><span>Role</span>기획·디렉션 · 사용 흐름 설계 · 검수</p>
+                    <p class="work-card-description">메신저·SNS·검색 화면을 편집하고 타이핑과 키프레임 모션을 더해 영상 제작에 사용할 장면으로 출력하는 브라우저 도구입니다.</p>
+                    <small class="work-card-meta">Interactive workspace <span aria-hidden="true">/</span> 브라우저에서 직접 편집·저장</small>
                 </div>
             </a>
             <div class="gallery-world"><div class="gallery-camera" id="gallery-camera">
@@ -768,6 +779,46 @@
         <a class="software-return" href="#work">↖ All work</a>
     </article>
 
+    <article class="project software-project social-scene-project" id="project-social-scene" aria-labelledby="social-scene-title" hidden>
+        <div class="social-scene-intro">
+            <header class="software-header">
+                <p class="software-eyebrow">SOFTWARE / BROWSER TOOL</p>
+                <h2 class="project-title" id="social-scene-title">Social Scene</h2>
+                <p class="software-lead">영상 속 화면을,<br>직접 편집하는 작업 공간.</p>
+                <p class="software-summary">메신저 대화, SNS 피드와 검색 화면을 영상에 사용할 장면으로 만드는 도구입니다. 내용과 미디어를 바꾸고, 등장 시점·타이핑·스크롤을 조절한 뒤 이미지와 영상으로 저장할 수 있습니다.</p>
+                <div class="software-tags"><span>UI scene editing</span><span>Typing &amp; keyframes</span><span>PNG / MP4 / MOV</span></div>
+                <div class="social-scene-actions">
+                    <button type="button" class="software-download" id="social-scene-edit">바로 편집하기 <span aria-hidden="true">↓</span></button>
+                    <span>이 상세페이지 안에서 편집과 저장까지</span>
+                </div>
+            </header>
+            <figure class="social-scene-mark" aria-label="Social Scene 프로젝트 아이콘"><img src="assets/social-scene/icon.svg?v=20261029-frame-ink" width="150" height="150" alt="Social Scene" decoding="async"></figure>
+        </div>
+        <section class="social-scene-workspace" id="social-scene-editor" aria-labelledby="social-scene-editor-title">
+            <header class="social-scene-workspace-header">
+                <div><p>INTERACTIVE WORKSPACE</p><h3 id="social-scene-editor-title">직접 편집해 보기</h3></div>
+                <div class="social-scene-workspace-tools"><span class="social-scene-formats">PNG · MP4 · 투명 MOV</span><button type="button" id="social-scene-popout" disabled>별도 창으로 크게 보기</button></div>
+            </header>
+            <div class="social-scene-frame-wrap">
+                <div id="social-scene-detached" class="social-scene-detached" hidden><p>별도 창에서 편집 중입니다. 창을 닫으면 편집 내용이 여기에 반영됩니다.</p><button type="button" id="social-scene-return">여기서 계속 편집</button></div>
+                <div id="social-scene-loading" class="social-scene-loading" role="status">편집기를 준비하고 있습니다.</div>
+                <iframe id="social-scene-frame" data-src="assets/social-scene/app/index.html?embed=portfolio&amp;v=20261029-naver-profile" title="Social Scene — 템플릿·내용·모션 편집과 이미지·영상 저장" loading="lazy" sandbox="allow-scripts allow-same-origin allow-downloads" allow="fullscreen; local-fonts" allowfullscreen referrerpolicy="no-referrer"></iframe>
+            </div>
+            <footer class="social-scene-workspace-footer"><p id="social-scene-status" role="status" aria-live="polite">템플릿을 선택하고 내용과 움직임을 바꿔 보세요.</p><button type="button" id="social-scene-retry" hidden>다시 불러오기</button><p>편집한 내용은 프로젝트 파일로 저장할 수 있습니다.</p></footer>
+        </section>
+        <p id="social-scene-run-note" class="social-scene-run-note" role="status" hidden></p>
+        <div class="software-story">
+            <section><h3>만들게 된 이유</h3><p>영상 안에 대화나 검색 화면을 넣을 때, 문구가 바뀔 때마다 화면과 타이밍을 다시 손보게 됩니다. 내용 수정과 모션 조절, 출력까지 한 작업 공간에서 이어지도록 구성했습니다.</p></section>
+            <section><h3>사용 흐름</h3><div class="software-features">
+                <div><h4>화면과 내용 편집</h4><p>카카오톡·Instagram·X·Discord와 검색·메일·전화 화면 등에서 템플릿을 선택하고 글, 프로필과 미디어를 바꿉니다.</p></div>
+                <div><h4>시간과 움직임 조절</h4><p>대화의 등장과 읽음, 타이핑 과정을 만들고 스크롤·반응·밀기 키프레임을 타임라인에서 조절합니다.</p></div>
+                <div><h4>영상 편집에 사용할 결과물</h4><p>현재 장면은 PNG로, 움직임은 MP4로 저장합니다. 투명 대화는 알파 채널을 포함한 MOV 또는 PNG 시퀀스로 출력해 기존 영상 위에 합성할 수 있습니다.</p></div>
+            </div></section>
+            <section><h3>직접 맡은 역할</h3><p>영상 제작에 필요한 기능과 사용 흐름을 정하고, 화면 배치·동작·저장 결과를 직접 확인하며 수정 기준을 세웠습니다. 코드 구현에는 AI 도구를 활용했고, 실제 실행과 출력 검사를 통해 결과를 점검했습니다.</p></section>
+        </div>
+        <a class="software-return" href="#work">↖ All work</a>
+    </article>
+
     <!-- ═══════════════ ABOUT SECTION ═══════════════ -->
     <section id="about" class="section about-section">
         <div class="section-header">
@@ -1039,6 +1090,7 @@
 
     <script src="script.js?v=20261024-menu-click"></script>
     <script src="mmt-release.js?v=20261024-1"></script>
+    <script src="social-scene-project.js?v=20261029-6"></script>
 </body>
 
 </html>

@@ -1,0 +1,83 @@
+{
+  "pass": true,
+  "states": 115,
+  "samples": [
+    {
+      "id": "kakao-chat",
+      "device": "iphone",
+      "changedPixels": 3550,
+      "rect": {
+        "left": 436,
+        "top": 2502,
+        "right": 733,
+        "bottom": 2513
+      }
+    },
+    {
+      "id": "kakao-chat",
+      "device": "android",
+      "changedPixels": 2688,
+      "rect": {
+        "left": 405,
+        "top": 2370,
+        "right": 674,
+        "bottom": 2379
+      }
+    },
+    {
+      "id": "phone-call",
+      "device": "iphone",
+      "changedPixels": 3550,
+      "rect": {
+        "left": 436,
+        "top": 2502,
+        "right": 733,
+        "bottom": 2513
+      }
+    },
+    {
+      "id": "phone-call",
+      "device": "android",
+      "changedPixels": 2688,
+      "rect": {
+        "left": 405,
+        "top": 2370,
+        "right": 674,
+        "bottom": 2379
+      }
+    },
+    {
+      "id": "google-search",
+      "device": "iphone",
+      "changedPixels": 4144,
+      "rect": {
+        "left": 411,
+        "top": 2499,
+        "right": 758,
+        "bottom": 2510
+      }
+    },
+    {
+      "id": "google-search",
+      "device": "android",
+      "changedPixels": 2688,
+      "rect": {
+        "left": 405,
+        "top": 2370,
+        "right": 674,
+        "bottom": 2379
+      }
+    }
+  ],
+  "exports": [
+    {
+      "device": "iphone",
+      "meanPixelError": 0
+    },
+    {
+      "device": "android",
+      "meanPixelError": 0
+    }
+  ],
+  "errors": []
+}

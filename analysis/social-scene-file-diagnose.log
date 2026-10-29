@@ -1,0 +1,67 @@
+{
+  "errors": [],
+  "failed": [
+    {
+      "url": "file:///E:/AI/portfolio-web/assets/brand/google-sans-bold.woff2",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "url": "file:///E:/AI/portfolio-web/assets/brand/barlow-condensed-extrabold-italic.ttf",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "url": "file:///E:/AI/portfolio-web/assets/brand/Allura-Regular.ttf",
+      "error": "net::ERR_FAILED"
+    }
+  ],
+  "console": [
+    "Access to font at 'file:///E:/AI/portfolio-web/assets/brand/google-sans-bold.woff2' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome-experimental-site-token-provider, chrome-extension, chrome-untrusted, data, edge, http, https, isolated-app.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to font at 'file:///E:/AI/portfolio-web/assets/brand/barlow-condensed-extrabold-italic.ttf' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome-experimental-site-token-provider, chrome-extension, chrome-untrusted, data, edge, http, https, isolated-app.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to font at 'file:///E:/AI/portfolio-web/assets/brand/Allura-Regular.ttf' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome-experimental-site-token-provider, chrome-extension, chrome-untrusted, data, edge, http, https, isolated-app.",
+    "Failed to load resource: net::ERR_FAILED"
+  ],
+  "parent": {
+    "messages": [
+      {
+        "origin": "null",
+        "type": "ready"
+      }
+    ],
+    "ready": "true",
+    "src": "file:///E:/AI/portfolio-web/assets/social-scene/app/index.html?embed=portfolio&v=20261028-1&portfolio-theme=light",
+    "loaded": "true",
+    "hidden": false
+  },
+  "frames": [
+    {
+      "url": "file:///E:/AI/portfolio-web/index.html#project-social-scene",
+      "state": {
+        "origin": "file://",
+        "complete": "complete",
+        "editor": "undefined",
+        "brand": "undefined"
+      }
+    },
+    {
+      "url": "file:///E:/AI/portfolio-web/assets/mmt/preview/index.html?v=20261024-2",
+      "state": {
+        "origin": "file://",
+        "complete": "complete",
+        "editor": "undefined",
+        "brand": "undefined"
+      }
+    },
+    {
+      "url": "file:///E:/AI/portfolio-web/assets/social-scene/app/index.html?embed=portfolio&v=20261028-1&portfolio-theme=light",
+      "state": {
+        "origin": "file://",
+        "embed": "true",
+        "complete": "complete",
+        "editor": "function",
+        "brand": "object"
+      }
+    }
+  ]
+}

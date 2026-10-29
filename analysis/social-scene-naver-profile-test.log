@@ -1,0 +1,30 @@
+✔ all registered scenes survive a project save/load round trip (27.9175ms)
+✔ import rejects unknown screens, remote media, malformed messages and invalid timing (7.4919ms)
+✔ typing and unread receipts follow the conversation deterministically when seeking in either direction (0.5049ms)
+✔ static frames do not run typing or read transitions; tight and equal timestamps do not overlap (0.5488ms)
+✔ Korean input composes syllables and preserves emoji graphemes (1.0869ms)
+✔ image and video imports are local, and media type follows the data instead of a supplied flag (0.6318ms)
+✔ motion easing stays monotonic and clamps the first and last frame (0.3614ms)
+✔ result favicons survive save/load and older projects receive safe defaults (2.0349ms)
+✔ interactive state and speed round-trip while legacy files keep defaults (1.2279ms)
+✔ interactive state rejects malformed values at import boundary (2.4937ms)
+✔ export speed changes frame count and duration, not logical scene timing (2.4136ms)
+✔ chat playback keeps source row identity for identical and reordered messages (0.2395ms)
+✔ calendar defaults use today's date and keep edited dates and clock values on save/load (5.1314ms)
+✔ search presets distinguish overview from conversational AI mode and preserve reference data (17.0377ms)
+✔ search expansion is seekable and reverses from its current position (2.0075ms)
+✔ desktop search columns fit Full HD and mobile has no side column (0.2102ms)
+✔ search import keeps local photos and rejects remote photos and malformed display flags (2.5382ms)
+✔ naver menus replay exclusively and deterministically when seeking (0.8624ms)
+✔ naver account text is editable, backward compatible and validated on import (2.311ms)
+✔ AI mode has distinct new-conversation and answer layouts without changing saved user content (0.7374ms)
+✔ AI mode markdown tables keep Korean, escaped pipes and source text offsets (0.3801ms)
+✔ AI mode columns, greeting and fixed composer fit desktop and phone frames (0.1902ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 139.247

@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: Social Scene previous arrow must stay visible and clickable beside the viewport
+    at assertPreviousArrow (E:\AI\portfolio-web\tests\social-scene.browser.cjs:21:4)
+    at async main (E:\AI\portfolio-web\tests\social-scene.browser.cjs:23:3)

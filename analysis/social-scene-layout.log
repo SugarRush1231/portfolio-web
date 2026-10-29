@@ -1,0 +1,2 @@
+PASS seventh project opens inside portfolio; editor loads lazily; portfolio navigation and project arrows stay in place
+PASS theme sync, leaving pauses playback, edits persist, 5 responsive widths, touch editing, fullscreen and no browser exceptions
