@@ -2,10 +2,11 @@
 const CollectionEditor=(()=>{
  const previous=new Map(),seeds=new Map(),mailScroll=new Map();
  const label=action=>{
+  const chat=ChatMedia.parseAction(action);if(chat)return({open:'영상 크게 보기',play:'영상 재생·일시정지',close:'영상 닫기'})[chat.kind];
   const scoped=SceneCollections.parseAction(action),key=scoped?.action||action;
   return(scoped?'게시물 '+(scoped.index+2)+' · ':'')+(SCENE_ACTION_LABELS[key]||(/^comment-like:\d+$/.test(key)?'댓글 '+(Number(key.split(':')[1])+1)+' 좋아요':'동작'));
  };
- function actionKeys(p){return(p.feedItems||[]).flatMap((_,i)=>(p.type==='facebook-feed'?['like','follow','comments']:['like','double-like','save','repost','comments']).map(key=>'feed:'+i+':'+key))}
+ function actionKeys(p){return(p.feedItems||[]).flatMap((item,i)=>[...(p.type==='facebook-feed'?['like','follow','comments']:['like','double-like','save','repost','comments']),...(item.media?.startsWith('data:video/')?['video']:[])].map(key=>'feed:'+i+':'+key))}
  function apply(patch){
   for(const [key,value]of Object.entries(patch)){
    if(key==='props')Object.assign(project.props,SceneCollections.clone(value));else project[key]=SceneCollections.clone(value);
@@ -30,12 +31,13 @@ const CollectionEditor=(()=>{
  }
  async function image(index,key){
   const scene=project,row=scene.feedItems[index];if(!row)return;
-  const picker=document.createElement('input');picker.type='file';picker.accept='image/png,image/jpeg,image/webp';picker.setAttribute('aria-label','게시물 '+(index+2)+' '+(key==='avatar'?'프로필':'이미지')+' 선택');picker.hidden=true;document.body.append(picker);
+  const picker=document.createElement('input');picker.type='file';picker.accept='image/png,image/jpeg,image/webp'+(key==='media'?',video/mp4,video/webm,video/quicktime':'');picker.setAttribute('aria-label','게시물 '+(index+2)+' '+(key==='avatar'?'프로필':'이미지')+' 선택');picker.hidden=true;document.body.append(picker);
   picker.addEventListener('cancel',()=>picker.remove(),{once:true});
   picker.addEventListener('change',async()=>{
    const file=picker.files[0];picker.remove();if(!file)return;
-   if(file.size>20*1024*1024||!/^image\/(png|jpeg|webp)$/.test(file.type)){tell('PNG, JPG, WebP 이미지를 20MB 이하로 선택해 주세요.');return}
+   if(file.size>20*1024*1024||(!/^image\/(png|jpeg|webp)$/.test(file.type)&&!(key==='media'&&/^video\/(mp4|webm|quicktime)$/.test(file.type)))){tell(key==='media'?'PNG·JPG·WebP 또는 MP4·WebM·MOV 파일을 20MB 이하로 선택해 주세요.':'프로필은 PNG·JPG·WebP 이미지를 20MB 이하로 선택해 주세요.');return}
    try{
+    if(key==='media'&&file.type.startsWith('video/')){const data=await readSceneFile(file);if(data.length+(scene.media?.length||0)+scene.feedItems.reduce((sum,item)=>sum+(item===row?0:item.media.length),0)>64*1024*1024)throw Error('게시물 미디어의 총 크기는 64MB 이내로 사용해 주세요.');await VideoMedia.load(data);if(!scene.feedItems.includes(row))return;row.media=data;dirty.add(scene.type);if(project===scene){phonePreview.dataset.force='true';draw()}return}
     const source=await loadSceneAsset(await readSceneFile(file)),target=document.createElement('canvas'),ctx=target.getContext('2d');
     if(key==='avatar'){target.width=target.height=256;sceneCover(ctx,source,0,0,256,256)}
     else{const scale=Math.min(1,1200/Math.max(source.naturalWidth,source.naturalHeight));target.width=Math.max(1,Math.round(source.naturalWidth*scale));target.height=Math.max(1,Math.round(source.naturalHeight*scale));ctx.fillStyle='#fff';ctx.fillRect(0,0,target.width,target.height);ctx.drawImage(source,0,0,target.width,target.height)}

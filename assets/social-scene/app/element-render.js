@@ -6,6 +6,7 @@ const ElementRender=(()=>{
  const iconSVG=name=>'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="'+(SCENE_ICONS[name]||SCENE_ICONS.more)+'"/></svg>';
  function image(data){if(!images.has(data)){const node=new Image();const task=new Promise((resolve,reject)=>{node.onload=()=>resolve(node);node.onerror=()=>reject(Error('요소 이미지를 읽지 못했습니다.'))});node.src=data;images.set(data,{node,task});task.catch(()=>images.delete(data))}return images.get(data)}
  async function ready(p){
+  if(typeof VideoMedia!=='undefined')await VideoMedia.ready(p);
   await Promise.all(Object.values(p.elementEdits||{}).filter(x=>x.image).map(x=>image(x.image).task));
   if(p.fontData&&!fonts.has(p.fontData)){const face=new FontFace(ElementModel.userFamily(p.fontData),'url('+p.fontData+')',{weight:'100 900'});const task=face.load().then(f=>document.fonts.add(f));fonts.set(p.fontData,task);task.catch(()=>fonts.delete(p.fontData))}
   if(p.fontData)await fonts.get(p.fontData);if(typeof SearchUI!=='undefined'&&(p.type?.startsWith('google-')||p.type==='naver-search'))await SearchUI.ready(p);

@@ -253,9 +253,9 @@ function validateScene(input) {
       const scoped=event&&SCENE_COLLECTIONS.parseAction(event.action);
       if(scoped&&(!Number.isInteger(scoped.index)||scoped.index<0||scoped.index>18||!Array.isArray(input.feedItems)||scoped.index>=input.feedItems.length||!['x-feed','instagram-feed','facebook-feed'].includes(input.type)))throw new Error('게시물 동작의 대상이 올바르지 않습니다.');
       const action=scoped?scoped.action:event?.action;
-      if(scoped&&!/^(like|double-like|save|follow|repost|comments|comment-like:(?:[0-9]|[12][0-9]))$/.test(action))throw new Error('게시물 동작이 올바르지 않습니다.');
+      if(scoped&&!/^(like|double-like|save|follow|repost|comments|video|comment-like:(?:[0-9]|[12][0-9]))$/.test(action))throw new Error('게시물 동작이 올바르지 않습니다.');
       if(!event||!Number.isFinite(event.at)||event.at<0||event.at>SCENE_TIMING.maxDuration||typeof event.value!=='boolean'||typeof event.action!=='string'||
-        !/^(ai-expand|source-expand|naver-account|naver-services|call-start|call-answer|call-end|call-mute|call-speaker|call-keypad|mail|mail-sidebar|mail-tab:(?:primary|promotions|social)|video|notices|lock-light|like|double-like|save|follow|repost|comments|comment-like:(?:[0-9]|[12][0-9]))$/.test(action)&&!SCENE_NEWS.isAction(action)||
+        !/^(ai-expand|source-expand|naver-account|naver-services|call-start|call-answer|call-end|call-mute|call-speaker|call-keypad|mail|mail-sidebar|mail-tab:(?:primary|promotions|social)|video|notices|lock-light|like|double-like|save|follow|repost|comments|comment-like:(?:[0-9]|[12][0-9]))$/.test(action)&&!SCENE_NEWS.isAction(action)&&!SCENE_CHAT_MEDIA.isAction(action,input)||
         (action==='double-like'&&!event.value))throw new Error('반응 동작 형식이 올바르지 않습니다.');
       return{at:event.at,action:event.action,value:event.value};
     });

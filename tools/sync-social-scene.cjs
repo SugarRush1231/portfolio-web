@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'..'),source=path.resolve(process.argv[2]||path.join(root,'../social-templates')),target=path.join(root,'assets/social-scene/app');
-const version='20261029-naver-profile';
+const version='20261029-feed-drag-2';
 function inside(base,name){const full=path.resolve(base,name);if(!full.startsWith(base+path.sep))throw Error('Invalid bundle path: '+name);return full}
 function collect(base,prefix=''){return fs.readdirSync(base,{withFileTypes:true}).flatMap(entry=>{const name=path.join(prefix,entry.name);return entry.isDirectory()?collect(path.join(base,entry.name),name):entry.isFile()?[name]:[]})}
 if(!fs.existsSync(path.join(source,'index.html')))throw Error('Social Scene source directory was not found: '+source);

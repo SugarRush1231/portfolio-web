@@ -86,7 +86,7 @@ const PhoneScene = (() => {
     rows.forEach((row,i)=>{let entryMarkup='';
       const other=row.side==='other',top=y+(other&&authorLine&&row.groupStart?20:0),left=other?62:415-row.width,entry=p.motion==='messages'?easeScene((time-row.at)/.28):1,id=multi?ChatModels.sender(p,row):null;
       if(other&&row.groupStart)entryMarkup+='<div class="ph-chat-avatar" data-chat-for="'+row.index+'" style="top:'+y+'px">'+(multi?participantAvatar(p,id):avatar(p))+'</div>'+(authorLine?'<div class="ph-chat-author" data-chat-for="'+row.index+'" style="top:'+y+'px">'+(multi?participantName(p,id):text(p.name,'name','','상대 이름 수정'))+'</div>':'');
-      entryMarkup+='<div class="ph-message '+(other?'is-other':'is-me')+(row.image?' is-image':'')+(row.groupStart?' is-first':'')+'" '+(id?'data-message-sender="'+id+'"':'')+' data-chat-row="'+row.index+'" style="left:'+left+'px;top:'+top+'px;width:'+row.width+'px;min-height:'+row.height+'px;opacity:'+(p.type==='kakao-overlay'?1:entry)+'">'+(row.image?'<img class="ph-message-image" src="'+row.image+'" alt="'+esc(row.imageName||'사진 메시지')+'" style="height:'+row.imageHeight+'px" draggable="false"><button type="button" class="ph-media-edit" data-phone-action="chat-image:'+row.index+'" aria-label="사진 메시지 교체">사진 교체</button>':'')+(!row.image||row.text?text(row.text,'messages.'+row.index+'.text','','메시지 '+(row.index+1)+' 내용 수정'):'')+'</div>';
+      entryMarkup+='<div class="ph-message '+(other?'is-other':'is-me')+(row.image?' is-image':'')+(row.groupStart?' is-first':'')+'" '+(id?'data-message-sender="'+id+'"':'')+' data-chat-row="'+row.index+'" style="left:'+left+'px;top:'+top+'px;width:'+row.width+'px;min-height:'+row.height+'px;opacity:'+(p.type==='kakao-overlay'?1:entry)+'">'+(row.image?VideoMedia.thumbnail(row,row.imageHeight):'')+(!row.image||row.text?text(row.text,'messages.'+row.index+'.text','','메시지 '+(row.index+1)+' 내용 수정'):'')+'</div>';
       const next=rows[i+1],end=!next||next.groupStart;
       if(kakao&&end)entryMarkup+='<div class="ph-message-time '+(other?'is-other':'is-me')+'" data-chat-for="'+row.index+'" style="left:'+(other?left+row.width+7:left-7)+'px;top:'+(top+row.height-13)+'px">'+text(row.time,'messages.'+row.index+'.time','','메시지 '+(row.index+1)+' 시간 수정')+'</div>';
       if(kakao&&!other){const unread=multi?ChatModels.unread(p,row,time):!row.read?p.receipt:'';if(unread&&unread!=='0')entryMarkup+='<span class="ph-unread" data-chat-for="'+row.index+'" style="left:'+(left-16)+'px;top:'+(top+row.height-29)+'px">'+(multi?esc(unread):text(unread,'receipt','','읽음 숫자 수정'))+'</span>'}
@@ -118,7 +118,7 @@ const PhoneScene = (() => {
     if(FilmModels.specs[p.type]){FilmTemplates.render(root,p,time,assets);return;}
     const active=document.activeElement, editing=!p._isPlaying&&root.contains(active)&&(active.matches('[contenteditable]')||active.matches('[data-phone-composer]'));
     platform=ChatModels.base(p.type);device=p.device||'iphone';navigation=(device==='android'?p.androidNavigation:p.iphoneNavigation)||'gesture';
-    const markup=ChatModels.native(p.type)?chat(p,time):p.type.startsWith('x-')?x(p,time):instagram({...p,_hasAudio:SceneAudio.hasExportSource(p,assets)},time);
+    const markup=(ChatModels.native(p.type)?chat(p,time):p.type.startsWith('x-')?x(p,time):instagram({...p,_hasAudio:SceneAudio.hasExportSource(p,assets)},time))+VideoMedia.viewer(p,time);
     const force=root.dataset.force==='true';delete root.dataset.force;
     if(!editing||force){
       if(root._phoneMarkup!==markup){
@@ -153,6 +153,7 @@ const PhoneScene = (() => {
       if(node.width!==Math.round(width*ratio))node.width=Math.round(width*ratio);if(node.height!==Math.round(height*ratio))node.height=Math.round(height*ratio);
       const ctx=node.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);sceneMedia(ctx,assets,0,0,width,height);
     }
+    VideoMedia.paint(root,p,time);
     ElementRender.applyMedia(root,p);
   }
 

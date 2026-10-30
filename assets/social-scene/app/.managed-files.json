@@ -106,5 +106,7 @@
   "vendor\\html-to-image-LICENSE.txt",
   "vendor\\html-to-image.js",
   "vendor\\mediabunny.js",
+  "video-media.css",
+  "video-media.js",
   "workspace.css"
 ]

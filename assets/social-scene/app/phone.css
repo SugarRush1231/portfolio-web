@@ -326,3 +326,8 @@
 
 /* Keep the Reels media editor clear of the status bar and header controls. */
 .ph-reels>.ph-media>.ph-media-edit{top:104px;right:16px}
+
+/* Pointer dragging affects preview surfaces only; exported frames keep their recorded scroll. */
+.phone-surface.touch-scroll-surface{cursor:grab;touch-action:none}
+.touch-scroll-surface .ph-feed-body,.touch-scroll-surface .film-scroll-body,.touch-scroll-surface .dc-message-content{translate:0 var(--touch-pull,0px)}
+.phone-surface[data-touch-dragging=true],.phone-surface[data-touch-dragging=true] *{cursor:grabbing!important;user-select:none!important;-webkit-user-select:none!important}

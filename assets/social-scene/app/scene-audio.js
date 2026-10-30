@@ -3,14 +3,14 @@
 const SceneAudio=(()=>{
  const calls=typeof CallAudio!=='undefined'?CallAudio:require('./call-audio.js');
  const models=typeof FilmModels!=='undefined'?FilmModels:require('./film-models.js');
- const mediaScene=p=>['instagram-feed','instagram-reels'].includes(p.type)||!!models.specs[p.type]?.video;
+ const mediaScene=p=>['instagram-feed','instagram-reels','x-feed','facebook-feed'].includes(p.type)||!!models.specs[p.type]?.video;
  function sequence(p){return p.type==='discord-voice'&&['sequence','mov'].includes(p.props.exportFormat)}
- function hasExportSource(p,a){if(calls.hasSource(p))return true;if(sequence(p))return false;if(p.type==='discord-voice')return p.voices.some((v,i)=>!v.muted&&!!a.voices?.[i]?.buffer);return mediaScene(p)&&!!a.media?._sceneAudio?.hasAudio}
+ function hasExportSource(p,a){if(calls.hasSource(p))return true;if(sequence(p))return false;if(p.type==='discord-voice')return p.voices.some((v,i)=>!v.muted&&!!a.voices?.[i]?.buffer);return(typeof VideoMedia!=='undefined'&&VideoMedia.hasAudio(p))||(mediaScene(p)&&!!a.media?._sceneAudio?.hasAudio)}
  function missingSource(p,a){return !sequence(p)&&p.type==='discord-voice'&&p.voices.some((v,i)=>!v.muted&&!!v.audioName&&!a.voices?.[i]?.buffer)}
  function segments(p,duration,voice=false){
   if(!Number.isFinite(duration)||duration<=0)return[];
   const intervals=[];let at=0,playing=true;
-  if(!voice&&p.type==='youtube-watch')for(const e of p.actions.filter(e=>e.action==='video'&&e.at<=p.duration).sort((a,b)=>a.at-b.at)){if(playing&&e.at>at)intervals.push([at,e.at]);at=e.at;playing=e.value}
+  if(!voice)for(const e of p.actions.filter(e=>e.action==='video'&&e.at<=p.duration).sort((a,b)=>a.at-b.at)){if(playing&&e.at>at)intervals.push([at,e.at]);at=e.at;playing=e.value}
   if(playing&&at<p.duration)intervals.push([at,p.duration]);
   const out=[];
   for(const[from,to]of intervals){let cursor=from,offset=voice?p.props.sourceStart+from:models.mediaTime(p,from)%duration;
@@ -24,6 +24,7 @@ const SceneAudio=(()=>{
  }
  function releaseMedia(element){element?._sceneAudio?.input?.dispose();if(element)delete element._sceneAudio}
  async function render(p,a,state){
+  if(typeof VideoMedia!=='undefined')await VideoMedia.ready(p);
   if(p.previewMuted||p.previewVolume===0||sequence(p))return null;
   if(missingSource(p,a))throw new Error('소리를 저장하려면 참가자의 음성 원본을 다시 연결해 주세요.');
   if(mediaScene(p)&&a.media?._sceneAudio?.error)throw new Error(a.media._sceneAudio.error);
@@ -36,6 +37,7 @@ const SceneAudio=(()=>{
    const info=a.media._sceneAudio;if(!await info.track.canDecode())throw new Error('이 영상의 음성 코덱을 읽을 수 없습니다. AAC 오디오가 포함된 MP4로 바꿔 주세요.');
    for(const s of segments(p,a.media.duration)){const sink=new Mediabunny.AudioBufferSink(info.track);for await(const chunk of sink.buffers(s.offset,s.offset+s.length)){if(state.cancelled)return null;const from=Math.max(s.offset,chunk.timestamp),to=Math.min(s.offset+s.length,chunk.timestamp+chunk.duration);schedule(chunk.buffer,s.at+(from-s.offset)/s.rate,from-chunk.timestamp,to-from,s.rate)}}
   }
+  if(typeof VideoMedia!=='undefined')await VideoMedia.renderAudio(p,ctx,gain,state);
   if(state.cancelled)return null;return ctx.startRendering();
  }
  return{supportsVideo:mediaScene,sequence,hasExportSource,missingSource,segments,inspectVideo,releaseMedia,render};

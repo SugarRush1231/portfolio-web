@@ -201,6 +201,7 @@ const FilmTemplates=(()=>{
   ElementRender.applyDOM(root,p);SceneScroll.apply(root,p,t);ReplyEditor.layout(root);applyCallMotion(root,p);
   const ratio=p._pixelRatio||1;
   for(const canvas of root.querySelectorAll('[data-film-media]')){const node=canvas.parentElement,width=node.clientWidth||432,height=node.clientHeight||240;canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);sceneMedia(ctx,assets,0,0,width,height)}
+  VideoMedia.paint(root,p,t);
   ElementRender.applyMedia(root,p);
   for(const node of root.querySelectorAll('[data-phone-action]'))node.style.transform='scale('+(p.type==='phone-call'?sceneCallPressScale:scenePressScale)(p,node.dataset.phoneAction,t,!p._export&&matchMedia('(prefers-reduced-motion:reduce)').matches)+')';
  }

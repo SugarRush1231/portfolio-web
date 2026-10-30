@@ -1,0 +1,4 @@
+'use strict';
+const{test}=require('node:test'),assert=require('node:assert/strict'),Scroll=require('../assets/social-scene/app/scroll-motion.js');
+test('short feeds and both edges resist dragging without creating invalid scroll positions',()=>{assert.deepEqual(Scroll.dragPosition(100,500,600),{offset:100,pull:0});const top=Scroll.dragPosition(-100,0,600),bottom=Scroll.dragPosition(100,0,600);assert.equal(top.offset,0);assert.equal(bottom.offset,0);assert(top.pull>0&&top.pull<64);assert(bottom.pull<0&&bottom.pull>-64);assert.equal(top.pull,-bottom.pull);const end=Scroll.dragPosition(650,500,600);assert.equal(end.offset,500);assert(end.pull<0);});
+test('edge resistance stays bounded as a pointer goes farther beyond the content',()=>{let previous=0;for(const distance of [1,10,100,1000,10000]){const p=Scroll.dragPosition(distance,0,400);assert.equal(p.offset,0);assert(-p.pull>previous);assert(-p.pull<48);previous=-p.pull;}});

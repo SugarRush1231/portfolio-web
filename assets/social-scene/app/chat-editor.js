@@ -112,21 +112,21 @@ const ChatEditor=(()=>{
  async function photo(file,index=null){
   if(!file)return;pausePreview();const p=project,position=time,target=index===null?null:project.messages[index];
   try{
-   if(!/^image\/(png|jpeg|webp)$/.test(file.type))throw Error('사진 메시지는 PNG·JPG·WebP 파일을 사용해 주세요.');
-   if(index===null&&p.messages.length>=ChatModels.messageLimit(p))throw Error('메시지 한도에 도달했습니다. 메시지를 지운 뒤 사진을 추가해 주세요.');
-   const data=await readSceneFile(file),image=await loadSceneAsset(data),value=ChatMedia.attachment({image:data,imageName:file.name.slice(0,300),imageWidth:image.naturalWidth,imageHeight:image.naturalHeight});
-   const bytes=p.messages.reduce((sum,m,i)=>sum+(m===target?0:m.image?.length||0),0)+data.length;if(bytes>64*1024*1024)throw Error('대화 사진의 총 크기는 64MB 이내로 사용해 주세요.');
-   const at=Math.max(0,Math.min(SceneTiming.maxDuration,position));if(index===null){if(at>=SceneTiming.maxDuration)throw Error('최대 영상 길이의 끝보다 앞쪽 시점에 사진을 추가해 주세요.');p.duration=Math.min(SceneTiming.maxDuration,Math.max(p.duration,Math.ceil((at+.35)*10)/10))}
+   const video=file.type.startsWith('video/');if(!/^image\/(png|jpeg|webp)$/.test(file.type)&&!/^video\/(mp4|webm|quicktime)$/.test(file.type))throw Error('PNG·JPG·WebP 사진 또는 MP4·WebM·MOV 영상을 사용해 주세요.');
+   if(index===null&&p.messages.length>=ChatModels.messageLimit(p))throw Error('메시지 한도에 도달했습니다. 메시지를 지운 뒤 미디어를 추가해 주세요.');
+   let value;if(video)value=await VideoMedia.attachment(file);else{const data=await readSceneFile(file),image=await loadSceneAsset(data);value=ChatMedia.attachment({image:data,imageName:file.name.slice(0,300),imageWidth:image.naturalWidth,imageHeight:image.naturalHeight})}
+   const bytes=p.messages.reduce((sum,m)=>sum+(m===target?0:ChatMedia.bytes(m)),0)+ChatMedia.bytes(value);if(bytes>64*1024*1024)throw Error('대화 미디어의 총 크기는 64MB 이내로 사용해 주세요.');
+   const at=Math.max(0,Math.min(SceneTiming.maxDuration,position));if(index===null){if(at>=SceneTiming.maxDuration)throw Error('영상 길이의 끝보다 앞쪽에 미디어를 추가해 주세요.');p.duration=Math.min(SceneTiming.maxDuration,Math.max(p.duration,Math.ceil((at+(video?value.videoDuration+.8:.35))*10)/10))}
    if(index===null){if(p.messages.length>=ChatModels.messageLimit(p))throw Error('메시지 한도에 도달했습니다.');const senderId=ChatModels.enabled(p)?p.composerSenderId:null;p.messages.push({side:senderId?ChatModels.side(p,senderId):'me',text:'',time:p.messages.at(-1)?.time||'오후 1:27',at,...value,...(senderId?{senderId}:{})})}
-   else {if(!target||!p.messages.includes(target)){tell('원래 사진 메시지가 삭제되어 교체를 취소했어요.');return}Object.assign(target,value)}
+   else{if(!target||!p.messages.includes(target)){tell('원래 메시지가 삭제되어 교체를 취소했어요.');return}const previous=target.videoId;if(previous)p.actions=p.actions.filter(e=>ChatMedia.parseAction(e.action)?.id!==previous);delete target.video;delete target.videoId;delete target.videoDuration;Object.assign(target,value)}
    dirty.add(p.type);if(project===p){if(index===null)time=at;renderEditor();draw();if(index===null)playPreview(Math.min(p.duration,at+.35))}
-   tell(index===null?'사진을 대화에 추가했어요. 메시지의 시간과 보낸 사람을 바꿀 수 있습니다.':'사진 메시지를 교체했어요.');
-  }catch(error){tell(error.message||'사진 메시지를 추가하지 못했습니다.')}
+   tell(video?'영상을 대화에 추가했어요. 재생 버튼을 누르면 크게 볼 수 있습니다.':'사진을 대화에 적용했어요.');
+  }catch(error){tell(error.message||'미디어 메시지를 추가하지 못했습니다.')}
  }
  function photoControl(message,index){
   const box=document.createElement('div');box.className='chat-photo-editor';const image=document.createElement('img');image.src=message.image;image.alt=message.imageName||'사진 메시지';
-  const picker=document.createElement('input');picker.type='file';picker.hidden=true;picker.dataset.chatPhoto=String(index);picker.accept='image/png,image/jpeg,image/webp';picker.setAttribute('aria-label','메시지 '+(index+1)+' 사진 교체');
-  const button=document.createElement('button');button.type='button';button.className='text-button';button.textContent='사진 교체';button.onclick=()=>picker.click();picker.onchange=()=>{photo(picker.files[0],index);picker.value=''};
+  const picker=document.createElement('input');picker.type='file';picker.hidden=true;picker.dataset.chatPhoto=String(index);picker.accept='image/png,image/jpeg,image/webp,video/mp4,video/webm,video/quicktime';picker.setAttribute('aria-label','메시지 '+(index+1)+' 사진 교체');
+  const button=document.createElement('button');button.type='button';button.className='text-button';button.textContent=message.video?'영상 교체':'사진·영상 교체';button.onclick=()=>picker.click();picker.onchange=()=>{photo(picker.files[0],index);picker.value=''};
   box.append(image,button,picker);return box;
  }
 

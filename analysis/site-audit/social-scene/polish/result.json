@@ -89,10 +89,14 @@
         }
       },
       {
-        "brand": "template-icon phone",
+        "brand": "template-icon phone has-logo",
         "color": "rgb(36, 36, 33)",
         "background": "rgb(255, 255, 255)",
-        "image": null
+        "image": {
+          "source": "assets/phone-app.svg?v=20261029-2",
+          "loaded": true,
+          "filter": "none"
+        }
       }
     ],
     "dark": [
@@ -177,10 +181,14 @@
         }
       },
       {
-        "brand": "template-icon phone",
-        "color": "rgb(239, 239, 235)",
-        "background": "rgb(41, 41, 39)",
-        "image": null
+        "brand": "template-icon phone has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/phone-app.svg?v=20261029-2",
+          "loaded": true,
+          "filter": "none"
+        }
       }
     ]
   },

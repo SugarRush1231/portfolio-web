@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "checks": [
+    "x-feed short-feed pullback",
+    "facebook-feed short-feed pullback",
+    "instagram-feed single-flick momentum",
+    "x-feed single-flick momentum",
+    "facebook-feed single-flick momentum",
+    "coast interruption",
+    "gesture keyframe save/load",
+    "inline editing remains clickable",
+    "reduced motion has no inertial coast"
+  ],
+  "recordedKeys": 2,
+  "errors": []
+}

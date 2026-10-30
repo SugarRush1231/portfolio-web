@@ -112,7 +112,7 @@ $('preview-volume').addEventListener('input',()=>{
 $('preview-mute').addEventListener('click',()=>{project.previewMuted=!project.previewMuted;if(!project.previewMuted&&project.previewVolume===0)project.previewVolume=.7;dirty.add(project.type);applyPreviewAudio();});
 
 function pausePreview() {
-  playing = false; cancelAnimationFrame(animationFrame);FilmEditor.pause();CallAudio.sync(project,time,false);
+  playing = false; cancelAnimationFrame(animationFrame);VideoMedia.pause();FilmEditor.pause();CallAudio.sync(project,time,false);
   if (assets.media instanceof HTMLVideoElement) assets.media.pause();
   $('play').classList.remove('is-playing'); $('play').setAttribute('aria-label', '미리보기 재생');
 }
@@ -165,7 +165,7 @@ function renderInteractionEditor(){
 }
 function recordInteraction(action,value){
   if(project.actions.length>=60){tell('반응 동작은 60개까지 사용할 수 있어요.');return}
-  const at=Math.max(0,Math.min(time,project.duration-.8));
+  const at=Math.max(0,Math.min(time,project.duration-(ChatMedia.parseAction(action)?0:.8)));
   project.actions.push({at,action,value});time=at;phonePreview.dataset.force='true';dirty.add(project.type);
   renderInteractionEditor();draw();tell(CollectionEditor.label(action)+' 기록 · '+at.toFixed(2)+'초. 모션 탭에서 시간을 바꿀 수 있어요.');
   playPreview(Math.min(project.duration,at+.8));
@@ -206,6 +206,7 @@ function phoneEdit(field,value) {
   dirty.add(project.type); syncPhoneEditors(); draw();
 }
 function phoneAction(action) {
+  if(VideoMedia.action(action))return;
   if(ReplyEditor.action(action)||CollectionEditor.action(action))return;
   if(action==='media-mute'){$('preview-mute').click();draw();return}
   pausePreview();let animateTo;
@@ -383,7 +384,7 @@ function renderMessageEditor() {
       message.at = Math.min(SceneTiming.maxDuration, Math.max(0, at.valueAsNumber));if(project.chatClockAuto)stamp.value=ChatClock.stamp(project,message);delete message.typing; dirty.add(project.type); draw();
     });
     text.addEventListener('input', () => { message.text = text.value;delete message.typing; dirty.add(project.type); draw(); });
-    remove.addEventListener('click', () => { project.messages.splice(index, 1); dirty.add(project.type); renderMessageEditor(); draw(); });
+    remove.addEventListener('click', () => { project.messages.splice(index, 1); project.actions=project.actions.filter(e=>!ChatMedia.parseAction(e.action)||ChatMedia.isAction(e.action,project)); dirty.add(project.type); renderMessageEditor(); draw(); });
     header.append(side, stamp, at, remove);row.append(header);if(message.image){row.append(ChatEditor.photoControl(message,index));text.placeholder='사진 설명 · 선택';text.setAttribute('aria-label',`메시지 ${index+1} 사진 설명`)}row.append(text);list.appendChild(row);
   });
   $('add-message').disabled = project.messages.length >= ChatModels.messageLimit(project);
@@ -450,9 +451,9 @@ function renderEditor() {
   $('shares-field').hidden = !project.type.startsWith('instagram');
   $('music-field').hidden = project.type !== 'instagram-reels';
   const videoScene=SceneAudio.supportsVideo(project);
-  $('media-label').textContent = ChatMedia.supports(project)?'대화에 사진 추가':videoScene ? '이미지 또는 영상 올리기' : project.type === 'x-profile' ? '프로필 헤더 이미지 올리기' : '이미지 올리기';
+  $('media-label').textContent = ChatMedia.supports(project)?'대화에 사진·영상 추가':videoScene ? '이미지 또는 영상 올리기' : project.type === 'x-profile' ? '프로필 헤더 이미지 올리기' : '이미지 올리기';
   $('media-file').accept = videoScene ? 'image/png,image/jpeg,image/webp,video/mp4,video/webm,video/quicktime' : 'image/png,image/jpeg,image/webp';
-  $('media-hint').textContent = videoScene ? 'MP4 / WebM 영상과 소리를 함께 저장합니다. 최대 20MB.' : chat ? '현재 타임라인 시점에 사진 메시지를 추가합니다. 그 이전에는 나타나지 않습니다. 메시지 목록에서 보낸 사람·등장 시간·순서를 조절하고 사진을 삭제·교체할 수 있습니다.' : '올린 사진은 화면에 맞춰 크롭합니다.';
+  $('media-hint').textContent = videoScene ? 'MP4 / WebM 영상과 소리를 함께 저장합니다. 최대 20MB.' : chat ? '현재 타임라인 시점에 사진·영상 메시지를 추가합니다. 이전 시점에는 나타나지 않습니다. MP4·WebM·MOV · 파일당 최대 20MB. 영상 미리보기를 누르면 크게 보기·재생이 열립니다.' : '올린 사진은 화면에 맞춰 크롭합니다.';
   const motions = search ? ['search', 'still'] : chat ? ['messages', 'still'] : project.type === 'instagram-reels' ? ['reveal', 'still'] : ['scroll', 'reveal', 'still'];
   for (const option of $('motion').options) option.hidden = !motions.includes(option.value);
   $('scroll').max=search?10000:SceneCollections.supported.includes(project.type)?100000:1200;
@@ -460,10 +461,11 @@ function renderEditor() {
   $('motion').querySelector('[value=scroll]').textContent=project.device==='desktop'?'페이지 스크롤':'스와이프 스크롤';
   $('scroll-motion-hint').hidden=project.motion!=='scroll'||!SceneScroll.supports(project.type);
   $('scroll-motion-hint').textContent=project.device==='desktop'?'PC 화면은 연속해서 스크롤합니다.':'폰 화면은 밀기·관성 감속·짧은 멈춤을 반복합니다. 거리가 크고 길이가 짧으면 빠르게 이동해요.';
+  VideoMedia.trim(Object.values(projects));
   $('avatar-preview').replaceChildren();
   if (project.avatar) { const img = document.createElement('img'); img.src = project.avatar; img.alt = ''; $('avatar-preview').appendChild(img); }
   else $('avatar-preview').textContent = Array.from(project.name)[0] || 'S';
-  $('media-name').textContent = ChatMedia.supports(project)?'사진 메시지 '+project.messages.filter(m=>m.image).length+'개':project.mediaName||'기본 그래픽';$('remove-media').hidden=ChatMedia.supports(project);
+  $('media-name').textContent = ChatMedia.supports(project)?'사진·영상 메시지 '+project.messages.filter(m=>m.image).length+'개':project.mediaName||'기본 그래픽';$('remove-media').hidden=ChatMedia.supports(project);
   FilmEditor.render();ChatEditor.render();CallAudio.renderEditor();ElementEditor.renderFont();applyPreviewAudio();
   const [width, height] = sceneOutputSize(project); canvas.width = width; canvas.height = height;
   $('resolution').textContent = `${width} × ${height}`;
@@ -532,6 +534,8 @@ function renderSearchEditor() {
   $('add-result').disabled = project.results.length >= 8;
 }
 function switchScene(id) {
+  if(typeof MotionEditor!=='undefined')MotionEditor.clearPreview();
+  phonePreview.dataset.force='true';
   pausePreview(); project = projects[id]; assets = assetsByScene[id] || {}; time = project.duration; renderEditor();
   tell(SOCIAL_SCENES.find(scene=>scene.id===id).section==='SNS'?'하트·댓글을 누르면 동작이 타임라인에 기록됩니다. MP4로 저장할 수 있어요.':'화면별 수정 내용은 작업 중 유지됩니다. 프로젝트 저장으로 파일을 남길 수 있어요.');
 }
@@ -568,6 +572,7 @@ async function uploadSceneAsset(file, avatar) {
     const data = await readSceneFile(file);
     const video = !avatar && file.type.startsWith('video/');
     if (!/^image\/(png|jpeg|webp)$/.test(file.type) && !(video && SceneAudio.supportsVideo({type:id}) && /^video\/(mp4|webm|quicktime)$/.test(file.type))) throw new Error('PNG, JPG, WebP 이미지를 사용해 주세요. Instagram 피드·릴스와 영상 템플릿에는 MP4 / WebM도 올릴 수 있어요.');
+    if(!avatar&&['x-feed','instagram-feed','facebook-feed'].includes(id)&&data.length+projects[id].feedItems.reduce((sum,item)=>sum+item.media.length,0)>64*1024*1024)throw Error('게시물 미디어의 총 크기는 64MB 이내로 사용해 주세요.');
     const element = await loadSceneAsset(data, video);
     if(avatar&&id==='naver-search')await SearchUI.ready({avatar:data});
     assetsByScene[id] ||= {};
@@ -655,6 +660,7 @@ $('add-result').addEventListener('click', () => {
   dirty.add(project.type); renderSearchEditor(); draw();
 });
 $('avatar-file').addEventListener('change', event => { uploadSceneAsset(event.target.files[0], true); event.target.value = ''; });
+$('media-file').accept+=' ,video/mp4,video/webm,video/quicktime';
 $('media-file').addEventListener('change', event => { uploadSceneAsset(event.target.files[0], false); event.target.value = ''; });
 $('change-avatar').addEventListener('click', () => $('avatar-file').click());
 $('change-media').addEventListener('click', () => {if(ChatMedia.supports(project))pausePreview();$('media-file').click();});

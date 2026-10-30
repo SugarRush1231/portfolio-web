@@ -36,13 +36,14 @@ const SceneCollections=(()=>{
     const row=textItem(value,feedText);
     for(const key of flags){if(typeof value[key]!=='boolean')throw new Error('게시물 상태가 올바르지 않습니다.');row[key]=value[key]}
     for(const key of ['avatar','media']){
-     if(typeof value[key]!=='string'||value[key].length>2000000||value[key]&&!/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(value[key]))throw new Error('게시물 사진이 올바르지 않습니다.');
+     if(typeof value[key]!=='string'||value[key].length>(key==='media'?32*1024*1024:2000000)||value[key]&&!(key==='media'?/^data:(image\/(png|jpeg|webp)|video\/(mp4|webm|quicktime));base64,[A-Za-z0-9+/=]+$/:/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/).test(value[key]))throw new Error('게시물 사진이 올바르지 않습니다.');
      row[key]=value[key];
     }
     if(!Number.isInteger(value.artwork)||value.artwork<0||value.artwork>5)throw new Error('예시 이미지 번호가 올바르지 않습니다.');
     row.artwork=value.artwork;row.commentItems=comments(value.commentItems);row.comments=String(row.commentItems.length);Object.assign(row,replies.validateDraft(value));return row;
    });
   }
+  if(out.feedItems.reduce((sum,item)=>sum+item.media.length,result.media?.length||0)>64*1024*1024)throw Error('게시물 미디어의 총 크기는 64MB 이내로 사용해 주세요.');
   if(input.mailItems!==undefined){
    if(!Array.isArray(input.mailItems)||input.mailItems.length>19||input.mailItems.length&&result.type!=='email-inbox')throw new Error('메일은 최대 20개 항목입니다.');
    out.mailItems=input.mailItems.map(value=>{const row=textItem(value,mailText);row.mailCategory=value.mailCategory??'primary';if(!Object.hasOwn(mailCategories,row.mailCategory))throw new Error('메일 분류가 올바르지 않습니다.');for(const k of ['read','starred']){if(typeof value[k]!=='boolean')throw new Error('메일 상태가 올바르지 않습니다.');row[k]=value[k]}return row});
@@ -82,13 +83,13 @@ const SceneCollections=(()=>{
   return patch;
  }
  function parseAction(value){const m=/^feed:(\d+):(.+)$/.exec(value);return m?{index:Number(m[1]),action:m[2]}:null}
- function context(project,item,index){return{...project,...item,feedItems:[],mailItems:[],props:{...project.props,privacy:item.privacy??project.props.privacy},mediaKind:'image',_collectionIndex:index}}
+ function context(project,item,index){return{...project,...item,feedItems:[],mailItems:[],props:{...project.props,privacy:item.privacy??project.props.privacy},mediaKind:item.media?.startsWith('data:video/')?'video':'image',_collectionIndex:index}}
  function scope(markup,index){
   if(!markup)return '';
   return '<div class="collection-post" data-feed-index="'+index+'">'+markup.replace(/data-phone-action="([^"]+)"/g,(_,v)=>'data-phone-action="feed:'+index+':'+v+'"').replace(/data-(phone|film)-field="([^"]+)"/g,(_,kind,key)=>'data-'+kind+'-field="feedItems.'+index+'.'+key.replace(/^props\./,'')+'"').replace(/data-phone-composer="commentDraft"/g,'data-phone-composer="feedItems.'+index+'.commentDraft"')+'</div>';
  }
  function media(item,cls=''){
-  return '<div class="ph-media collection-media '+cls+'" data-artwork="'+item.artwork+'">'+(item.media?'<img alt="게시물 이미지" src="'+esc(item.media)+'">':'<div class="collection-art" aria-label="예시 이미지"><i></i><i></i><i></i><span>STUDIO NOTES</span><b>'+String(item.artwork+1).padStart(2,'0')+'</b></div>')+'<button type="button" class="ph-media-edit" data-phone-action="media" aria-label="게시물 이미지 바꾸기">미디어 변경</button></div>';
+  return '<div class="ph-media collection-media '+cls+'" data-artwork="'+item.artwork+'">'+(item.media?(item.media.startsWith('data:video/')?'<canvas data-collection-video="'+item._collectionIndex+'"></canvas><button type="button" class="collection-video-toggle" data-phone-action="video" aria-label="게시물 영상 재생·일시정지"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7Z"/></svg></button>':'<img alt="게시물 이미지" src="'+esc(item.media)+'">'):'<div class="collection-art" aria-label="예시 이미지"><i></i><i></i><i></i><span>STUDIO NOTES</span><b>'+String(item.artwork+1).padStart(2,'0')+'</b></div>')+'<button type="button" class="ph-media-edit" data-phone-action="media" aria-label="게시물 이미지 바꾸기">미디어 변경</button></div>';
  }
  return{supported,feedText,mailText,mailCategories,flags,defaults,validate,generate,parseAction,context,scope,media,clone};
 })();

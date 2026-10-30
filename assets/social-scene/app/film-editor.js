@@ -159,7 +159,7 @@ const FilmEditor=(()=>{
  }
  function getCurrent(key){return value(project,key)}
  function syncNews(){if(project.type!=='news-article')return;for(const control of $('film-props').querySelectorAll('[data-film-prop]'))if(Object.hasOwn(NewsModel.fields,control.dataset.filmProp)&&control!==document.activeElement){const next=value(project,control.dataset.filmProp);if(control.value!==next)control.value=next}}
- function syncVideo(){if(project.type==='youtube-watch'&&assets.media instanceof HTMLVideoElement){const state=sceneInteractionState(project,time);if(!playing||!state.videoPlaying)assets.media.pause();else if(assets.media.paused)assets.media.play().catch(()=>{})}}
+ function syncVideo(){if(SceneAudio.supportsVideo(project)&&assets.media instanceof HTMLVideoElement){const state=sceneInteractionState(project,time);if(!playing||state.videoPlaying===false)assets.media.pause();else if(assets.media.paused)assets.media.play().catch(()=>{})}}
  function init(){
   phonePreview.addEventListener('input',event=>{
    if(!event.target.matches('[data-call-slide]'))return;

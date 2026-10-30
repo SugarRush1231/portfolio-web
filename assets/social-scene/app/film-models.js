@@ -73,9 +73,9 @@ const FilmModels=(()=>{
  }
 
  function mediaTime(p,time){
-  if(p.type!=='youtube-watch')return time;let elapsed=0,cursor=0,playing=true;
+  if(!['youtube-watch','x-feed','instagram-feed','instagram-reels','facebook-feed'].includes(p.type))return time;let elapsed=0,cursor=0,playing=true;
   for(const e of p.actions.filter(e=>e.action==='video'&&e.at<=time).sort((a,b)=>a.at-b.at)){if(playing)elapsed+=e.at-cursor;cursor=e.at;playing=e.value}
-  if(playing)elapsed+=time-cursor;return p.props.videoStart+elapsed;
+  if(playing)elapsed+=time-cursor;return(p.type==='youtube-watch'?p.props.videoStart:0)+elapsed;
  }
  function actions(id){
   if(id==='discord-dm')return['call-start','call-answer','call-end','call-mute','call-speaker'];

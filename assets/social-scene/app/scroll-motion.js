@@ -3,6 +3,7 @@ const SceneScroll=(()=>{
  const easing=typeof module!=='undefined'?{easeScene:require('./scene.js').easeScene,interactionEase:require('./interactions.js').interactionEase}:{easeScene,interactionEase};
  const supported=['instagram-feed','x-feed','x-profile','facebook-feed','email-inbox','news-article','youtube-watch','discord-channel','discord-dm'];
  const clamp=(value,min,max)=>Math.max(min,Math.min(max,Number.isFinite(value)?value:0));
+ function dragPosition(raw,max,viewport){const offset=clamp(raw,0,Math.max(0,max)),excess=raw-offset,limit=Math.max(1,Math.min(64,viewport*.12));return{offset,pull:excess?-excess*.35/(1+Math.abs(excess)*.35/limit):0}}
  function plan(distance,duration,viewport){
   const lead=Math.min(.5,duration*.25),tail=lead,available=Math.max(.01,duration-lead-tail);
   const naturalBurst=.16+.5,minimumRest=.25;
@@ -38,6 +39,6 @@ const SceneScroll=(()=>{
   if(tabs)tabs.style.transform='translateY('+Math.max(0,offset-tabs.offsetTop)+'px)';
   root._sceneScroll={offset,max,viewport:viewport.clientHeight};
  }
- return{supports:type=>supported.includes(type),plan,position,apply};
+ return{supports:type=>supported.includes(type),dragPosition,plan,position,apply};
 })();
 if(typeof module!=='undefined')module.exports=SceneScroll;
