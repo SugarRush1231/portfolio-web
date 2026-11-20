@@ -6,6 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>김병석 | Portfolio</title>
     <meta name="description" content="김병석의 영상·모션 그래픽·AI 비주얼 및 프로그램 개발 포트폴리오.">
+    <script>
+        /* site-mode: 주소로 입구(/)·영상(/video)·프로그램(/software) 모드를 정합니다.
+           상대 경로 자원을 불러오기 전에 실행돼야 하므로 head 맨 앞에 둡니다. tests/site-mode.test.cjs */
+        (function () {
+            'use strict';
+            var SOFTWARE_HASHES = ['#project-mmt', '#project-social-scene'];
+            function resolveMode(pathname, hash) {
+                var path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+                if (hash === '#') hash = '';
+                if (path === '/video' || path === '/software') return { mode: path.slice(1), path: path, hash: hash };
+                // 옛 한 페이지 주소(/#...)를 새 갈래로 잇습니다.
+                if (SOFTWARE_HASHES.indexOf(hash) !== -1) return { mode: 'software', path: '/software', hash: hash };
+                if (hash && hash !== '#hero') return { mode: 'video', path: '/video', hash: hash };
+                return { mode: 'entry', path: '/', hash: '' };
+            }
+            var loc = window.location;
+            var result = resolveMode(loc.pathname, loc.hash);
+            if (/^https?:$/.test(loc.protocol) && result.path + result.hash !== loc.pathname + loc.hash) {
+                window.history.replaceState(window.history.state, '', result.path + loc.search + result.hash);
+            }
+            document.documentElement.dataset.mode = result.mode;
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -64,6 +87,7 @@
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
             <div class="work-barcode" role="group" aria-label="Select a project"></div>
+            <a class="mode-switch" href="/software" data-mode-switch>AI Software <span aria-hidden="true">↗</span></a>
             <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme">
                 <svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></svg>
                 <svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"></path></svg>
@@ -73,6 +97,28 @@
     </nav>
 
     <div class="view-toolbar" id="view-toolbar" hidden><a href="#work" class="view-back">↖ All work</a><span id="view-label"></span></div>
+
+    <!-- ═══════════════ ENTRY (/) ═══════════════ -->
+    <main id="entry" class="entry">
+        <div class="entry-inner">
+            <p class="hero-label entry-label">PORTFOLIO</p>
+            <h1 class="entry-name"><span>김병석</span><span class="entry-name-en">Byeongseok Kim</span></h1>
+            <nav class="entry-doors" aria-label="포트폴리오 갈래 선택">
+                <a class="entry-door" href="/video">
+                    <span class="entry-door-index">01</span>
+                    <span class="entry-door-title">Video &amp; AI&nbsp;Visual</span>
+                    <span class="entry-door-desc">영상 · 모션 그래픽 · AI 비주얼</span>
+                    <span class="entry-door-arrow" aria-hidden="true">↗</span>
+                </a>
+                <a class="entry-door" href="/software">
+                    <span class="entry-door-index">02</span>
+                    <span class="entry-door-title">AI Software &amp; Automation</span>
+                    <span class="entry-door-desc">AI로 업무 도구를 만듭니다</span>
+                    <span class="entry-door-arrow" aria-hidden="true">↗</span>
+                </a>
+            </nav>
+        </div>
+    </main>
 
     <!-- ═══════════════ HERO SECTION ═══════════════ -->
     <section id="hero" class="hero">
@@ -1088,6 +1134,7 @@
         <span>클립보드에 복사되었습니다!</span>
     </div>
 
+    <script src="site-mode.js?v=20261120-1"></script>
     <script src="script.js?v=20261024-menu-click"></script>
     <script src="mmt-release.js?v=20261024-1"></script>
     <script src="social-scene-project.js?v=20261029-6"></script>

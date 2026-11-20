@@ -2,6 +2,20 @@
 
 정적 HTML/CSS/JavaScript 포트폴리오입니다. `index.html`을 열거나 정적 호스팅으로 배포합니다.
 
+## 입구와 두 갈래
+
+한 `index.html`이 주소에 따라 세 화면을 보여 줍니다. Netlify `_redirects`가 `/video`, `/software`를 `index.html`로 200 rewrite하고, `<head>` 맨 앞의 `site-mode` 스크립트가 주소를 보고 `<html data-mode>`를 정합니다.
+
+| 주소 | 화면 |
+| --- | --- |
+| `/` | 입구: 이름과 두 갈래 링크 |
+| `/video` | 영상 프로젝트 5개 |
+| `/software` | 프로그램 프로젝트(MMT, Social Scene) |
+
+- 옛 주소는 새로고침 없이 이어집니다: `/#project-mmt`, `/#project-social-scene` → `/software#...`, 그 밖의 `/#...`(영상·About·Contact) → `/video#...`, `/#hero` → `/`.
+- `site-mode.js`가 `script.js`보다 먼저 다른 갈래의 카드와 상세 글을 DOM에서 뺍니다. 새 프로그램 프로젝트(예: 엑셀 애드인)는 카드에 `data-kind="software"`, 상세 글에 `class="project software-project"`를 붙이면 `/software`에만 나옵니다.
+- 로컬 확인: `node tools/serve.cjs` 실행 후 `http://localhost:8888/`, `/video`, `/software`를 엽니다. 파일을 직접 열면(`file://`) 주소 갈래가 동작하지 않습니다.
+
 ## 화면 및 테마
 
 - 상단 Light / Dark 버튼으로 테마를 전환합니다. 작은 화면에서는 아이콘으로 표시합니다.
