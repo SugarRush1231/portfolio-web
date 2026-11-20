@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+    <title>MMT · UI 미리보기</title>
+    <link rel="stylesheet" href="preview.css?v=20261024-2">
+    <script src="preview.js?v=20261024-2" defer></script>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false"><defs><symbol id="icon-clapperboard" viewBox="0 0 24 24"><path d="m12.296 3.464 3.02 3.956"/><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="m6.18 5.276 3.1 3.899"/></symbol><symbol id="icon-settings-2" viewBox="0 0 24 24"><path d="M14 17H5"/><path d="M19 7h-9"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></symbol><symbol id="icon-repeat-2" viewBox="0 0 24 24"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></symbol><symbol id="icon-music-2" viewBox="0 0 24 24"><circle cx="8" cy="18" r="4"/><path d="M12 18V2l7 4"/></symbol><symbol id="icon-captions" viewBox="0 0 24 24"><rect width="18" height="14" x="3" y="5" rx="2" ry="2"/><path d="M7 15h4M15 15h2M7 11h2M13 11h4"/></symbol><symbol id="icon-audio-lines" viewBox="0 0 24 24"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></symbol><symbol id="icon-folder-open" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></symbol><symbol id="icon-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="icon-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol><symbol id="icon-save" viewBox="0 0 24 24"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></symbol><symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol><symbol id="icon-scan-search" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-1.9-1.9"/></symbol><symbol id="icon-list-checks" viewBox="0 0 24 24"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></symbol><symbol id="icon-arrow-down-to-line" viewBox="0 0 24 24"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></symbol></defs></svg>
+    <div class="app">
+        <header class="titlebar"><span class="title-brand"><img src="app-icon.png" width="24" height="24" alt="">MMT</span><span id="section-name">AI 자막 · 번역</span><span data-mmt-version>v1.4.0</span></header>
+        <aside class="sidebar" aria-label="MMT 메뉴">
+            <div class="brand">Multi<br>Media Toolkit</div>
+            <nav class="navigation" aria-label="작업 메뉴">
+                <button type="button" data-page="youtube" aria-label="영상 다운로드" title="영상 다운로드"><span class="native-icon" aria-hidden="true">&#xE714;</span><span class="nav-label">영상 다운로드</span></button>
+                <button type="button" data-page="codec" aria-label="Pr/AE 코덱 해결" title="Pr/AE 코덱 해결"><span class="native-icon" aria-hidden="true">&#xE90F;</span><span class="nav-label">Pr/AE 코덱 해결</span></button>
+                <button type="button" data-page="format" aria-label="포맷 변환기" title="포맷 변환기"><span class="native-icon" aria-hidden="true">&#xE8AB;</span><span class="nav-label">포맷 변환기</span></button>
+                <button type="button" data-page="audio" aria-label="오디오 변환기" title="오디오 변환기"><span class="native-icon" aria-hidden="true">&#xE189;</span><span class="nav-label">오디오 변환기</span></button>
+                <button type="button" data-page="subtitles" aria-label="AI 자막 · 번역" title="AI 자막 · 번역" aria-current="page"><span class="native-icon" aria-hidden="true">&#xE190;</span><span class="nav-label">AI 자막 · 번역</span></button>
+                <button type="button" data-page="lyrics" aria-label="노래 자막 생성" title="노래 자막 생성"><span class="native-icon" aria-hidden="true">&#xE8D6;</span><span class="nav-label">노래 자막 생성</span></button>
+            </nav>
+            <div class="sidebar-bottom">
+                <div class="widget-row"><span class="native-icon" aria-hidden="true">&#xE8F9;</span><span class="nav-label">위젯 모드</span><button class="switch" id="widget-toggle" type="button" role="switch" aria-checked="false" aria-label="위젯 모드" title="위젯 모드"><span></span></button></div>
+                <button type="button" data-page="settings" aria-label="설정" title="설정"><span class="native-icon" aria-hidden="true">&#xE713;</span><span class="nav-label">설정</span></button>
+            </div>
+        </aside>
+        <main id="workspace" tabindex="-1" aria-label="MMT 작업 화면"></main>
+    </div>
+    <dialog id="preview-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+        <h2 id="dialog-title"></h2><p id="dialog-description"></p><div id="dialog-content"></div>
+        <div class="dialog-actions"><button type="button" id="dialog-close">닫기</button></div>
+    </dialog>
+    <button type="button" id="widget-preview" class="widget-preview" aria-label="현재 브라우저 영상 다운로드" title="현재 브라우저 영상 다운로드" hidden><img src="widget-download.png" width="52" height="52" alt="" draggable="false"></button>
+    <noscript>이 UI 미리보기는 JavaScript가 필요합니다.</noscript>
+
+    <template id="page-subtitles">
+        <section class="page" aria-labelledby="subtitles-title">
+            <header class="page-heading"><h1 id="subtitles-title">AI 자막 · 번역</h1><p>음성을 인식해 원문 SRT를 만들고, 필요한 언어로 번역합니다.</p></header>
+            <section class="section file-row"><div><h2>영상 또는 오디오 파일</h2><p data-source-path>파일을 선택하거나 이 화면에 끌어다 놓으세요.</p></div><button type="button" data-pick-file><span class="native-icon" aria-hidden="true">&#xE8E5;</span>파일 선택</button></section>
+            <section class="section stack">
+                <div class="options options-four">
+                    <label>원본 언어<select aria-label="원본 언어" name="source-language"><option>자동 감지</option><option>한국어</option><option>영어</option><option>일본어</option><option>중국어(간체)</option></select></label>
+                    <label>번역 언어<select aria-label="번역 언어" name="target-language"><option>번역 안 함</option><option>한국어</option><option>영어</option><option>일본어</option><option>중국어(간체)</option></select></label>
+                    <label>음성 인식 (Whisper)<select aria-label="음성 인식 (Whisper)" name="whisper-model"><option>Large V3 Turbo · 빠름 · 정확</option><option>Large V3 · 느림 · 대용량</option><option>Small · 매우 빠름 · 경량</option></select></label>
+                    <label>처리 장치<select aria-label="처리 장치" name="device"><option>자동 (GPU 우선)</option><option>CPU</option></select></label>
+                </div>
+                <div class="environment-row"><p>현재 PC 환경: UI 미리보기</p><button type="button" data-environment>자세히</button><button type="button" class="icon-button" data-models aria-label="모델 관리" title="모델 관리"><span class="native-icon" aria-hidden="true">&#xE713;</span></button></div>
+            </section>
+            <section class="section section-bottom stack"><div class="action-row"><div class="button-row"><button type="button" class="ai" data-preview-action="자막 생성"><span class="native-icon" aria-hidden="true">&#xE190;</span>자막 생성</button><button type="button" class="danger" disabled><span class="native-icon" aria-hidden="true">&#xE711;</span>취소</button></div><button type="button" class="small" disabled><span class="native-icon" aria-hidden="true">&#xE8B7;</span>자막 폴더 열기</button></div><div class="progress" aria-hidden="true"></div><p data-status>영상 파일을 선택하면 시작할 수 있습니다.</p></section>
+        </section>
+    </template>
+    <template id="page-lyrics">
+        <section class="page" aria-labelledby="lyrics-title">
+            <header class="page-heading"><h1 id="lyrics-title">노래 자막 생성</h1></header>
+            <section class="section file-row"><div><h2>음악 또는 영상 파일</h2><p data-source-path>선택된 파일 없음</p></div><button type="button" data-pick-file><span class="native-icon" aria-hidden="true">&#xE8E5;</span>파일 선택</button></section>
+            <section class="section options options-three">
+                <label>노래 언어<select aria-label="노래 언어" name="song-language"><option>자동 감지</option><option>한국어</option><option>영어</option><option>일본어</option><option>중국어</option></select></label>
+                <label>처리 장치<select aria-label="처리 장치" name="song-device"><option>자동 (GPU 우선)</option><option>CPU</option></select></label>
+                <div class="model-label"><span>음성 인식</span><div>Whisper Large v3 Turbo<button type="button" class="icon-button" data-models aria-label="모델 관리" title="모델 관리"><span class="native-icon" aria-hidden="true">&#xE713;</span></button></div></div>
+            </section>
+            <section class="section"><label>가사<textarea name="lyrics" placeholder="가사 원문" rows="7" maxlength="100000"></textarea></label></section>
+            <section class="section stack"><div class="button-row"><button type="button" class="ai" data-preview-action="가사 싱크 생성"><span class="native-icon" aria-hidden="true">&#xE189;</span>가사 싱크 생성</button><button type="button" class="danger" disabled>취소</button><button type="button" disabled><span class="native-icon" aria-hidden="true">&#xE74E;</span>SRT 저장</button><button type="button" disabled>자막 폴더 열기</button></div><div class="progress" aria-hidden="true"></div><p data-status>대기 중...</p></section>
+        </section>
+    </template>
+    <template id="page-youtube">
+        <section class="page download-page" aria-labelledby="youtube-title">
+            <header class="page-heading download-heading"><h1 id="youtube-title">영상 다운로드</h1><button type="button" class="connection" data-browser><span class="connection-dot" aria-hidden="true"></span>브라우저 연결</button></header>
+            <div class="url-entry"><label for="video-url-input">영상 URL 입력</label><div class="url-row"><input id="video-url-input" name="video-url" type="text" inputmode="url" placeholder="YouTube, Instagram, 치지직, SOOP, X 등의 영상 URL" maxlength="3000"><button type="button" data-preview-action="영상 확인" data-check-video disabled><span class="native-icon" aria-hidden="true">&#xE721;</span>영상 확인</button><button type="button" class="icon-button" data-internal-browser aria-label="내장 브라우저" title="내장 브라우저"><span class="native-icon" aria-hidden="true">&#xE774;</span></button></div></div>
+            <section class="video-info"><div class="video-placeholder" aria-hidden="true"></div><div><p class="small-text">YouTube · Instagram · 치지직 · SOOP · X</p><h2>선택된 영상 없음</h2></div></section>
+            <label class="quality-row">화질 옵션<select name="quality"><option>최고화질</option><option>1080p</option><option>720p</option><option>MP3</option></select></label>
+            <div class="checkbox-row"><label><input type="checkbox" name="with-subtitles">자막도 함께 다운로드</label><select name="subtitle-language" aria-label="다운로드 자막 언어" hidden><option>한국어</option><option>한국어 + 영어</option><option>영어</option><option>모든 자막</option><option>일본어</option><option>중국어</option></select><label><input type="checkbox" checked>썸네일·게시 정보 포함</label><label><input type="checkbox" checked>스폰서 구간 제거</label><label><input type="checkbox" name="section-download">구간만 받기</label></div>
+            <section class="queue section"><h2>다운로드 목록 <span>0</span></h2><div class="queue-head"><span>영상 제목</span><span>화질/포맷</span><span>상태</span></div><div class="queue-empty"></div></section>
+            <div class="download-footer"><div class="action-row"><p data-status>대기 중</p><button type="button" class="danger" disabled>선택 취소</button></div><div class="progress" aria-hidden="true"></div><div class="button-row"><p class="small-text">저장 위치: 다운로드 / MMT</p><button type="button" class="icon-button" data-preview-action="폴더 열기" aria-label="폴더 열기" title="폴더 열기"><span class="native-icon" aria-hidden="true">&#xE8B7;</span></button></div></div>
+        </section>
+    </template>
+    <template id="page-settings">
+        <section class="page settings-page" aria-labelledby="settings-title">
+            <header class="page-heading"><h1 id="settings-title">설정</h1></header>
+            <section class="section stack"><h2>다운로드</h2><div class="input-row"><label>기본 저장 위치<input type="text" readonly value="다운로드 / MMT"></label><button type="button" data-preview-action="위치 설정">위치 설정</button></div><label>동시 다운로드 수<input type="number" name="concurrent" min="1" max="5" value="3"></label><label class="toggle-row">사이트별 하위 폴더 사용<input type="checkbox" role="switch" checked></label><label class="toggle-row">사이트별 직접 폴더 지정<input type="checkbox" role="switch" name="custom-folders"></label><div class="options options-two" data-site-folders hidden><label>사이트<select aria-label="사이트"><option>YouTube</option><option>Instagram</option><option>치지직</option><option>SOOP</option><option>X</option></select></label><label>사이트 저장 위치<input type="text" placeholder="다운로드 / MMT"></label></div></section>
+            <section class="section stack"><div class="options options-two"><label>파일명 규칙<select aria-label="파일명 규칙" name="filename-rule"><option>제목만</option><option>채널-제목</option><option>날짜-제목</option><option>사이트-제목</option><option>직접 입력</option></select></label><label>사용자 파일명<input name="filename-template" type="text" placeholder="{site}_{title}_{date}" disabled></label></div><p class="small-text">토큰: {site}, {channel}, {title}, {date}, {quality}</p></section>
+            <section class="section options options-two"><label>기본 품질<select aria-label="기본 품질"><option>최고화질</option><option>1080p</option><option>720p</option><option>MP3</option></select></label><label>기본 자막 언어<select aria-label="기본 자막 언어"><option>한국어</option><option>한국어 + 영어</option><option>영어</option><option>모든 자막</option></select></label></section>
+            <section class="section stack"><label class="toggle-row">완료 알림<input type="checkbox" role="switch" checked></label><label class="toggle-row">완료 후 폴더 열기<input type="checkbox" role="switch"></label><label class="toggle-row">자동 업데이트 확인<input type="checkbox" role="switch" checked></label></section>
+            <section class="section stack"><h2>브라우저 연동</h2><p>브라우저가 연결되지 않았습니다.</p><div class="button-row"><button type="button" data-browser><span class="native-icon" aria-hidden="true">&#xE774;</span>브라우저 연결</button><button type="button" disabled>연결 해제</button><button type="button" data-internal-browser>내장 브라우저</button></div><label class="toggle-row">로그인 유지<input type="checkbox" role="switch"></label></section>
+            <section class="section stack"><h2>AI 모델</h2><p>Whisper와 AI 번역 모델은 기존 선택 설치 경로를 그대로 사용합니다.</p><button type="button" data-models class="align-start">모델 관리</button></section>
+            <section class="section stack"><h2>Multi Media Toolkit <span data-mmt-version>v1.4.0</span></h2><div class="button-row"><button type="button" data-preview-action="새 버전 업데이트 확인">새 버전 업데이트 확인</button><button type="button" data-preview-action="다른 버전 받기">다른 버전 받기</button><button type="button" data-preview-action="필수 도구 복구">필수 도구 복구</button></div><div class="button-row"><button type="button" data-preview-action="실험 기능">실험 기능</button><button type="button" data-preview-action="문의하기">문의하기</button></div></section>
+        </section>
+    </template>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "SceneInter": {
+    "source": "https://github.com/google/fonts/blob/main/ofl/inter/Inter[opsz,wght].ttf",
+    "file": "SceneInter.woff2",
+    "license": "SceneInter-OFL.txt"
+  },
+  "SceneOpenSans": {
+    "source": "https://github.com/google/fonts/blob/main/ofl/opensans/OpenSans[wdth,wght].ttf",
+    "file": "SceneOpenSans.woff2",
+    "license": "SceneOpenSans-OFL.txt"
+  },
+  "SceneKorean": {
+    "source": "https://github.com/google/fonts/blob/main/ofl/notosanskr/NotoSansKR[wght].ttf",
+    "file": "SceneKorean.woff2",
+    "license": "SceneKorean-OFL.txt",
+    "processing": "Subset to Hangul, Latin, Jamo, punctuation and common symbols; variable weights retained."
+  },
+  "SceneGoogle": {
+    "source": "https://github.com/google/fonts/blob/main/ofl/googlesansflex/GoogleSansFlex[ROND,opsz,slnt,wdth,wght].ttf",
+    "file": "SceneGoogle.woff2",
+    "license": "SceneGoogle-OFL.txt",
+    "processing": "Default width, slant, grade and roundedness; weight and optical-size axes retained."
+  }
+}
