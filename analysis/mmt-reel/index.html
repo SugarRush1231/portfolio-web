@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MMT · Portfolio Film</title>
+  <link rel="stylesheet" href="film.css?v=2"><script src="film.js?v=2" defer></script>
+</head>
+<body>
+  <div id="preview"><main id="stage" aria-label="MMT 포트폴리오 영상">
+    <header id="brand"><img src="../../assets/mmt/mmt-icon-original.png" alt=""><strong>MMT</strong><span>SOFTWARE PROJECT</span></header>
+    <div id="opening" class="layer">
+      <div class="word-mask"><span>받고.</span></div><div class="word-mask"><span>바꾸고.</span></div><div class="word-mask"><span>자막까지.</span></div>
+      <div class="intro-caption">미디어 작업을 하나의 흐름으로.</div>
+    </div>
+    <div id="file-marks" class="layer" aria-hidden="true"><span>MP4</span><span>WAV</span><span>SRT</span></div>
+    <div id="headline" class="layer"><p id="eyebrow"></p><h1 id="headline-text"></h1><p id="subline"></p></div>
+    <div id="panel">
+      <div id="file-face"><svg viewBox="0 0 180 180" fill="none" aria-hidden="true"><rect x="28" y="20" width="124" height="140" rx="12" stroke="currentColor" stroke-width="7"/><path d="m77 65 38 25-38 25Z" fill="currentColor"/></svg><strong>MP4</strong></div>
+      <div id="ui-port"><div class="native-layer" id="download-layer"><iframe title="MMT 영상 다운로드 UI" src="../../assets/mmt/preview/index.html" tabindex="-1"></iframe></div><div class="native-layer" id="codec-layer"><iframe title="MMT 코덱 해결 UI" src="../../assets/mmt/preview/index.html" tabindex="-1"></iframe></div><div class="native-layer" id="subtitle-layer"><iframe title="MMT 자막 및 번역 UI" src="../../assets/mmt/preview/index.html" tabindex="-1"></iframe></div></div>
+      <img id="original-icon" src="../../assets/mmt/mmt-icon-original.png" alt="MMT 원본 앱 아이콘">
+    </div>
+    <div id="feature" class="layer"><span id="feature-label"></span><strong id="feature-text"></strong></div>
+    <div id="widget"><img src="../../assets/mmt/preview/widget-download.png" alt="MMT 원본 다운로드 위젯"></div>
+    <div id="example" class="layer"><span>자막 예시</span><p>준비 작업은 줄이고, 제작에 집중하도록.</p><p class="english">Less preparation. More creation.</p></div>
+    <svg id="wave" viewBox="0 0 904 168" aria-hidden="true"></svg>
+    <div id="ending" class="layer"><h2>MMT</h2><p>Multi Media Toolkit</p><small>WINDOWS DESKTOP APPLICATION</small></div>
+    <svg id="cursor" viewBox="0 0 40 48" aria-hidden="true"><path d="M5 3v34l9-9 8 16 8-4-8-15 13-1Z" fill="#203b54" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>
+    <div id="click-ring" aria-hidden="true"></div>
+    <footer id="film-footer"><span>MULTI MEDIA TOOLKIT</span><span>DESIGNED / BUILT / TESTED</span></footer>
+  </main></div>
+  <section id="controls" aria-label="영상 미리보기 제어"><button id="play" type="button">재생</button><label class="timeline">재생 위치<input id="scrub" type="range" min="0" max="24" step=".01" value="0"></label><output id="time">00:00 / 00:24</output><label>볼륨<input id="volume" type="range" min="0" max="1" step=".01" value=".5"></label><audio id="music" src="out/audio.wav" preload="metadata"></audio></section>
+</body>
+</html>

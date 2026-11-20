@@ -1,0 +1,15 @@
+{
+  "pass": true,
+  "approvedIcon": true,
+  "mainThumbnail": true,
+  "detailThemes": [
+    "light",
+    "dark"
+  ],
+  "nativeHeader": true,
+  "popoutFavicon": true,
+  "parentFaviconPreserved": true,
+  "popoutEditPreserved": true,
+  "mobileWidth": 390,
+  "errors": []
+}

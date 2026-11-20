@@ -1,0 +1,14 @@
+✔ a refreshed parent accepts only its saved popout token and reconnects that window (2.2615ms)
+✔ file opening sends to its own iframe with a wildcard and accepts serialized null origin only from that frame (0.8982ms)
+✔ a missing ready signal ends the spinner and exposes retry (1.4035ms)
+✔ Social Scene loads once when opened and pauses without replacing its document (1.0684ms)
+✔ only messages from the embedded editor at the same origin update status (1.4343ms)
+✔ project embeds actual downloads without a standalone-tab link or eager load (0.7468ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 100.4056

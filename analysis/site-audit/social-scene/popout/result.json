@@ -1,0 +1,17 @@
+{
+  "pass": true,
+  "modes": [
+    "file",
+    "http"
+  ],
+  "fileExports": [
+    "JSON",
+    "PNG",
+    "MP4"
+  ],
+  "popupState": true,
+  "windowClose": true,
+  "keepsWorkspaceHeight": true,
+  "parentReloadRecovery": true,
+  "simultaneousReloadAndClose": true
+}

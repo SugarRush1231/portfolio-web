@@ -1,0 +1,15 @@
+{
+  "pass": true,
+  "layoutOnly": false,
+  "templates": 24,
+  "projectCards": 7,
+  "popups": 0,
+  "errors": [],
+  "standaloneRequests": [],
+  "downloads": [
+    "embedded-project.json",
+    "embedded.png",
+    "embedded.mp4",
+    "embedded-transparent.mov"
+  ]
+}

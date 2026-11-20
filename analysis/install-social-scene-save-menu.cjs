@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const source='E:/AI/social-templates',root=path.resolve(__dirname,'..'),entry=path.join(source,'index.html');
+let html=fs.readFileSync(entry,'utf8');
+if(!html.includes('save-menu.css'))html=html.replace('</head>','<link rel="stylesheet" href="save-menu.css?v=20261029-save-menu-3">\n</head>');
+if(!html.includes('save-menu.js'))html=html.replace('</body>','<script src="save-menu.js?v=20261029-save-menu-3"></script></body>');
+html=html.replace(/((?:src|href)="[\w./-]+)\?v=[^"&]+/g,'$1?v=20261029-save-menu-3');
+if(!html.includes('save-menu.js')||!html.includes('save-menu.css'))throw Error('Save menu entry points missing');
+for(const file of ['save-menu.js','save-menu.css'])fs.copyFileSync(path.join(root,'assets/social-scene',file),path.join(source,file));
+fs.writeFileSync(entry,html);console.log('Installed the shared Save menu in the Social Scene source.');

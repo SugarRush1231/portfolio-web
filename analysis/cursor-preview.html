@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIEW — Cursor preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+body { padding: 32px clamp(20px, 4vw, 56px) 56px; }
+.preview { max-width: 1160px; margin: auto; }
+.preview-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.preview-header .nav-logo { margin: 0; }
+.preview-back { font-size: 12px; min-height: 44px; display: inline-flex; align-items: center; }
+.preview-intro { margin-block: 48px 32px; }
+h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.2; font-weight: 500; letter-spacing: -.05em; }
+.preview-intro p { margin-top: 16px; font-size: 14px; line-height: 1.8; color: var(--text-secondary); word-break: keep-all; }
+.cursor-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.cursor-surface { display: block; width: 100%; padding: 0; border: 0; background: var(--bg-secondary); aspect-ratio: 16 / 9; cursor: pointer; }
+.cursor-surface img { width: 100%; height: 100%; object-fit: cover; }
+.cursor-caption { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 16px; }
+.cursor-caption h2 { font-size: 16px; font-weight: 500; }
+.cursor-caption span { font-size: 11px; color: var(--text-muted); }
+.cursor-hint { display: none; position: fixed; left: 0; top: 0; z-index: 10; pointer-events: none; padding: 7px 10px; border: 1px solid rgb(255 255 255 / .2); border-radius: 3px; background: #171717; color: #f2f2ef; font: 500 10px/1.2 Inter, sans-serif; letter-spacing: .12em; opacity: 0; transition: opacity 160ms ease; }
+@media (hover: hover) and (pointer: fine) { .cursor-hint { display: block; } .cursor-hint.is-visible { opacity: 1; } }
+.preview-note { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-secondary); line-height: 1.8; }
+@media (max-width: 620px) { .cursor-cards { grid-template-columns: minmax(0, 1fr); gap: 32px; } .preview-intro { margin-top: 32px; } }
+@media (prefers-reduced-motion: reduce) { .cursor-hint { transition: none; } }
+</style>
+</head>
+<body>
+<main class="preview">
+<header class="preview-header"><a class="nav-logo" href="../index.html#work" aria-label="포트폴리오로 돌아가기"><span>VISUAL &amp;</span><span>AI CREATOR.</span></a><a class="preview-back" href="../index.html#work">← Portfolio</a></header>
+<div class="preview-intro"><h1>카드 위에 마우스를 올려보세요.</h1><p>기본 커서는 그대로 두고, 썸네일 위에서만 작은 VIEW 안내가 커서 옆에 따라옵니다.</p></div>
+<div class="cursor-cards">
+<article><button type="button" class="cursor-surface" aria-label="Google Chrome 카드 — VIEW 커서 미리보기"><img src="../Thumbnail/work-01.jpg" alt="Google Chrome 인포그래픽" width="960" height="540"></button><div class="cursor-caption"><h2>Google Chrome</h2><span>Motion Graphics</span></div></article>
+<article><button type="button" class="cursor-surface" aria-label="Sugar Rush 카드 — VIEW 커서 미리보기"><img src="../Thumbnail/work-02.jpg" alt="Sugar Rush 뮤직비디오" width="960" height="536"></button><div class="cursor-caption"><h2>Sugar Rush</h2><span>Music Video</span></div></article>
+</div>
+<p class="preview-note">포인터 반응만 확인하는 시안입니다. 카드를 눌러도 영상은 열리지 않습니다.<br>현재 포트폴리오의 커서는 변경하지 않았습니다.</p>
+</main>
+<span class="cursor-hint" aria-hidden="true">VIEW ↗</span>
+<script>
+const hint = document.querySelector('.cursor-hint');
+function hideHint() { hint.classList.remove('is-visible'); }
+function showHint(event) {
+    if (event.pointerType !== 'mouse') return;
+    const x = Math.min(event.clientX + 16, innerWidth - hint.offsetWidth - 12);
+    const y = Math.min(event.clientY + 16, innerHeight - hint.offsetHeight - 12);
+    hint.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    hint.classList.add('is-visible');
+}
+document.querySelectorAll('.cursor-surface').forEach(card => {
+    card.addEventListener('pointerenter', showHint);
+    card.addEventListener('pointermove', showHint);
+    card.addEventListener('pointerleave', hideHint);
+});
+window.addEventListener('blur', hideHint);
+window.addEventListener('scroll', hideHint, { passive: true });
+</script>
+</body>
+</html>

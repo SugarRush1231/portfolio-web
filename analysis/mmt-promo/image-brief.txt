@@ -1,0 +1,21 @@
+Mode: built-in image_gen
+Use case: ads-marketing
+Destination: main MMT portfolio project thumbnail
+
+Create a polished, original software advertising key visual for MMT, Multi Media Toolkit, a Windows application that combines video downloading, media conversion, AI subtitles, and translation. This is a designed campaign poster, not an application screenshot or a web page.
+
+Format: widescreen 16:9, 1920 x 1080 composition. Essential content comfortably inside the central 80% width and 72% height so a project card can crop the edges.
+
+Art direction: Swiss editorial typography meets meticulous contemporary software brand advertising. Restrained, assertive, tactile, and highly legible at thumbnail size. The existing application palette is charcoal #202425, off-white #F3F5F5, and a single vivid pink-red #D82F4E accent. Use these coherently, with charcoal as the dominant backdrop and off-white typography. No extra palette.
+
+Composition: an oversized, beautifully kerned off-white 'MMT' wordmark anchors the left half, with 'Multi Media Toolkit' immediately below in a much smaller clean grotesk. The right half is a single bespoke sculptural graphic: three precision-cut off-white media strips, one showing a film-frame aperture, one a crisp audio waveform, one subtitle line blocks, fold and interlock into a compact toolkit-like M structure. Pink-red inner faces and one taut connecting strip visually unify video, audio, and subtitles. These are precise graphic design objects with flat planes, fine edge depth, clean silhouettes, controlled studio lighting and subtle contact shadows, not soft clay objects or glossy plastic icons. The sculpture is substantial, optically balanced against the large typography and feels intentionally art directed, not randomly floating UI cards.
+
+Exact text only, no additional copy:
+'MMT'
+'Multi Media Toolkit'
+'미디어 작업을, 하나로.'
+'DOWNLOAD / CONVERT / SUBTITLE / TRANSLATE'
+
+Place the short Korean line below the wordmark with ample separation, at a clearly readable size and a refined Korean sans-serif weight. The functional English line is secondary and small, near the bottom within the safe area. Precise baseline alignment, consistent margins, purposeful negative space, disciplined visual hierarchy. Make the MMT wordmark and the media sculpture the two dominant elements.
+
+Avoid: neon glow, purple-blue gradients, robots, AI brains, people, generic SaaS website layouts, glassmorphism cards, invented interface screenshots, browser frames, download buttons, QR codes, URLs, version numbers, watermarks, decorative microtext, stock clip-art and confetti. Crisp professionally finished advertising artwork.

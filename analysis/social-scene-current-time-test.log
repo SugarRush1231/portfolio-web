@@ -1,0 +1,24 @@
+✔ all chat types share a clock basis and advance at the actual send time (21.3881ms)
+✔ clock formatting handles noon, midnight and manual status editing (0.3558ms)
+✔ manual legacy timestamps survive; disabling auto freezes the displayed values (0.8449ms)
+✔ all registered scenes survive a project save/load round trip (28.249ms)
+✔ import rejects unknown screens, remote media, malformed messages and invalid timing (7.0199ms)
+✔ typing and unread receipts follow the conversation deterministically when seeking in either direction (0.4145ms)
+✔ static frames do not run typing or read transitions; tight and equal timestamps do not overlap (0.5115ms)
+✔ Korean input composes syllables and preserves emoji graphemes (1.0293ms)
+✔ image and video imports are local, and media type follows the data instead of a supplied flag (0.5653ms)
+✔ motion easing stays monotonic and clamps the first and last frame (0.2819ms)
+✔ result favicons survive save/load and older projects receive safe defaults (1.8972ms)
+✔ interactive state and speed round-trip while legacy files keep defaults (1.0843ms)
+✔ interactive state rejects malformed values at import boundary (2.1553ms)
+✔ export speed changes frame count and duration, not logical scene timing (2.2844ms)
+✔ chat playback keeps source row identity for identical and reordered messages (0.2406ms)
+✔ calendar defaults use today's date and keep edited dates and clock values on save/load (5.02ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 149.0398

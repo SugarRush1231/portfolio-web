@@ -1,0 +1,3 @@
+PASS light/dark cancel button contrast, hover, focus, size and real PNG sequence cancellation
+PASS actual 60-frame ProRes 4444 alpha MOV with moving speaker rings and no background/audio
+PASS file-mode guidance and readable error close button

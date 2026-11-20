@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs');
+const file='E:/AI/social-templates/index.html';
+const before=fs.readFileSync(file,'utf8');
+const after=before.replace(/((?:src|href)="[\w./-]+)\?v=[^"&]+/g,'$1?v=20261029-discord-mov');
+if(after!==before)fs.writeFileSync(file,after);
+console.log('Standalone asset version: 20261029-discord-mov');
+const readme='E:/AI/social-templates/README.md';
+let docs=fs.readFileSync(readme,'utf8').replace('현재 미리보기 서버: <http://127.0.0.1:8881/index.html>','현재 미리보기 서버: <http://127.0.0.1:8991/index.html>');
+if(!docs.includes('### Discord 투명 MOV와 하단 탐색 설정'))docs+='\n\n### Discord 투명 MOV와 하단 탐색 설정\n\nDiscord 발화자 화면의 출력 형식에 ‘투명 MOV · ProRes 4444’를 추가했습니다. 미리보기의 배경 선택과 관계없이 30fps·무음·알파 채널로 저장하며 발화자 테두리의 시간별 변화를 포함합니다. 기존 PNG 시퀀스와 배경 포함 MP4도 유지합니다. MOV 변환에는 HTTP/HTTPS 주소와 Worker·WASM 사용이 필요하며 별도 변환 서버나 유료 API는 사용하지 않습니다.\n\nGalaxy는 제스처 바·3버튼·표시 안 함, iPhone은 제스처 바 표시·표시 안 함을 선택할 수 있습니다. 두 기기의 설정은 독립적으로 저장되며 기존 프로젝트는 제스처 바 표시를 유지합니다. 앱 자체의 하단 메뉴는 바뀌지 않습니다.\n\n2026-10-29에 Windows 예약 포트 범위가 기존 8881 주소를 포함해 미리보기 서버를 8991로 옮겼습니다. 실행 명령은 `python -m http.server 8991 --bind 127.0.0.1 --directory "E:\\AI\\social-templates"`입니다. 기존 탭의 수정 내용을 프로젝트 JSON으로 저장한 뒤 새 주소에서 불러오세요.\n';
+fs.writeFileSync(readme,docs);
+console.log('Standalone usage notes updated.');

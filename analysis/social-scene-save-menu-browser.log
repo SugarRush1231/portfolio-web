@@ -1,0 +1,5 @@
+PASS seventh project opens inside portfolio; editor loads lazily; portfolio navigation and project arrows stay in place
+PASS actual JSON and PNG downloads from sandboxed editor; project edits survive About and return
+PASS actual MP4 download stays on the same portfolio page
+PASS real transparent MOV encoded by worker under the portfolio path; no standalone editor or 8881 dependency
+PASS theme sync, leaving pauses playback, edits persist, 5 responsive widths, touch editing, fullscreen, return arrows, Save menu keyboard controls and no browser exceptions

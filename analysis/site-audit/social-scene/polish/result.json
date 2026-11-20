@@ -1,0 +1,196 @@
+{
+  "pass": true,
+  "typing": [
+    "plaintext-only",
+    "textarea",
+    "composer"
+  ],
+  "previewSpace": true,
+  "themes": {
+    "light": [
+      {
+        "brand": "template-icon kakao has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/kakaotalk-app.jpg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon discord has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(88, 101, 242)",
+        "image": {
+          "source": "assets/discord-brand.svg",
+          "loaded": true,
+          "filter": "brightness(0) invert(1)"
+        }
+      },
+      {
+        "brand": "template-icon x has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(15, 20, 25)",
+        "image": {
+          "source": "assets/x-brand.svg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon instagram has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/instagram-app.jpg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon youtube has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/youtube-brand.svg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon facebook has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/facebook-brand.svg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon google has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/google-favicon.png",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon naver has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/naver-app.jpg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon phone has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/phone-app.svg?v=20261029-2",
+          "loaded": true,
+          "filter": "none"
+        }
+      }
+    ],
+    "dark": [
+      {
+        "brand": "template-icon kakao has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/kakaotalk-app.jpg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon discord has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(88, 101, 242)",
+        "image": {
+          "source": "assets/discord-brand.svg",
+          "loaded": true,
+          "filter": "brightness(0) invert(1)"
+        }
+      },
+      {
+        "brand": "template-icon x has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(15, 20, 25)",
+        "image": {
+          "source": "assets/x-brand.svg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon instagram has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/instagram-app.jpg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon youtube has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/youtube-brand.svg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon facebook has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/facebook-brand.svg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon google has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/google-favicon.png",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon naver has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/naver-app.jpg",
+          "loaded": true,
+          "filter": "none"
+        }
+      },
+      {
+        "brand": "template-icon phone has-logo",
+        "color": "rgb(36, 36, 33)",
+        "background": "rgb(255, 255, 255)",
+        "image": {
+          "source": "assets/phone-app.svg?v=20261029-2",
+          "loaded": true,
+          "filter": "none"
+        }
+      }
+    ]
+  },
+  "errors": []
+}

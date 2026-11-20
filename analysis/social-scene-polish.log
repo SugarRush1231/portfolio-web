@@ -1,0 +1,3 @@
+Inline text Space: {"playing":false,"name":"공백 테스트 "}
+Hover contrast: {"color":"rgb(36, 36, 33)","background":"rgb(255, 255, 255)"}
+PASS editable spaces stay text; preview Space still plays; all menu icons and hover text readable in both themes

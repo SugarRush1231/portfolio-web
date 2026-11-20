@@ -1,0 +1,12 @@
+✔ chat video timing, pause, close and seeking are deterministic (15.938ms)
+✔ video metadata, local-only sources and action targets validate on project import (1.0716ms)
+✔ all native chat templates retain uploaded video attachments across save/load (4.6164ms)
+✔ X, Instagram, Facebook and YouTube accept main video; feed list items retain videos (4.0872ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 124.7594

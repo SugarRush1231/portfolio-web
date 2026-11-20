@@ -1,0 +1,21 @@
+{
+  "pass": true,
+  "brands": [
+    "kakao",
+    "discord",
+    "x",
+    "instagram",
+    "youtube",
+    "facebook",
+    "google",
+    "naver",
+    "phone"
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "mobile": 390,
+  "standalone": true,
+  "errors": []
+}

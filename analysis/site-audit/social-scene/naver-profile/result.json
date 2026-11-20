@@ -1,0 +1,25 @@
+{
+  "pass": true,
+  "upload": true,
+  "cameraButton": true,
+  "headerAndPanel": {
+    "header": [
+      215,
+      42,
+      49,
+      255
+    ],
+    "panel": [
+      229,
+      43,
+      50,
+      255
+    ]
+  },
+  "editableNameEmail": true,
+  "jsonReload": true,
+  "pngExport": true,
+  "remove": true,
+  "otherProfilesPreserved": true,
+  "errors": []
+}
