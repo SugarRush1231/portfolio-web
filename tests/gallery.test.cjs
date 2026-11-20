@@ -28,7 +28,7 @@ function setup(reduced = false, withSoftware = false, hash = '') {
     }
     const ids = Object.fromEntries(['back-to-top', 'gallery-focus', 'gallery-type', 'gallery-cinema', 'gallery-camera', 'gallery-portal', 'gallery-controls', 'gallery-details', 'gallery-status', 'gallery-back', 'gallery-prev', 'gallery-next', 'gallery-project-kind', 'gallery-project-credit'].map(id => [id, element()]));
     const projects = Array.from({ length: withSoftware ? 6 : 5 }, (_, i) => {
-        const video = { dataset: { src: `video/web/project-0${i + 1}.mp4` }, loads: 0, pauses: 0, plays: 0, primes: 0, play() { if (this.muted) this.primes++; else this.plays++; return Promise.resolve(); }, load() { this.loads++; }, pause() { this.pauses++; } };
+        const video = { dataset: { src: `video/web/project-0${i + 1}.mp4` }, readyState: 4, buffered: { length: 0 }, listeners: {}, addEventListener(name, fn) { (this.listeners[name] ??= new Set()).add(fn); }, removeEventListener(name, fn) { this.listeners[name]?.delete(fn); }, emit(name) { this.listeners[name]?.forEach(fn => fn()); }, loads: 0, pauses: 0, plays: 0, primes: 0, play() { if (this.muted) this.primes++; else this.plays++; return Promise.resolve(); }, load() { this.loads++; }, pause() { this.pauses++; } };
         const media = element();
         const project = element();
         media.parent = project;
@@ -401,7 +401,12 @@ test('arrow keys browse only the main list and never switch projects during an o
     assert.equal(press('ArrowRight').defaultPrevented, true);
     assert.match(app.counter.textContent, /02 \/ 05/);
     app.fire(app.cards[1], 'click');
-    for (const phase of ['type', 'camera', 'video', 'closing']) {
+    // During the opening a key skips straight to the same project's film instead of browsing.
+    assert.equal(app.gallery.dataset.phase, 'type');
+    assert.equal(press('ArrowRight').defaultPrevented, true);
+    assert.equal(app.gallery.dataset.phase, 'video');
+    assert.match(app.counter.textContent, /02 \/ 05/);
+    for (const phase of ['video', 'closing']) {
         app.gallery.dataset.phase = phase;
         assert.equal(press('ArrowRight').defaultPrevented, undefined);
         assert.equal(press('ArrowLeft').defaultPrevented, undefined);
@@ -850,4 +855,73 @@ test('direct project links and browser history keep the barcode selection in syn
     app.windowEvents.hashchange();
     assert.equal(app.barcode[0].attributes['aria-pressed'], 'true');
     assert.equal(app.ids['gallery-prev'].disabled, true);
+});
+
+test('clicking again during the opening skips straight to the film; controls keep their own job', () => {
+    const app = setup(), video = app.projects[2].video;
+    app.fire(app.cards[2], 'click');
+    assert.equal(app.gallery.dataset.phase, 'type');
+    const back = app.fire(app.gallery, 'click', { target: { closest: selector => selector === '.gallery-controls' ? {} : null }, stopPropagation() {} });
+    assert.equal(back.defaultPrevented, undefined, 'the back button is not swallowed');
+    assert.equal(app.gallery.dataset.phase, 'type');
+    let stopped = false;
+    const skip = app.fire(app.gallery, 'click', { stopPropagation() { stopped = true; } });
+    assert.equal(skip.defaultPrevented, true);
+    assert.equal(stopped, true, 'the skip click does not also reach the player or a card');
+    assert.equal(app.gallery.dataset.phase, 'video');
+    assert.equal(video.plays, 1);
+    app.tick(5000);
+    assert.equal(video.plays, 1, 'the cancelled sequence does not play again');
+    assert.equal(app.fire(app.gallery, 'click', { stopPropagation() {} }).defaultPrevented, undefined, 'clicks during the film are untouched');
+});
+
+test('a slow film shows a small progress indicator only while it is not ready', () => {
+    const app = setup(), video = app.projects[0].video;
+    video.readyState = 1;
+    app.fire(app.cards[0], 'click');
+    const loading = app.gallery.children.find(child => child.className === 'gallery-loading');
+    app.tick(400);
+    assert.equal(loading.hidden, true, 'no flash for films that become ready quickly');
+    video.buffered = { length: 1, start: () => 0, end: () => 1 };
+    app.tick(200);
+    assert.equal(loading.hidden, false);
+    assert.equal(loading.style['--loaded'], '0.5');
+    assert.equal(app.gallery.classList.contains('is-loading'), true);
+    app.tick(3000);
+    assert.equal(app.gallery.dataset.phase, 'video');
+    assert.equal(loading.hidden, false, 'still loading after the opening ends');
+    video.readyState = 4; video.emit('canplay');
+    assert.equal(loading.hidden, true);
+    assert.equal(app.gallery.classList.contains('is-loading'), false);
+    assert.equal(video.listeners.canplay.size, 0, 'listeners are released');
+});
+
+test('the last work offers About · Contact and a fresh scroll past it continues there', () => {
+    const app = setup();
+    const end = app.gallery.children.find(child => child.className === 'gallery-end');
+    let clicks = 0; end.click = () => { clicks++; };
+    assert.equal(end.hidden, true);
+    const press = key => app.events.keydown({ key, target: { closest: () => null }, preventDefault() {} });
+    for (let i = 0; i < 3; i++) press('ArrowRight');
+    assert.equal(end.hidden, true);
+    // One continuous swipe that reaches the last work keeps going with momentum: it stops there.
+    for (let i = 0; i < 20; i++) { app.fire(app.gallery, 'wheel', { deltaX: 0, deltaY: 100, deltaMode: 0 }); app.tick(16); }
+    assert.match(app.counter.textContent, /05 \/ 05/);
+    assert.equal(end.hidden, false);
+    assert.equal(clicks, 0);
+    // A new gesture that starts at the end leads on, even as separate wheel notches.
+    app.tick(400);
+    app.fire(app.gallery, 'wheel', { deltaX: 0, deltaY: 120, deltaMode: 0 });
+    app.tick(400);
+    app.fire(app.gallery, 'wheel', { deltaX: 0, deltaY: 100, deltaMode: 0 });
+    assert.equal(clicks, 0);
+    assert.equal(app.gallery.style['--end-push'], String(220 / 240));
+    app.tick(1300);
+    assert.equal(app.gallery.style['--end-push'], '0', 'the nudge relaxes after a pause');
+    app.fire(app.gallery, 'wheel', { deltaX: 0, deltaY: 120, deltaMode: 0 });
+    app.tick(300);
+    app.fire(app.gallery, 'wheel', { deltaX: 0, deltaY: 140, deltaMode: 0 });
+    assert.equal(clicks, 1);
+    app.fire(app.cards[4], 'click');
+    assert.equal(end.hidden, true, 'hidden while a film is open');
 });

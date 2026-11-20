@@ -204,6 +204,24 @@
                 });
             });
 
+            // 브라우저 내장 poster는 탐색·미리 재생 뒤 사라져 첫 프레임(검은·흰 화면)이 보일 수 있어,
+            // 실제로 재생이 진행될 때까지 같은 이미지를 덮어 둡니다.
+            const posterSrc = video.getAttribute('poster');
+            if (posterSrc) {
+                const cover = document.createElement('img');
+                cover.className = 'video-poster-cover';
+                cover.src = posterSrc;
+                cover.alt = '';
+                cover.decoding = 'async';
+                cover.setAttribute('aria-hidden', 'true');
+                video.after(cover);
+                const start = () => (Number(video.dataset.start) || 0) + 0.25;
+                video.addEventListener('playing', () => playerContainer.classList.add('has-played'));
+                ['pause', 'seeked', 'emptied'].forEach(event => video.addEventListener(event, () => {
+                    if (video.paused && video.currentTime < start()) playerContainer.classList.remove('has-played');
+                }));
+            }
+
             // ── 유튜브 스타일 액션 인디케이터 ──
             const actionIndicator = document.createElement('div');
             actionIndicator.className = 'video-action-indicator';
@@ -1257,6 +1275,21 @@
             return button;
         });
         document.querySelector('.work-barcode')?.replaceChildren(...barcode);
+        // 연출 중 영상이 아직 준비되지 않았을 때만 보이는 작은 진행 표시.
+        const loading = document.createElement('div');
+        loading.className = 'gallery-loading';
+        loading.hidden = true;
+        loading.setAttribute('aria-hidden', 'true');
+        loading.innerHTML = '<span class="gallery-loading-track"><span class="gallery-loading-bar"></span></span><span class="gallery-loading-label">영상 불러오는 중<span class="gallery-loading-skip"> · 클릭하면 바로 보기</span></span>';
+        gallery.appendChild(loading);
+        // 마지막 작품 뒤에서 About·Contact로 이어지는 안내.
+        const endLink = document.createElement('a');
+        endLink.className = 'gallery-end';
+        endLink.href = '#about';
+        endLink.hidden = true;
+        endLink.innerHTML = 'About · Contact <span aria-hidden="true">→</span>';
+        gallery.appendChild(endLink);
+        let loadingTimer = 0, loadingVideo = null, wheelIdleTimer = 0, wheelGesture = null, endPush = 0, endPushTimer = 0;
         const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
         let index = Math.max(0, cards.findIndex(card => card.hash === window.location.hash));
         let gap = 120;
@@ -1309,6 +1342,7 @@
             }
             previous.disabled = index === 0;
             next.disabled = index === cards.length - 1;
+            endLink.hidden = phase !== 'out' || index !== cards.length - 1;
             barcode.forEach((button, i) => {
                 button.setAttribute('aria-pressed', String(i === index));
                 const influence = Math.max(0, 1 - Math.abs(i - renderedOffset / gap) / 2);
@@ -1332,11 +1366,49 @@
             surface?.render({ width: gallery.clientWidth, height: gallery.clientHeight, frameWidth: width, gap, offset: renderedOffset, angle: tilt * (motion.matches ? 0.5 : 1), energy: Math.min(Math.abs(impulse) / 500, 1) * (motion.matches ? 0.5 : 1), visible: phase === 'out' });
             updateCounter();
         }
+        function videoReady(video) {
+            return video.readyState >= 3;
+        }
+        function updateLoading() {
+            const video = loadingVideo;
+            if (!video || videoReady(video) || phase === 'out' || phase === 'closing') { stopLoading(); return; }
+            const start = Number(video.dataset.start) || 0;
+            let ahead = 0;
+            for (let i = 0; i < video.buffered.length; i++) {
+                if (video.buffered.start(i) <= start + 0.1 && video.buffered.end(i) > start) ahead = video.buffered.end(i) - start;
+            }
+            // 재생 시작에 필요한 앞부분(약 2초)을 기준으로 채우고, 준비 완료 전에는 끝까지 차지 않게 둡니다.
+            loading.style.setProperty('--loaded', String(Math.max(0.06, Math.min(0.92, ahead / 2))));
+            // 연출 중에는 화면 아래, 영상 화면에서는 영상 위에 둡니다.
+            const host = phase === 'video' ? cinema : gallery;
+            if (loading.parentNode !== host) host.appendChild(loading);
+            loading.hidden = false;
+            gallery.classList.add('is-loading');
+        }
+        function stopLoading() {
+            clearTimeout(loadingTimer);
+            if (loadingVideo) ['progress', 'loadeddata', 'canplay', 'playing', 'waiting'].forEach(name => loadingVideo.removeEventListener(name, onLoadingEvent));
+            loadingVideo = null;
+            loading.hidden = true;
+            gallery.classList.remove('is-loading');
+            if (loading.parentNode && loading.parentNode !== gallery) gallery.appendChild(loading);
+        }
+        function onLoadingEvent() {
+            if (!loading.hidden || !loadingVideo || videoReady(loadingVideo)) updateLoading();
+        }
+        function watchLoading(video) {
+            stopLoading();
+            loadingVideo = video;
+            ['progress', 'loadeddata', 'canplay', 'playing', 'waiting'].forEach(name => video.addEventListener(name, onLoadingEvent));
+            // 빨리 준비되는 경우 깜박이지 않도록 잠시 기다린 뒤에만 보여 줍니다.
+            loadingTimer = setTimeout(() => { if (loadingVideo === video && !videoReady(video)) updateLoading(); }, 500);
+        }
         function returnMedia() {
             opening++;
             drag = null;
             resetLift();
             fireType.stop();
+            stopLoading();
             clearTimeout(timer);
             if (story) {
                 story.hidden = true;
@@ -1388,6 +1460,7 @@
             story.hidden = false;
             story.classList.add('gallery-story');
             document.body.classList.add('gallery-playing');
+            if (loadingVideo && !loading.hidden) updateLoading();
             const video = media.querySelector('video');
             video.volume = 0.5;
             video.muted = false;
@@ -1499,10 +1572,19 @@
                     video.currentTime = start;
                 }
             }).catch(() => {});
+            watchLoading(video);
             window.scrollTo({ top: 0, behavior: 'instant' });
             layout();
             showType();
         }
+        // 연출(타이포·카메라) 도중 다시 클릭하거나 키를 누르면 바로 영상으로 넘어갑니다.
+        const inCinematic = () => phase === 'expand' || phase === 'type' || phase === 'camera';
+        gallery.addEventListener('click', event => {
+            if (!inCinematic() || event.target.closest('.gallery-controls')) return;
+            event.preventDefault();
+            event.stopPropagation();
+            revealVideo();
+        }, true);
         cards.forEach((card, i) => {
             card.addEventListener('click', event => {
                 if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
@@ -1539,13 +1621,34 @@
             if (Math.abs(delta) < 3) return;
             gallery.classList.remove('instant-motion');
             const distance = event.deltaMode === 1 ? delta * 16 : event.deltaMode === 2 ? delta * gallery.clientWidth : delta;
-            offset = Math.max(0, Math.min((cards.length - 1) * gap, offset + distance * 0.6));
+            const end = (cards.length - 1) * gap;
+            // 마지막 작품에서 "새로" 시작한 스크롤만 About으로 이어 줍니다.
+            // 끝에 도착하던 제스처의 관성 스크롤은 세지 않고, 휠 몇 칸 또는 한 번의 스와이프로 넘어갑니다.
+            clearTimeout(wheelIdleTimer);
+            if (!wheelGesture) wheelGesture = { atEnd: offset >= end - 1 };
+            wheelIdleTimer = setTimeout(() => { wheelGesture = null; }, 250);
+            clearTimeout(endPushTimer);
+            if (wheelGesture.atEnd && distance > 0) {
+                endPush += distance;
+                gallery.style.setProperty('--end-push', String(Math.min(1, endPush / 240)));
+                endPushTimer = setTimeout(() => { endPush = 0; gallery.style.setProperty('--end-push', '0'); }, 1200);
+                if (endPush > 240) {
+                    endPush = 0;
+                    wheelGesture.atEnd = false;
+                    gallery.style.setProperty('--end-push', '0');
+                    endLink.click();
+                }
+                return;
+            }
+            endPush = 0;
+            gallery.style.setProperty('--end-push', '0');
+            offset = Math.max(0, Math.min(end, offset + distance * 0.6));
             index = Math.round(offset / gap);
             liftCards();
             layout();
         }, { passive: false });
         gallery.addEventListener('pointerdown', event => {
-            if (phase !== 'out' || gallery.hidden || event.button !== 0 || event.target.closest('button, .gallery-details, .gallery-cinema')) return;
+            if (phase !== 'out' || gallery.hidden || event.button !== 0 || event.target.closest('button, .gallery-details, .gallery-cinema, .gallery-end')) return;
             resetLift();
             drag = { x: event.clientX, offset, id: event.pointerId };
             dragged = false;
@@ -1594,6 +1697,10 @@
             if (event.key === 'Escape' && phase !== 'out' && !document.fullscreenElement) {
                 event.preventDefault();
                 collapse(true, true);
+            } else if (inCinematic() && !event.repeat && !event.shiftKey && !['Tab', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock'].includes(event.key) &&
+                !((event.key === 'Enter' || event.key === ' ') && event.target.closest('.gallery-controls'))) {
+                event.preventDefault();
+                revealVideo();
             } else if (phase === 'out' && !event.target.closest('button, video, .video-player') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
                 event.preventDefault();
                 resetLift();
